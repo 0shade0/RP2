@@ -1,12 +1,12 @@
-class obitelj
+class kucanstvo
   ID, ime
   korisnici[]
   zadaci[]
 
 class korisnik
   email
-  obiteljID
-  obiteljime
+  kucanstvoID
+  ime_kucanstva
   bodovi
   
 nasljednici od korisnik:
