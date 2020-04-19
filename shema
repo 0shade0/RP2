@@ -1,0 +1,24 @@
+class obitelj
+  ID, ime
+  korisnici[]
+  zadaci[]
+
+class korisnik
+  email
+  obiteljID
+  obiteljime
+  bodovi
+  
+nasljednici od korisnik:
+  class admin
+     zadaj_zadatak()
+  class regular
+
+class zadatak
+  ime
+  kategorija
+  bool mogu/moraju
+  vrsta // dnevni, tjedni, samo jednom
+  zadužene_osobe[]
+  broj_bodova
+  
