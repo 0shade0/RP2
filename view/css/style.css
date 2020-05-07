@@ -1,7 +1,131 @@
 :root {
-    --color1: #000000;
-    --color2: #ff0000;
-    --color3: #00ff00;
-    --color4: #0000ff;
-    --color5: #ffffff;
+    --orange: #eb9c39;
+    --pink: #e86898;
+    --teal: #60e8ef;
+    --gray: #4c7b7c;
+    --blue: #4651e9;
+}
+
+
+.logo {
+    width: 500px;
+    margin: 30px;
+}
+
+.title {
+    font-size: 24pt;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.description {
+    float: right;
+    clear: none;
+    width: 560px;
+    padding: 10px;
+    padding-right: 40px;
+    text-align: justify;
+}
+
+.login {
+    float: left;
+    clear: none;
+    width: 300px;
+    margin: 10px;
+    padding: 40px;
+}
+
+.login form div {
+    margin: 10px;
+}
+
+.login form input {
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.login form input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+}
+
+body {
+    background-image: url("../../app/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+
+    font-family: Comfortaa;
+    font-size: 16pt;
+}
+
+.wrapper {
+    width: 1024px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    overflow: hidden;
+
+    background-color: rgba(255,255,255,0.7);
+}
+
+.header_wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--teal);
+    transition: background-color 1s;
+}
+
+.header_wrapper:hover {
+    background-color: var(--blue);
+    transition-duration: 1.0s;
+}
+
+.menu{
+    font-size: 24pt;
+    padding: 30px;
+    text-align: center;
+}
+
+.menu a {
+    margin: 10px;
+    color: var(--orange);
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+
+.menu a:hover {
+    color: var(--teal);
+    transition-duration: 0.5s;
+}
+
+@font-face {
+    font-family: Varela;
+    src: url("../../app/Varela-Regular.ttf");
+}
+
+@font-face {
+    font-family: Archivo;
+    src: url("../../app/Archivo-Regular.ttf");
+}
+
+@font-face {
+    font-family: Concert;
+    src: url("../../app/ConcertOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: Fjalla;
+    src: url("../../app/FjallaOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: Comfortaa;
+    src: url("../../app/Comfortaa-Regular.ttf");
 }
