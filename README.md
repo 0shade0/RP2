@@ -1,29 +1,39 @@
 # RP2
 ## Baza podataka
 
-kucanstvo
+pr_kucanstva
 * ID
 * ime
 
-korisnik
+pr_korisnici
 * ID
 * ID_kucanstvo
 * username
-* password
+* password_hash
 * email
+* bodovi
 * admin (da ili ne)
+* registracijski_niz
+* registriran (da ili ne)
 
-zadatak
+pr_zadaci
 * ID
 * ID_korisnik
+* ID_kategorija
 * opis
-* kategorija
+* vrijeme (vrijeme kada je zadatak prvi put zadan)
 * obavezno (da ili ne)
-* vrsta (tjedni, dnevni, mjesečni...)
+* vrsta (jednom(0), dnevni(1), tjedni(2), mjesečni(3))
 * vrijednost (u bodovima)
 
-nagrada
+pr_kategorije
 * ID
+* ID_kucanstvo (kojem kategorije pripadaju)
+* ime
+
+pr_nagrade
+* ID
+* ID_korisnik (kojem korisniku se prikazuju)
 * opis
 * cijena
 
@@ -43,7 +53,7 @@ class korisnik
   * pojedinacne_nagrade[]
   * rijesi_zadatak()
   * uzmi_nagradu()
-  
+
 nasljednici od korisnik:
   * class admin
       * dodaj_korisnika()
@@ -59,8 +69,7 @@ class zadatak
   * vrsta // dnevni, tjedni, samo jednom
   * zaduzene_osobe[]
   * broj_bodova
-  
+
 class nagrada
   * opis
   * cijena
-  
