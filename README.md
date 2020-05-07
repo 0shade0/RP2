@@ -27,14 +27,14 @@ nagrada
 * opis
 * cijena
 
-## Shema:
-### class kucanstvo
+## Klase:
+class kucanstvo
   * ID, ime
   * korisnici[]
   * grupni_zadaci[]
   * grupne_nagrade[]
 
-### class korisnik
+class korisnik
   * email
   * kucanstvoID
   * ime_kucanstva
@@ -44,14 +44,14 @@ nagrada
   * rijesi_zadatak()
   * uzmi_nagradu()
   
-### nasljednici od korisnik:
+nasljednici od korisnik:
   * class admin
       * dodaj_korisnika()
       *  zadaj_zadatak()
       *  dodaj_nagradu()
   * class regular
 
-### class zadatak
+class zadatak
   * ime
   * opis
   * kategorija
@@ -60,7 +60,7 @@ nagrada
   * zaduzene_osobe[]
   * broj_bodova
   
-### class nagrada
+class nagrada
   * opis
   * cijena
   
