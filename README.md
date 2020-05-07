@@ -1,4 +1,32 @@
 # RP2
+## Baza podataka
+
+kucanstvo
+* ID
+* ime
+
+korisnik
+* ID
+* ID_kucanstvo
+* username
+* password
+* email
+* admin (da ili ne)
+
+zadatak
+* ID
+* ID_korisnik
+* opis
+* kategorija
+* obavezno (da ili ne)
+* vrsta (tjedni, dnevni, mjesečni...)
+* vrijednost (u bodovima)
+
+nagrada
+* ID
+* opis
+* cijena
+
 ## Shema:
 ### class kucanstvo
   * ID, ime
