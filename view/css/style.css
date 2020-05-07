@@ -106,26 +106,6 @@ body {
 }
 
 @font-face {
-    font-family: Varela;
-    src: url("../../app/Varela-Regular.ttf");
-}
-
-@font-face {
-    font-family: Archivo;
-    src: url("../../app/Archivo-Regular.ttf");
-}
-
-@font-face {
-    font-family: Concert;
-    src: url("../../app/ConcertOne-Regular.ttf");
-}
-
-@font-face {
-    font-family: Fjalla;
-    src: url("../../app/FjallaOne-Regular.ttf");
-}
-
-@font-face {
     font-family: Comfortaa;
     src: url("../../app/Comfortaa-Regular.ttf");
 }
