@@ -1,7 +1,7 @@
 <div class = "login">
 
 <div>
-<form action= "main.php?rt=user/checkLogin" method="post" id="Login">
+<form action= "main.php?rt=account/checkLogin" method="post" id="Login">
 	<div><?php if(isset($message)) { echo $message; } ?></div>
 	<div>
 		<input placeholder="Username" name="member_name" type="text" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>" required>
@@ -20,7 +20,7 @@
 </div>
 
 <div>
-<form action="<?php echo 'main.php?rt=user/register'; ?>" method="post" id="Register">
+<form action="<?php echo 'main.php?rt=account/register'; ?>" method="post" id="Register">
 	<div><?php if(isset($message_name)) { echo $message_name; } ?></div>
 	<div>
 		<input placeholder="Username" name="member_name" type="text" value="" required>
