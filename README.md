@@ -18,15 +18,20 @@ accountController (**u izradi**)
 * activate
 
 ## Modeli
-ChorezService --- za dohvat iz baze podataka
+**ChorezService** --- za dohvat iz baze podataka
 * getUserByID(str)
 * getUserByUsername(str)
 * getUserByEmail(str)
-* getUserPasswordByUsername(str)
-* addNewUser(User)
+* addNewUser(User) - vraća ID dodanog korisnika
+* addUserToHousehold(User, Household)
 * set_registered(int) - postavlja vrijednost registered u bazi
 
-User (isto kao u bazi)
+* addNewHousehold(Household) - vraća ID dodanog kućanstva
+* getHouseholdByID
+
+
+User(isto kao u bazi)
+
 Household (isto kao u bazi)
 
 ## Baza podataka

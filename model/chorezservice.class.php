@@ -1,6 +1,7 @@
 <?php
 require_once platformSlashes($dir . '/app/database/db.class.php');
 require_once platformSlashes($dir . '/model/user.class.php');
+require_once platformSlashes($dir . '/model/household.class.php');
 // TODO: Napraviti i dodati ostale modele.
 
 class ChorezService {
@@ -9,11 +10,11 @@ class ChorezService {
 //--------------------------------------------------------------------------
 
 // Dohvaćanje korisnika preko ID-ja.
-public static function getUserByID($userID) {
+public function getUserByID($userID) {
     $db = DB::getConnection();
 
     $st = $db->prepare('SELECT * FROM pr_users  WHERE ID=:userID');
-    $st->execute(array('userID' => userID));
+    $st->execute(array('userID' => $userID));
 
     if ($r = $st->fetch()) {
         $user = new User (
@@ -26,7 +27,7 @@ public static function getUserByID($userID) {
 }
 
 // Dohvaćanje korisnika preko korisničkog imena.
-public static function getUserByUsername($username) {
+public function getUserByUsername($username) {
     $db = DB::getConnection();
 
     $st = $db->prepare('SELECT * FROM pr_users  WHERE username=:username');
@@ -43,7 +44,7 @@ public static function getUserByUsername($username) {
 }
 
 // Dohvaćanje korisnika preko e-mail adrese.
-public static function getUserByEmail($email) {
+public function getUserByEmail($email) {
     $db = DB::getConnection();
 
     try {
@@ -64,26 +65,8 @@ public static function getUserByEmail($email) {
     }
 }
 
-// Dohvaćanje lozinke (hashirane) korisnika preko korisničkog imena.
-public static function getUserPasswordByUsername($username) {
-    $db = DB::getConnection();
-
-    try {
-    $st = $db->prepare('SELECT password FROM pr_users ' .
-        'WHERE username=:username');
-    $st->execute(array('username' => $username));
-
-    if ($r = $st->fetch())
-        return $r['password'];
-    }
-    catch(PDOException $e) {
-        exit('PDO error [select pr_users]: ' . $e->getMessage());
-    }
-
-}
-
 // Dodavanje novog korisnika u bazu podataka.
-public static function addNewUser($user) {
+public function addNewUser($user) {
     $db = DB::getConnection();
 
     try {
@@ -102,6 +85,9 @@ public static function addNewUser($user) {
         'admin' => $user->admin,
         'registration_sequence' => $user->registration_sequence,
         'registered' => $user->registered));
+
+    // Vrati ID dodanog korisnika.
+    return $db->lastInsertId();
     }
     catch(PDOException $e) {
         exit('PDO error [insert pr_users]: ' . $e->getMessage());
@@ -109,12 +95,72 @@ public static function addNewUser($user) {
 }
 
 // Postavljanje vrijednosti u stupac registered korisniku sa zadanim ID-jem.
-public static function set_registered ($userID, $value) {
+public function set_registered ($userID, $value) {
     $db = DB::getConnection();
 
+    try {
     $st = $db->prepare('UPDATE pr_users SET registered = :value ' .
-        'WHERE id=:userID');
+        'WHERE ID=:userID');
+
     $st->execute(array('value' => $value, 'userID' => $userID));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
 }
+
+public function addUserToHousehold($user, $household) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('UPDATE pr_users SET ID_household = :householdID ' .
+        'WHERE ID=:userID');
+
+    $st->execute(array(
+        'householdID' => $household->ID,
+        'userID' => $user->ID));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [update pr_households]: ' . $e->getMessage());
+    }
+}
+
+//--------------------------------------------------------------------------
+//  Funkcije za dohvaćanje iz tablice kućanstava
+//--------------------------------------------------------------------------
+public function getHouseholdByID($householdID) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('SELECT * FROM pr_households  WHERE ID=:householdID');
+    $st->execute(array('householdID' => $householdID));
+
+    if ($r = $st->fetch()) {
+        $household = new Household ($r['ID'], $r['name']);
+
+        return $household;
+    }
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_households]: ' . $e->getMessage());
+    }
+}
+
+public function addNewHousehold($household) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('INSERT INTO pr_households(name) VALUES (:name)');
+
+    $st->execute(array('name' => $household->name));
+
+    // Vrati ID dodanog kućanstva.
+    return $db->lastInsertId();
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_households]: ' . $e->getMessage());
+    }
+}
+
 }
 ?>

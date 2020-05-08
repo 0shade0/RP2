@@ -4,22 +4,24 @@ require_once platformSlashes($dir . '/model/chorezservice.class.php');
 class accountController {
 // Provjera korisničkog imena i lozinke za prijavu.
 public function checkLogin() {
+    $success = False;
+
     if (isset($_POST['member_name']) && isset($_POST['member_password'])) {
         $cs = new ChorezService();
-        $success = False;
         // Dohvaćamo hashirani password iz baze.
-        $passwordHash = $cs->getUserPasswordByUsername($_POST['member_name']);
+        $user = $cs->getUserByUsername($_POST['member_name']);
 
         // Provjeravamo odgovaraju li korisničko ime i lozinka.
         // Ako ne postoji korisnik s tim korisničkim imenom,
         // ChorezService::getPasswordByUsername() vraća null.
-        if ($passwordHash !== null) {
+        if ($user !== null) {
+            $passwordHash = $user->password;
+
             if (password_verify($_POST['member_password'], $passwordHash)) {
                 if (session_status() !== PHP_SESSION_ACTIVE)
                     session_start();
 
-                $_SESSION['user'] =
-                    $cs->getUserByUsername($_POST['member_name']);
+                $_SESSION['user'] = $user;
 
                 $success = True;
             }
@@ -94,17 +96,17 @@ public function register() {
 
         /* Spremi korisnika u bazu s vrijednostima:
             ID = 0 (MySQL će dodijeliti jedinstveni ID)
-            ID_kucanstvo = 0 (dodijelit ćemo mu kućanstvo kad potvrdi e-mail)
+            ID_household = 0 (dodijelit ćemo mu kućanstvo kad potvrdi e-mail)
             username = $_POST['member_name']
-            password_hash = $passwordHash,
+            password = $passwordHash,
             email = $_POST['member_email']
-            bodovi = 0
+            points = 0
             admin = 1 (svi novoregistrirani će automatski biti administratori)
-            registracijski_niz = $sequence
-            registriran = 0.
+            registration_sequence = $sequence
+            registered = 0.
         */
         $user = New User(0, 0, $_POST['member_name'], $passwordHash,
-                $_POST['member_email'], 0, 0, $sequence, 0);
+                $_POST['member_email'], 0, 1, $sequence, 0);
 
         $cs->addNewUser($user);
 
@@ -112,7 +114,7 @@ public function register() {
         $user = $cs->getUserByUsername($_POST['member_name']);
 
         /* Link za registraciju šaljemo na mail, a on je oblika
-            main.php?rt=users/activate&
+            main.php?rt=account/activate&
                 sequence=<registracijski niz>&
                 userID=<korisnikov ID>
 
@@ -127,7 +129,7 @@ public function register() {
         $body = 'Kako biste uspješno dovršili registraciju na Chorezo' .
             'pritisnite ili prekopirajte link' .
             'https://rp2.studenti.math.hr/~korisnicko_ime/projekt/main.php?' .
-            'rt=users/activate&sequence=' . $sequence . '&userID=' . $user->ID;
+            'rt=account/activate&sequence=' . $sequence . '&userID=' . $user->ID;
 
         $bodyWrapped = wordwrap($body, 70, "<br>\n");
 
@@ -135,12 +137,11 @@ public function register() {
         // i još malo popraviti poruku.
         mail($email, $subject, $bodyWrapped);
 
-        // TODO: Dodati još neko mjesto za message ili stranicugdje mogu
-        // napisati da je registracija uspješna i da treba potvrditi e-mail.
         $message_name = 'Uspješna registracija! Da biste dovršili ' .
             'registraciju, trebate potvrditi svoju e-mail adresu.';
     }
 
+    // TODO: Provjeriti je li ovo aktualno.
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/login.php');
@@ -154,14 +155,26 @@ public function activate() {
         $cs = new ChorezService();
 
         $user = $cs->getUserByID($_GET['userID']);
+        if ($user !== null && $user->registration_sequence === $_GET['sequence']) {
 
-        if ($user !== null && $user->registracijski_niz === $_GET['sequence']) {
             // Postavi registriran na 1.
-            $cs->set_registriran($_GET['userID'], 1);
+            $cs->set_registered($_GET['userID'], 1);
 
-            // TODO: Napravi i dodijeli korisniku novo kućanstvo.
+            // Stvori kućanstvo i dodaj ga u njega.
+            $householdName = 'Kućanstvo korisnika ' . $user->username;
+            $household = new Household(0, $householdName);
+
+            $householdID = $cs->addNewHousehold($household);
+
+            // Uzmi kućanstvo iz baze s dodijeljenim ID-jem.
+            $household = $cs->getHouseholdByID($householdID);
+
+            // Dodaj korisnika u kućanstvo.
+            $cs->addUserToHousehold($user, $household);
         }
     }
+
+    // TODO: Preusmjeriti korisnika.
 }
 }
  ?>
