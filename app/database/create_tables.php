@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/db.class.php';
 
-create_table_korisnici();
-create_table_kucanstva();
-create_table_zadaci();
-create_table_kategorije();
-create_table_nagrade();
+create_table_users();
+create_table_households();
+create_table_chores();
+create_table_categories();
+create_table_rewards();
 
 exit(0);
 
@@ -30,136 +30,136 @@ function has_table($tableName)
 
 //------------------------------------------------------------------------------
 // Stvaranje tablica.
-function create_table_korisnici()
+function create_table_users()
 {
 	$db = DB::getConnection();
 
-	if (has_table('pr_korisnici'))
-		exit('Tablica pr_korisnici već postoji.<br>');
+	if (has_table('pr_users'))
+		exit('Tablica pr_users već postoji.<br>');
 
 	try {
 		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS pr_korisnici (' .
+			'CREATE TABLE IF NOT EXISTS pr_users (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'ID_kucanstvo int NOT NULL,' .
+			'ID_household int NOT NULL,' .
 			'username varchar(50) NOT NULL,' .
-			'password_hash varchar(255) NOT NULL,'.
+			'password varchar(255) NOT NULL,'.
 			'email varchar(50) NOT NULL,' .
-			'bodovi int NOT NULL,' .
+			'points int NOT NULL,' .
 			'admin int NOT NULL,' .
-			'registracijski_niz varchar(20) NOT NULL,' .
-			'registriran int NOT NULL)'
+			'registration_sequence varchar(20) NOT NULL,' .
+			'registered int NOT NULL)'
 		);
 
 		$st->execute();
 	}
 	catch(PDOException $e) {
-		exit('PDO error [create pr_korisnici]: ' . $e->getMessage());
+		exit('PDO error [create pr_users]: ' . $e->getMessage());
 	}
 
-	echo 'Napravio tablicu pr_korisnici.<br>';
+	echo 'Napravio tablicu pr_users.<br>';
 }
 
-function create_table_kucanstva()
+function create_table_households()
 {
 	$db = DB::getConnection();
 
-	if (has_table('pr_kucanstva'))
-		exit('Tablica pr_kucanstva već postoji.<br>');
+	if (has_table('pr_households'))
+		exit('Tablica pr_households već postoji.<br>');
 
 	try {
 		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS pr_kucanstva (' .
+			'CREATE TABLE IF NOT EXISTS pr_households (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'ime varchar(100) NOT NULL)'
+			'name varchar(100) NOT NULL)'
 		);
 
 		$st->execute();
 	}
 	catch(PDOException $e) {
-		exit('PDO error [create pr_kucanstva]: ' . $e->getMessage());
+		exit('PDO error [create pr_households]: ' . $e->getMessage());
 	}
 
-	echo 'Napravio tablicu pr_kucanstva.<br>';
+	echo 'Napravio tablicu pr_households.<br>';
 }
 
 
-function create_table_zadaci()
+function create_table_chores()
 {
 	$db = DB::getConnection();
 
-	if (has_table('pr_zadaci'))
-		exit('Tablica pr_zadaci već postoji.<br>');
+	if (has_table('pr_chores'))
+		exit('Tablica pr_chores već postoji.<br>');
 
 	try {
 		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS pr_zadaci (' .
+			'CREATE TABLE IF NOT EXISTS pr_chores (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'ID_korisnik int NOT NULL,' .
-			'ID_kategorija int NOT NULL,' .
-			'opis varchar(1000) NOT NULL,' .
-			'vrijeme datetime NOT NULL,' .
-			'obavezno int NOT NULL,' .
-			'vrsta int NOT NULL,' .
-			'vrijednost int NOT NULL)'
+			'ID_user int NOT NULL,' .
+			'ID_category int NOT NULL,' .
+			'description varchar(1000) NOT NULL,' .
+			'time_next datetime NOT NULL,' .
+			'mandatory int NOT NULL,' .
+			'type int NOT NULL,' .
+			'points int NOT NULL)'
 		);
 
 		$st->execute();
 	}
 	catch(PDOException $e) {
-		exit('PDO error [create pr_zadaci]: ' . $e->getMessage());
+		exit('PDO error [create pr_chores]: ' . $e->getMessage());
 	}
 
-	echo 'Napravio tablicu pr_zadaci.<br>';
+	echo 'Napravio tablicu pr_chores.<br>';
 }
 
-function create_table_kategorije()
+function create_table_categories()
 {
 	$db = DB::getConnection();
 
-	if (has_table('pr_kategorije'))
-		exit('Tablica pr_kategorije već postoji.<br>');
+	if (has_table('pr_categories'))
+		exit('Tablica pr_categories već postoji.<br>');
 
 	try {
 		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS pr_kategorije (' .
+			'CREATE TABLE IF NOT EXISTS pr_categories (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'ID_kucanstvo int NOT NULL,' .
-			'ime varchar(100) NOT NULL)'
+			'ID_household int NOT NULL,' .
+			'name varchar(100) NOT NULL)'
 		);
 
 		$st->execute();
 	}
 	catch(PDOException $e) {
-		exit('PDO error [create pr_kategorije]: ' . $e->getMessage());
+		exit('PDO error [create pr_categories]: ' . $e->getMessage());
 	}
 
-	echo 'Napravio tablicu pr_kategorije.<br>';
+	echo 'Napravio tablicu pr_categories.<br>';
 }
 
-function create_table_nagrade()
+function create_table_rewards()
 {
 	$db = DB::getConnection();
 
-	if (has_table('pr_nagrade'))
-		exit('Tablica pr_nagrade već postoji.<br>');
+	if (has_table('pr_rewards'))
+		exit('Tablica pr_rewards već postoji.<br>');
 
 	try {
 		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS pr_nagrade (' .
+			'CREATE TABLE IF NOT EXISTS pr_rewards (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'ID_korisnik int NOT NULL,' .
-			'opis varchar(300) NOT NULL,' .
-			'cijena int NOT NULL)'
+			'ID_user int NOT NULL,' .
+			'description varchar(300) NOT NULL,' .
+			'points_price int NOT NULL)'
 		);
 
 		$st->execute();
 	}
 	catch(PDOException $e) {
-		exit('PDO error [create pr_nagrade]: ' . $e->getMessage());
+		exit('PDO error [create pr_rewards]: ' . $e->getMessage());
 	}
 
-	echo 'Napravio tablicu pr_nagrade.<br>';
+	echo 'Napravio tablicu pr_rewards.<br>';
 }
 
 ?>

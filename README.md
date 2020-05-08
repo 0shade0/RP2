@@ -1,75 +1,68 @@
 # RP2
+## Controlleri
+choreController
+* popis mojih zadataka - index
+* detalj nekog zadatka - show&id=...
+* stvori novi zadatak - create
+
+userController
+* pregled mojih podataka - index
+* pregled podataka ukućana - show&id=...
+* pregled kućanstva - household
+* moji zadaci - chores
+* nagrade - rewards
+
+accountController (**u izradi**)
+* login
+* register
+* activate
+
+## Modeli
+ChorezService --- za dohvat iz baze podataka
+* getUserByID(str)
+* getUserByUsername(str)
+* getUserByEmail(str)
+* getUserPasswordByUsername(str)
+* addNewUser(User)
+* set_registered(int) - postavlja vrijednost registered u bazi
+
+User (isto kao u bazi)
+Household (isto kao u bazi)
+
 ## Baza podataka
 
-pr_kucanstva
+pr_users
 * ID
-* ime
-
-pr_korisnici
-* ID
-* ID_kucanstvo
+* ID_household
 * username
-* password_hash
+* password (hashirani)
 * email
-* bodovi
-* admin (da ili ne)
-* registracijski_niz
-* registriran (da ili ne)
+* points
+* admin (da/ne)
+* registration_sequence
+* registered (da/ne)
 
-pr_zadaci
+pr_households
 * ID
-* ID_korisnik
-* ID_kategorija
-* opis
-* vrijeme (vrijeme kada je zadatak prvi put zadan)
-* obavezno (da ili ne)
-* vrsta (jednom(0), dnevni(1), tjedni(2), mjesečni(3))
-* vrijednost (u bodovima)
+* name
 
-pr_kategorije
+pr_chores
 * ID
-* ID_kucanstvo (kojem kategorije pripadaju)
-* ime
+* ID_user
+* ID_category
+* description
+* time_next (vrijeme kad se zadatak **idući put** treba prikazati)
+* mandatory (da/ne)
+* type (jednom(0), dnevni(1), tjedni(2), mjesečni(3), godišnji(4))
+* points (vrijednost)
 
-pr_nagrade
+pr_categories
 * ID
-* ID_korisnik (kojem korisniku se prikazuju)
-* opis
-* cijena
+* ID_household (kućanstvo kojem kategorije pripadaju)
+* name
 
-## Klase:
-class kucanstvo
-  * ID, ime
-  * korisnici[]
-  * grupni_zadaci[]
-  * grupne_nagrade[]
-
-class korisnik
-  * email
-  * kucanstvoID
-  * ime_kucanstva
-  * bodovi
-  * pojedinacni_zadaci[]
-  * pojedinacne_nagrade[]
-  * rijesi_zadatak()
-  * uzmi_nagradu()
-
-nasljednici od korisnik:
-  * class admin
-      * dodaj_korisnika()
-      *  zadaj_zadatak()
-      *  dodaj_nagradu()
-  * class regular
-
-class zadatak
-  * ime
-  * opis
-  * kategorija
-  * bool mogu/moraju
-  * vrsta // dnevni, tjedni, samo jednom
-  * zaduzene_osobe[]
-  * broj_bodova
-
-class nagrada
-  * opis
-  * cijena
+pr_rewards
+* ID
+* ID_user (kojem korisniku se prikazuju)
+* description
+* points_price

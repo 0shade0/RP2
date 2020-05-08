@@ -3,246 +3,247 @@
 // samo ako su sve tablice prazne.
 require_once __DIR__ . '/db.class.php';
 
-seed_table_korisnici();
-seed_table_kucanstva();
-seed_table_zadaci();
-seed_table_kategorije();
-seed_table_nagrade();
+seed_table_users();
+seed_table_households();
+seed_table_chores();
+seed_table_categories();
+seed_table_rewards();
 
 exit(0);
 
-function seed_table_korisnici()
+function seed_table_users()
 {
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_korisnici' .
-			'(ID_kucanstvo, username, password_hash, email, bodovi, ' .
-			'admin, registracijski_niz, registriran) VALUES ' .
-			'(:ID_kucanstvo, :username, :password_hash, :email, :bodovi, ' .
-			':admin, :registracijski_niz, :registriran)');
+		$st = $db->prepare('INSERT INTO pr_users' .
+			'(ID_household, username, password, email, points, ' .
+			'admin, registration_sequence, registered) VALUES ' .
+			'(:ID_household, :username, :password, :email, :points, ' .
+			':admin, :registration_sequence, :registered)');
 
 		// Prvo kućanstvo.
 		$st->execute(array(
-			'ID_kucanstvo' => 1,
+			'ID_household' => 1,
 			'username' => 'Mirjana',
-			'password_hash' => password_hash('mirjaninalozinka', PASSWORD_DEFAULT),
+			'password' => password_hash('mirjaninalozinka', PASSWORD_DEFAULT),
 			'email' => 'mirjana@mail.com',
-		 	'bodovi' => 20,
+		 	'points' => 20,
 			'admin' => 1,
-			'registracijski_niz' => 'abc',
-			'registriran' => 1));
+			'registration_sequence' => 'abc',
+			'registered' => 1));
 
 		$st->execute(array(
-			'ID_kucanstvo' => 1,
+			'ID_household' => 1,
 			'username' => 'Goran',
-			'password_hash' => password_hash('goranovalozinka', PASSWORD_DEFAULT),
+			'password' => password_hash('goranovalozinka', PASSWORD_DEFAULT),
 			'email' => 'goran@mail.com',
-		 	'bodovi' => 5,
+		 	'points' => 5,
 			'admin' => 1,
-			'registracijski_niz' => 'def',
-			'registriran' => 1));
+			'registration_sequence' => 'def',
+			'registered' => 1));
 
 		$st->execute(array(
-			'ID_kucanstvo' => 1,
+			'ID_household' => 1,
 			'username' => 'Josip',
-			'password_hash' => password_hash('josipovalozinka', PASSWORD_DEFAULT),
+			'password' => password_hash('josipovalozinka', PASSWORD_DEFAULT),
 			'email' => 'josip@mail.com',
-		 	'bodovi' => 1000,
+		 	'points' => 1000,
 			'admin' => 0,
-			'registracijski_niz' => 'ghi',
-			'registriran' => 1));
+			'registration_sequence' => 'ghi',
+			'registered' => 1));
 
 		// Drugo kućanstvo.
 		$st->execute(array(
-			'ID_kucanstvo' => 2,
+			'ID_household' => 2,
 			'username' => 'Filipa',
-			'password_hash' => password_hash('filipinalozinka', PASSWORD_DEFAULT),
+			'password' => password_hash('filipinalozinka', PASSWORD_DEFAULT),
 			'email' => 'filipa@mail.com',
-		 	'bodovi' => 250,
+		 	'points' => 250,
 			'admin' => 1,
-			'registracijski_niz' => 'jkl',
-			'registriran' => 1));
+			'registration_sequence' => 'jkl',
+			'registered' => 1));
 
 		$st->execute(array(
-			'ID_kucanstvo' => 2,
+			'ID_household' => 2,
 			'username' => 'Ana',
-			'password_hash' => password_hash('aninalozinka', PASSWORD_DEFAULT),
+			'password' => password_hash('aninalozinka', PASSWORD_DEFAULT),
 			'email' => 'ana@mail.com',
-		 	'bodovi' => 315,
+		 	'points' => 315,
 			'admin' => 1,
-			'registracijski_niz' => 'ghi',
-			'registriran' => 1));
+			'registration_sequence' => 'ghi',
+			'registered' => 1));
 	}
 	catch(PDOException $e) {
-		exit("PDO error [insert pr_korisnici]: " . $e->getMessage());
+		exit("PDO error [insert pr_users]: " . $e->getMessage());
 	}
 
-	echo 'Ubacio u tablicu pr_korisnici.<br>';
+	echo 'Ubacio u tablicu pr_users.<br>';
 }
 
-function seed_table_kucanstva()
+function seed_table_households()
 {
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_kucanstva (ime) VALUES (:ime)');
+		$st = $db->prepare('INSERT INTO pr_households (name) VALUES (:name)');
 
 		// Prvo kućanstvo.
-		$st->execute(array('ime' => 'Mirjanina obitelj'));
+		$st->execute(array('name' => 'Mirjanina obitelj'));
 
 		// Drugo kućanstvo.
-		$st->execute(array('ime' => 'Best friends'));
+		$st->execute(array('name' => 'Best friends'));
 	}
 	catch(PDOException $e) {
-		exit("PDO error [insert pr_kucanstva]: " . $e->getMessage());
+		exit("PDO error [insert pr_households]: " . $e->getMessage());
 	}
 
-	echo 'Ubacio u tablicu pr_kucanstva.<br>';
+	echo 'Ubacio u tablicu pr_households.<br>';
 }
 
-function seed_table_zadaci()
+function seed_table_chores()
 {
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_zadaci' .
-			'(ID_korisnik, ID_kategorija, opis, vrijeme, obavezno, ' .
-			'vrsta, vrijednost) VALUES ' .
-			'(:ID_korisnik, :ID_kategorija, :opis, :vrijeme, :obavezno, ' .
-			':vrsta, :vrijednost)');
+		$st = $db->prepare('INSERT INTO pr_chores' .
+			'(ID_user, ID_category, description, time_next, mandatory, ' .
+			'type, points) VALUES ' .
+			'(:ID_user, :ID_category, :description, :time_next, :mandatory, ' .
+			':type, :points)');
 
 		// Zadaci za korisnike u prvom kućanstvu.
 		$st->execute(array(
-			'ID_korisnik' => 1,
-			'ID_kategorija' => 1,
-			'opis' => 'Oprati suđe',
-			'vrijeme' => '2020-05-07 20:20:00',
-			'obavezno' => 0,
-			'vrsta' => 1,
-			'vrijednost' => 20));
+			'ID_user' => 1,
+			'ID_category' => 1,
+			'description' => 'Oprati suđe',
+			'time_next' => '2020-05-15 20:20:00',
+			'mandatory' => 0,
+			'type' => 1,
+			'points' => 20));
 
 		$st->execute(array(
-			'ID_korisnik' => 2,
-			'ID_kategorija' => 1,
-			'opis' => 'Oprati suđe',
-			'vrijeme' => '2020-05-07 20:20:00',
-			'obavezno' => 0,
-			'vrsta' => 1,
-			'vrijednost' => 20));
+			'ID_user' => 2,
+			'ID_category' => 1,
+			'description' => 'Oprati suđe',
+			'time_next' => '2020-05-15 20:20:00',
+			'mandatory' => 0,
+			'type' => 1,
+			'points' => 20));
 
 		$st->execute(array(
-			'ID_korisnik' => 3,
-			'ID_kategorija' => 2,
-			'opis' => 'Oprati prozore',
-			'vrijeme' => '2020-04-07 15:30:00',
-			'obavezno' => 1,
-			'vrsta' => 3,
-			'vrijednost' => 50));
+			'ID_user' => 3,
+			'ID_category' => 2,
+			'description' => 'Oprati prozore',
+			'time_next' => '2020-06-07 15:30:00',
+			'mandatory' => 1,
+			'type' => 3,
+			'points' => 50));
 
 		// Zadaci za korisnike u drugom kućanstvu.
 		$st->execute(array(
-			'ID_korisnik' => 4,
-			'ID_kategorija' => 1,
-			'opis' => 'Izvesti Flokija',
-			'vrijeme' => '2020-05-02 17:15:00',
-			'obavezno' => 1,
-			'vrsta' => 1,
-			'vrijednost' => 15));
+			'ID_user' => 4,
+			'ID_category' => 1,
+			'description' => 'Izvesti Flokija',
+			'time_next' => '2020-05-20 17:15:00',
+			'mandatory' => 1,
+			'type' => 1,
+			'points' => 15));
 
 		$st->execute(array(
-			'ID_korisnik' => 4,
-			'ID_kategorija' => 2,
-			'opis' => 'Iznijeti smeće',
-			'vrijeme' => '2020-05-06 16:00:00',
-			'obavezno' => 0,
-			'vrsta' => 2,
-			'vrijednost' => 10));
+			'ID_user' => 4,
+			'ID_category' => 2,
+			'description' => 'Iznijeti smeće',
+			'time_next' => '2020-05-21 16:00:00',
+			'mandatory' => 0,
+			'type' => 2,
+			'points' => 10));
 
 		$st->execute(array(
-			'ID_korisnik' => 5,
-			'ID_kategorija' => 2,
-			'opis' => 'Iznijeti smeće',
-			'vrijeme' => '2020-05-06 16:00:00',
-			'obavezno' => 0,
-			'vrsta' => 2,
-			'vrijednost' => 10));
+			'ID_user' => 5,
+			'ID_category' => 2,
+			'description' => 'Iznijeti smeće',
+			'time_next' => '2020-05-21 16:00:00',
+			'mandatory' => 0,
+			'type' => 2,
+			'points' => 10));
 
 	}
 	catch(PDOException $e) {
-		exit("PDO error [insert pr_zadaci]: " . $e->getMessage());
+		exit("PDO error [insert pr_chores]: " . $e->getMessage());
 	}
 
-	echo 'Ubacio u tablicu pr_zadaci.<br>';
+	echo 'Ubacio u tablicu pr_chores.<br>';
 }
 
-function seed_table_kategorije()
+function seed_table_categories()
 {
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_kategorije' .
-			'(ID_kucanstvo, ime) VALUES (:ID_kucanstvo, :ime)');
+		$st = $db->prepare('INSERT INTO pr_categories' .
+			'(ID_household, name) VALUES (:ID_household, :name)');
 
 		// Kategorije prvog kućanstva.
 		$st->execute(array(
-			'ID_kucanstvo' => 1,
-			'ime' => 'Kuhinja'));
+			'ID_household' => 1,
+			'name' => 'Kuhinja'));
 
 		$st->execute(array(
-			'ID_kucanstvo' => 1,
-			'ime' => 'Čišćenje'));
+			'ID_household' => 1,
+			'name' => 'Čišćenje'));
 
 		// Kategorije prvog kućanstva.
 		$st->execute(array(
-			'ID_kucanstvo' => 2,
-			'ime' => 'Kućni ljubimci'));
+			'ID_household' => 2,
+			'name' => 'Kućni ljubimci'));
 
 		$st->execute(array(
-			'ID_kucanstvo' => 2,
-			'ime' => 'Čišćenje'));
+			'ID_household' => 2,
+			'name' => 'Čišćenje'));
 
 	}
 	catch(PDOException $e) {
-		exit("PDO error [insert pr_kategorije]: " . $e->getMessage());
+		exit("PDO error [insert pr_categories]: " . $e->getMessage());
 	}
 
-	echo 'Ubacio u tablicu pr_kategorije.<br>';
+	echo 'Ubacio u tablicu pr_categories.<br>';
 }
 
-function seed_table_nagrade()
+function seed_table_rewards()
 {
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_nagrade' .
-			'(ID_korisnik, opis, cijena) VALUES (:ID_korisnik, :opis, :cijena)');
+		$st = $db->prepare('INSERT INTO pr_rewards' .
+			'(ID_user, description, points_price) VALUES ' .
+			'(:ID_user, :description, :points_price)');
 
 		$st->execute(array(
-			'ID_korisnik' => 3,
-			'opis' => 'Sladoled',
-			'cijena' => '50'));
+			'ID_user' => 3,
+			'description' => 'Sladoled',
+			'points_price' => '50'));
 
 		$st->execute(array(
-			'ID_korisnik' => 1,
-			'opis' => 'Odlazak na odmor',
-			'cijena' => '10000'));
+			'ID_user' => 1,
+			'description' => 'Odlazak na odmor',
+			'points_price' => '10000'));
 
 		$st->execute(array(
-			'ID_korisnik' => 2,
-			'opis' => 'Odlazak na odmor',
-			'cijena' => '10000'));
+			'ID_user' => 2,
+			'description' => 'Odlazak na odmor',
+			'points_price' => '10000'));
 
 		$st->execute(array(
-			'ID_korisnik' => 3,
-			'opis' => 'Odlazak na odmor',
-			'cijena' => '10000'));
+			'ID_user' => 3,
+			'description' => 'Odlazak na odmor',
+			'points_price' => '10000'));
 	}
 	catch(PDOException $e) {
-		exit("PDO error [insert pr_nagrade]: " . $e->getMessage());
+		exit("PDO error [insert pr_rewards]: " . $e->getMessage());
 	}
 
-	echo 'Ubacio u tablicu pr_nagrade.<br>';
+	echo 'Ubacio u tablicu pr_rewards.<br>';
 }
 
 ?>

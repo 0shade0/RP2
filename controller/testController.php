@@ -1,13 +1,13 @@
 <?php
 require_once platformSlashes($dir . '/model/chorezservice.class.php');
 
-class userController
+class testController
 {
-public function index()
-{
-    if(session_id() == '') session_start();
-    global $title, $dir;
-    $title = 'User page';
+    public function index()
+    {
+        if(session_id() == '') session_start();
+        global $title, $dir;
+        $title = 'Uvodna stranica';
 
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
@@ -18,14 +18,17 @@ public function index()
     require_once platformSlashes($dir . '/view/_footer.php');
 }
 
-public function test2()
-{
-    if(session_id() == '') session_start();
-    global $title, $dir;
-    $title = 'User page';
+    public function test2()
+    {
+        if(session_id() == '') session_start();
+        global $title, $dir;
+        $title = 'Nagrade';
 
-    require_once platformSlashes($dir . '/view/_header.php');
-    require_once platformSlashes($dir . '/view/main_menu.php');
+        require_once platformSlashes($dir . '/view/_header.php');
+        require_once platformSlashes($dir . '/view/main_menu.php');
+        require_once platformSlashes($dir . '/view/rewards.php');
+        require_once platformSlashes($dir . '/view/_footer.php');
+    }
 
     require_once platformSlashes($dir . '/view/_footer.php');
 }
