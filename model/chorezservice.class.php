@@ -12,14 +12,14 @@ class ChorezService {
 public static function getUserByID($userID) {
     $db = DB::getConnection();
 
-    $st = $db->prepare('SELECT * FROM pr_korisnici  WHERE ID=:userID');
+    $st = $db->prepare('SELECT * FROM pr_users  WHERE ID=:userID');
     $st->execute(array('userID' => userID));
 
     if ($r = $st->fetch()) {
         $user = new User (
-            $r['ID'], $r['ID_kucanstvo'], $r['username'],
-            $r['password_hash'], $r['email'], $r['bodovi'], $r['admin'],
-            $r['registracijski_niz'], $r['registriran']);
+            $r['ID'], $r['ID_household'], $r['username'],
+            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['registration_sequence'], $r['registered']);
 
         return $user;
     }
@@ -29,14 +29,14 @@ public static function getUserByID($userID) {
 public static function getUserByUsername($username) {
     $db = DB::getConnection();
 
-    $st = $db->prepare('SELECT * FROM pr_korisnici  WHERE username=:username');
+    $st = $db->prepare('SELECT * FROM pr_users  WHERE username=:username');
     $st->execute(array('username' => $username));
 
     if ($r = $st->fetch()) {
         $user = new User (
-            $r['ID'], $r['ID_kucanstvo'], $r['username'],
-            $r['password_hash'], $r['email'], $r['bodovi'], $r['admin'],
-            $r['registracijski_niz'], $r['registriran']);
+            $r['ID'], $r['ID_household'], $r['username'],
+            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['registration_sequence'], $r['registered']);
 
         return $user;
     }
@@ -47,20 +47,20 @@ public static function getUserByEmail($email) {
     $db = DB::getConnection();
 
     try {
-    $st = $db->prepare('SELECT * FROM pr_korisnici WHERE email=:email');
+    $st = $db->prepare('SELECT * FROM pr_users WHERE email=:email');
     $st->execute(array('email' => $email));
 
     if ($r = $st->fetch()) {
         $user = new User (
-            $r['ID'], $r['ID_kucanstvo'], $r['username'],
-            $r['password_hash'], $r['email'], $r['bodovi'], $r['admin'],
-            $r['registracijski_niz'], $r['registriran']);
+            $r['ID'], $r['ID_household'], $r['username'],
+            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['registration_sequence'], $r['registered']);
 
         return $user;
     }
     }
     catch(PDOException $e) {
-        exit('PDO error [select pr_korisnici]: ' . $e->getMessage());
+        exit('PDO error [select pr_users]: ' . $e->getMessage());
     }
 }
 
@@ -69,15 +69,15 @@ public static function getUserPasswordByUsername($username) {
     $db = DB::getConnection();
 
     try {
-    $st = $db->prepare('SELECT password_hash FROM pr_korisnici ' .
+    $st = $db->prepare('SELECT password FROM pr_users ' .
         'WHERE username=:username');
     $st->execute(array('username' => $username));
 
     if ($r = $st->fetch())
-        return $r['password_hash'];
+        return $r['password'];
     }
     catch(PDOException $e) {
-        exit('PDO error [select pr_korisnici]: ' . $e->getMessage());
+        exit('PDO error [select pr_users]: ' . $e->getMessage());
     }
 
 }
@@ -88,31 +88,31 @@ public static function addNewUser($user) {
 
     try {
     $st = $db->prepare(
-        'INSERT INTO pr_korisnici(ID_kucanstvo, username, password_hash, ' .
-        'email, bodovi, admin, registracijski_niz, registriran) VALUES ' .
-        '(:ID_kucanstvo, :username, :password_hash, :email, :bodovi, ' .
-        ':admin, :registracijski_niz, :registriran)');
+        'INSERT INTO pr_users(ID_household, username, password, ' .
+        'email, points, admin, registration_sequence, registered) VALUES ' .
+        '(:ID_household, :username, :password, :email, :points, ' .
+        ':admin, :registration_sequence, :registered)');
 
     $st->execute(array(
-        'ID_kucanstvo' => $user->ID_kucanstvo,
+        'ID_household' => $user->ID_household,
         'username' => $user->username,
-        'password_hash' => $user->password_hash,
+        'password' => $user->password,
         'email' => $user->email,
-        'bodovi' => $user->bodovi,
+        'points' => $user->points,
         'admin' => $user->admin,
-        'registracijski_niz' => $user->registracijski_niz,
-        'registriran' => $user->registriran));
+        'registration_sequence' => $user->registration_sequence,
+        'registered' => $user->registered));
     }
     catch(PDOException $e) {
-        exit('PDO error [insert pr_korisnici]: ' . $e->getMessage());
+        exit('PDO error [insert pr_users]: ' . $e->getMessage());
     }
 }
 
-// Postavljanje vrijednosti u stupac registriran korisniku sa zadanim ID-jem.
-public static function set_registriran ($userID, $value) {
+// Postavljanje vrijednosti u stupac registered korisniku sa zadanim ID-jem.
+public static function set_registered ($userID, $value) {
     $db = DB::getConnection();
 
-    $st = $db->prepare('UPDATE pr_korisnici SET registriran = :value ' .
+    $st = $db->prepare('UPDATE pr_users SET registered = :value ' .
         'WHERE id=:userID');
     $st->execute(array('value' => $value, 'userID' => $userID));
 }

@@ -11,12 +11,24 @@ userController
 * pregled kućanstva - household
 * moji zadaci - chores
 * nagrade - rewards
-* login, register // u izradi
 
-Moguće ubaciti loginController?
+**u izradi**
+accountController
+* login
+* register
+* activate
 
 ## Modeli
 ChorezService --- za dohvat iz baze podataka
+* getUserByID(str)
+* getUserByUsername(str)
+* getUserByEmail(str)
+* getUserPasswordByUsername(str)
+* addNewUser(User)
+* set_registered(int) - postavlja vrijednost registered u bazi
+
+User (isto kao u bazi)
+Household (isto kao u bazi)
 
 ## Baza podataka
 
@@ -24,7 +36,7 @@ pr_users
 * ID
 * ID_household
 * username
-* password
+* password (hashirani)
 * email
 * points
 * admin (da/ne)
