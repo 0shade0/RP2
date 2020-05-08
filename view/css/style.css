@@ -6,24 +6,68 @@
     --blue: #4651e9;
 }
 
+.logo, .logo_gif {
+    width: 480px;
+    margin: 25px;
+    margin-bottom: 35px;
+
+    position: absolute;
+}
 
 .logo {
-    width: 500px;
+    opacity: 1;
+    transition-duration: 2s;
+    transition-delay: 5s;
+}
+
+.logo:hover {
+    opacity: 0;
+    transition-duration: 0.1s;
+    transition-delay: 0.005s;
+}
+
+.by {
+    color: var(--teal);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14pt;
+    float: right;
+    clear: both;
     margin: 30px;
+    margin-top: 60px;
+}
+
+.by td {
+    padding: 20px;
+    transition-duration: 0.2s;
+    transition-delay: 0.005s;
+}
+
+.by td:hover {
+    transform: scale(1.2);
+    transition-duration: 0.2s;
+    transition-delay: 0.005s;
+}
+
+.yarn {
+    width: 400px;
+    float: right;
+    clear: both;
+    margin: 20px;
 }
 
 .title {
-    font-size: 24pt;
+    font-size: 36pt;
     text-align: center;
     margin: 0 auto;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .description {
     float: right;
     clear: none;
-    width: 560px;
+    width: 500px;
     padding: 10px;
     padding-right: 40px;
     text-align: justify;
@@ -32,25 +76,88 @@
 .login {
     float: left;
     clear: none;
-    width: 300px;
-    margin: 10px;
-    padding: 40px;
+    width: 340px;
+    margin: 20px;
+    margin-left: 50px;
+    padding: 20px;
+    padding-bottom: 0px;
+    background-color:white;
 }
 
 .login form div {
-    margin: 10px;
+    margin: 0 auto;
 }
 
 .login form input {
-    width: 300px;
-    height: 40px;
+    margin: 10px;
+    margin-bottom: 0px;
+    width: 320px;
+    height: 50px;
     font-size: 20px;
+    transition-duration: 0.2s;
+}
+
+.login form input[type=text], .login form input[type=password] {
+    border: none;
+    border-bottom: solid 3px var(--orange);
+    padding-left: 5px;
+} 
+
+.login form input:focus {
+    outline: none;
+    filter: brightness(120%);
+    transition-duration: 0.5s;
+}
+
+.login form input::placeholder {
+    font-family: Comfortaa;
+    transition-duration: 0.2s;
+}
+
+.login form input:focus::placeholder {
+    color: rgba(255,255,255,0.2);
+    transition-duration: 0.5s;
 }
 
 .login form input[type=checkbox] {
     width: 20px;
     height: 20px;
     margin: 10px;
+}
+
+.login form input[type=submit] {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    transition-duration: 0.5s;
+
+    font-size: 20pt;
+    height: 60px;
+}
+
+.login form input[type=submit]:hover {
+    filter: brightness(130%);
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+.login form label {
+    font-size: 14pt;
+}
+
+.login form label:hover {
+    cursor: pointer;
+}
+
+.register form input[type=text], .register form input[type=password]{
+    border-color: var(--blue);
+}
+
+.register form input[type=submit] {
+    color: white;
+    margin-top:15px;
+    margin-bottom: 20px;
+    background-color: var(--blue);
 }
 
 body {
@@ -69,8 +176,9 @@ body {
     margin: 0 auto;
     padding-bottom: 20px;
     overflow: hidden;
-
-    background-color: rgba(255,255,255,0.7);
+    background-color: #ffffff8a;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 .header_wrapper {
@@ -78,31 +186,55 @@ body {
     margin: 0;
     padding: 0;
 
+    position: realtive;
+
     background-color: var(--teal);
-    transition: background-color 1s;
+    transition-duration: 0.3s;
+    transition-delay: 0.005s;
+    transition-timing-function: ease-in;
+    overflow: hidden;
 }
 
 .header_wrapper:hover {
     background-color: var(--blue);
-    transition-duration: 1.0s;
+    color: black;
+    transition-duration: 1s;
+    transition-delay: 0.005s;
+    transition-timing-function: ease-out;
 }
 
 .menu{
-    font-size: 24pt;
+    font-size: 20pt;
+    font-weight: bold;
     padding: 30px;
+    padding-bottom: 15px;
     text-align: center;
+    height: 60px;
+    transform:scale(1.0);
+    background-color: var(--teal);
+    border-bottom: 5px solid var(--blue);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 .menu a {
+    display: inline-block;
+    vertical-align: middle;
     margin: 10px;
-    color: var(--orange);
+    padding-left:20px;
+    padding-right:20px;
+    color: var(--blue);
     text-decoration: none;
+    transition-delay: 0.005s;
     transition-duration: 0.5s;
 }
 
 .menu a:hover {
-    color: var(--teal);
-    transition-duration: 0.5s;
+    color: var(--orange);
+    filter: brightness(130%);
+    transform: scale(1.5);
+    transition-duration: 0.2s;
+    transition-delay: 0.005s;
 }
 
 @font-face {

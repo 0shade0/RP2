@@ -1,12 +1,12 @@
 <?php
 
-class userController
+class testController
 {
     public function index()
     {
         if(session_id() == '') session_start();
         global $title, $dir;
-        $title = 'User page';
+        $title = 'Uvodna stranica';
 
         require_once platformSlashes($dir . '/view/_header.php');
         require_once platformSlashes($dir . '/view/main_menu.php');
@@ -19,11 +19,11 @@ class userController
     {
         if(session_id() == '') session_start();
         global $title, $dir;
-        $title = 'User page';
+        $title = 'Nagrade';
 
         require_once platformSlashes($dir . '/view/_header.php');
         require_once platformSlashes($dir . '/view/main_menu.php');
-    
+        require_once platformSlashes($dir . '/view/rewards.php');
         require_once platformSlashes($dir . '/view/_footer.php');
     }
 
