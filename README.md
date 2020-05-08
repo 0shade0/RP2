@@ -1,7 +1,7 @@
 # RP2
 ## Controlleri
 choreController
-* popis mojih zadataka - index
+* pdescription mojih zadataka - index
 * detalj nekog zadatka - show&id=...
 * stvori novi zadatak - create
 
@@ -17,38 +17,38 @@ Moguće ubaciti loginController?
 
 ## Baza podataka
 
-pr_kucanstva
+pr_users
 * ID
-* ime
-
-pr_korisnici
-* ID
-* ID_kucanstvo
+* ID_household
 * username
-* password_hash
+* password
 * email
-* bodovi
-* admin (da ili ne)
-* registracijski_niz
-* registriran (da ili ne)
+* points
+* admin (da/ne)
+* registration_sequence
+* registered (da/ne)
 
-pr_zadaci
+pr_households
 * ID
-* ID_korisnik
-* ID_kategorija
-* opis
-* vrijeme (vrijeme kada je zadatak prvi put zadan)
-* obavezno (da ili ne)
-* vrsta (jednom(0), dnevni(1), tjedni(2), mjesečni(3))
-* vrijednost (u bodovima)
+* name
 
-pr_kategorije
+pr_chores
 * ID
-* ID_kucanstvo (kojem kategorije pripadaju)
-* ime
+* ID_user
+* ID_category
+* description
+* time (vrijeme kada je zadatak prvi put zadan)
+* mandatory (da/ne)
+* type (jednom(0), dnevni(1), tjedni(2), mjesečni(3), godišnji(4))
+* points (vrijednost)
 
-pr_nagrade
+pr_categories
 * ID
-* ID_korisnik (kojem korisniku se prikazuju)
-* opis
-* cijena
+* ID_household (kojem kategorije pripadaju)
+* name
+
+pr_rewards
+* ID
+* ID_user (kojem korisniku se prikazuju)
+* description
+* points_price
