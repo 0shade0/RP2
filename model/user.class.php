@@ -1,27 +1,27 @@
 <?php
 class User {
     protected $ID;
-    protected $ID_kucanstvo;
+    protected $ID_household;
     protected $username;
-    protected $password_hash;
+    protected $password;
     protected $email;
-    protected $bodovi;
+    protected $points;
     protected $admin;
-    protected $registracijski_niz;
-    protected $registriran;
+    protected $registration_sequence;
+    protected $registered;
 
     // Konstruktor.
-    public function __construct ($ID, $ID_kucanstvo, $username, $password_hash,
-        $email, $bodovi, $admin, $registracijski_niz, $registriran) {
+    public function __construct ($ID, $ID_household, $username, $password,
+        $email, $points, $admin, $registration_sequence, $registered) {
         $this->ID = $ID;
-        $this->ID_kucanstvo = $ID_kucanstvo;
+        $this->ID_household = $ID_household;
         $this->username = $username;
-        $this->password_hash = $password_hash;
+        $this->password = $password;
         $this->email = $email;
-        $this->bodovi = $bodovi;
+        $this->points = $points;
         $this->admin = $admin;
-        $this->registracijski_niz = $registracijski_niz;
-        $this->registriran = $registriran;
+        $this->registration_sequence = $registration_sequence;
+        $this->registered = $registered;
     }
 
     // Getteri i setteri.
