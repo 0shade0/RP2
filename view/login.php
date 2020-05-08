@@ -20,7 +20,7 @@
 </div>
 
 <div>
-<form action="<?php platformSlashes($dir . '/main.php'); ?>" method="post" id="Register">
+<form action="<?php echo 'main.php?rt=user/register'; ?>" method="post" id="Register">
 	<div><?php if(isset($message_name)) { echo $message_name; } ?></div>
 	<div>
 		<input placeholder="Username" name="member_name" type="text" value="" required>
