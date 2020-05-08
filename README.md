@@ -1,4 +1,19 @@
 # RP2
+## Controlleri
+choreController
+* popis mojih zadataka - index
+* detalj nekog zadatka - show&id=...
+* stvori novi zadatak - create
+
+userController
+* pregled mojih podataka - index
+* pregled kućanstva - household
+* moji zadaci - chores
+* nagrade - rewards
+* login, register // u izradi
+
+Moguće ubaciti loginController?
+
 ## Baza podataka
 
 pr_kucanstva
@@ -36,40 +51,3 @@ pr_nagrade
 * ID_korisnik (kojem korisniku se prikazuju)
 * opis
 * cijena
-
-## Klase:
-class kucanstvo
-  * ID, ime
-  * korisnici[]
-  * grupni_zadaci[]
-  * grupne_nagrade[]
-
-class korisnik
-  * email
-  * kucanstvoID
-  * ime_kucanstva
-  * bodovi
-  * pojedinacni_zadaci[]
-  * pojedinacne_nagrade[]
-  * rijesi_zadatak()
-  * uzmi_nagradu()
-
-nasljednici od korisnik:
-  * class admin
-      * dodaj_korisnika()
-      *  zadaj_zadatak()
-      *  dodaj_nagradu()
-  * class regular
-
-class zadatak
-  * ime
-  * opis
-  * kategorija
-  * bool mogu/moraju
-  * vrsta // dnevni, tjedni, samo jednom
-  * zaduzene_osobe[]
-  * broj_bodova
-
-class nagrada
-  * opis
-  * cijena
