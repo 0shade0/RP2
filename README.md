@@ -15,6 +15,9 @@ userController
 
 Moguće ubaciti loginController?
 
+## Modeli
+ChorezService --- za dohvat iz baze podataka
+
 ## Baza podataka
 
 pr_users
@@ -37,14 +40,14 @@ pr_chores
 * ID_user
 * ID_category
 * description
-* time (vrijeme kada je zadatak prvi put zadan)
+* time_next (vrijeme kad se zadatak **idući put** treba prikazati)
 * mandatory (da/ne)
 * type (jednom(0), dnevni(1), tjedni(2), mjesečni(3), godišnji(4))
 * points (vrijednost)
 
 pr_categories
 * ID
-* ID_household (kojem kategorije pripadaju)
+* ID_household (kućanstvo kojem kategorije pripadaju)
 * name
 
 pr_rewards
