@@ -16,13 +16,13 @@
 
 .logo {
     opacity: 1;
-    transition-duration: 2s;
-    transition-delay: 5s;
+    transition-duration: 0.005s;
+    transition-delay: 10s;
 }
 
 .logo:hover {
     opacity: 0;
-    transition-duration: 0.1s;
+    transition-duration: 0.005s;
     transition-delay: 0.005s;
 }
 
