@@ -1,7 +1,7 @@
 # RP2
 ## Controlleri
 choreController
-* pdescription mojih zadataka - index
+* popis mojih zadataka - index
 * detalj nekog zadatka - show&id=...
 * stvori novi zadatak - create
 
@@ -12,8 +12,7 @@ userController
 * moji zadaci - chores
 * nagrade - rewards
 
-**u izradi**
-accountController
+accountController (**u izradi**)
 * login
 * register
 * activate
