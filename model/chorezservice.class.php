@@ -162,5 +162,38 @@ public function addNewHousehold($household) {
     }
 }
 
+//--------------------------------------------------------------------------
+//  Funkcije za dohvaćanje iz tablice zadataka
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//  Funkcije za dohvaćanje iz tablice kategorija
+//--------------------------------------------------------------------------
+public function getAllCategories() {
+    $db = DB::getConnection();
+    
+    try {
+        $st = $db->prepare('SELECT * FROM pr_categories');
+    
+        $st->execute();
+    
+        // Bit će popunjen sa imenima svih kategorija.
+        $ret = array();
+
+        while ($row = $st->fetch()) {
+            array_push($ret, $row["name"]);
+        }
+
+        // Vrati array s imenima svih kategorija.
+        return $ret;
+
+    } catch(PDOException $e) {
+        exit('PDO error [select pr_categories]: ' . $e->getMessage());
+    }
+}
+
+//--------------------------------------------------------------------------
+//  Funkcije za dohvaćanje iz tablice nagrade
+//--------------------------------------------------------------------------
 }
 ?>
