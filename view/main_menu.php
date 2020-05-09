@@ -1,11 +1,9 @@
 <div class = "menu">
-        <a href='main.php'>Početna</a>
-        <a href='main.php?rt=user/test2'>Nagrade</a>
-        <a href='main.php?rt=user/test3'>Test 3</a>
-        <a href='main.php?rt=user/test4'>Test 4</a>
-        <a href='main.php?rt=user/test5'>Test 5</a>
+        <a href='chorez.php?rt=user'>Početna</a>
+        <a href='chorez.php?rt=chore'>Zadaci</a>
+        <a href='chorez.php?rt=user/household'>Kućanstvo</a>
+        <a href='chorez.php?rt=user/rewards'>Nagrade</a>
+        <a href='chorez.php?rt=account&logout=y'>Logout</a>
 </div>
 
-<br>
-
-<div class = "title"> <?php echo $title; ?> </div>
+<br> <div class = "title"> <?php echo $title; ?> </div> <br>

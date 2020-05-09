@@ -12,9 +12,19 @@ if(session_id() == '') session_start();
 
 $title = 'Naslov nije zadan';
 
-if(!isset($_GET['rt']))
+if(isset($_POST['register']))
 {
-    $controller = 'user';
+    $controller = 'account';
+    $action = 'register';
+}
+elseif(!isset($_SESSION['user']))
+{
+    $controller = 'account';
+    $action = 'index';
+}
+elseif(!isset($_GET['rt']))
+{
+    $controller = 'chore';
     $action = 'index';
 }
 else
@@ -24,7 +34,7 @@ else
     if(isset($parts[0]) && preg_match('/^[A-Za-z0-9]+$/', $parts[0]))
         $controller = $parts[0];
     else
-        $controller = 'user';
+        $controller = 'chore';
 
     if(isset($parts[1]) && preg_match('/^[A-Za-z0-9]+$/', $parts[1]))
         $action = $parts[1];
@@ -34,7 +44,7 @@ else
 
 $controllerName = $controller . 'Controller';
 
-require_once platformSlashes($dir . '/controller/' . $controllerName . '.php');
+require_once platformSlashes($dir . './controller/' . $controllerName . '.php');
 $con = new $controllerName();
 $con->$action();
 

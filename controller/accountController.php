@@ -3,13 +3,15 @@ require_once platformSlashes($dir . '/model/chorezservice.class.php');
 
 class accountController {
 // Provjera korisničkog imena i lozinke za prijavu.
-public function checkLogin() {
+public function index() {
     $success = False;
 
-    if (isset($_POST['member_name']) && isset($_POST['member_password'])) {
+    if(isset($_GET['logout']) && $_GET['logout']==='y') unset ($_SESSION['user']);
+
+    if (isset($_POST['log_name']) && isset($_POST['log_password'])) {
         $cs = new ChorezService();
         // Dohvaćamo hashirani password iz baze.
-        $user = $cs->getUserByUsername($_POST['member_name']);
+        $user = $cs->getUserByUsername($_POST['log_name']);
 
         // Provjeravamo odgovaraju li korisničko ime i lozinka.
         // Ako ne postoji korisnik s tim korisničkim imenom,
@@ -17,25 +19,25 @@ public function checkLogin() {
         if ($user !== null) {
             $passwordHash = $user->password;
 
-            if (password_verify($_POST['member_password'], $passwordHash)) {
+            if (password_verify($_POST['log_password'], $passwordHash)) {
                 if (session_status() !== PHP_SESSION_ACTIVE)
                     session_start();
 
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = $user->ID;
 
                 $success = True;
             }
+            else $message = 'Neispravna lozinka.';
         }
+        else $message = 'Korisnik "' . $_POST['log_name'] . '" ne postoji.';
     }
 
     // Neuspješan login.
     if (!$success) {
         global $title, $dir;
-        $title = 'Uvodna stranica';
-        $message = 'Krivo korisničko ime ili lozinka.';
+        $title = 'Dobrodošli u CHOREZ';
 
         require_once platformSlashes($dir . '/view/_header.php');
-        require_once platformSlashes($dir . '/view/main_menu.php');
         require_once platformSlashes($dir . '/view/login.php');
         require_once platformSlashes($dir . '/view/site_description.php');
         require_once platformSlashes($dir . '/view/_footer.php');
@@ -63,24 +65,48 @@ public function register() {
 
     // Provjeri postoji jesu li varijable postavljene, i postoje li već
     // u bazi korisnici s istim korisničkim imenom ili e-mail adresom.
-    if (!isset($_POST['member_name']))
+
+    // korisničko ime
+    if (!isset($_POST['reg_name']))
         $message_name = 'Morate upisati korisničko ime.';
 
-    else if (!isset($_POST['member_email']))
+    else if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['reg_name']))
+        $message_name = 'Korisničko ime može se sastojati samo od slova i znamenki.';
+
+    else if ($cs->getUserByUsername($_POST['reg_name']) !== null)
+        $message_name = 'Korisnik s tim korisničkim imenom već postoji.'; 
+
+    // e-mail adresa
+    if (!isset($_POST['reg_email']))
         $message_email = 'Morate upisati e-mail adresu.';
 
-    else if (!isset($_POST['member_password'])
-        || !isset($_POST['repeat_password']))
+    else {
+        $email = $_POST['reg_email'];
+        $email = filter_var( $email, FILTER_SANITIZE_EMAIL );
+
+        if(filter_var( $email, FILTER_VALIDATE_EMAIL )===False)
+        {
+            $content_valid = False;
+            $message_email = "E-mail adresa nije u ispravnom formatu.";
+        }
+
+        else if ($cs->getUserByEmail($_POST['reg_email']) !== null)
+            $message_email = 'Korisnik s tom e-mail adresom već postoji.';
+    }
+    
+
+    // lozinka
+    if (!isset($_POST['reg_password'])
+        || !isset($_POST['reg_repeat']))
         $message_password = 'Morate upisati lozinku.';
 
-    else if ($cs->getUserByUsername($_POST['member_name']) !== null)
-        $message_name = 'Korisnik s tim korisničkim imenom već postoji.';
+    else if ($_POST['reg_password'] != $_POST['reg_repeat'])
+        $message_password = 'Lozinke nisu jednake.';
 
-    else if ($cs->getUserByEmail($_POST['member_email']) !== null)
-        $message_email = 'Korisnik s tom e-mail adresom već postoji.';
+        
 
     // Registracija.
-    else {
+    if(!isset($message_name) && !isset($message_email) && !isset($message_password) ) {
         // Generiraj registracijski niz = niz znakova duljine 20.
         $sequence = '';
         for ($i = 0; $i < 20; ++$i)
@@ -88,21 +114,21 @@ public function register() {
 
         // Hashiraj password.
         $passwordHash =
-            password_hash($_POST['member_password'], PASSWORD_DEFAULT);
+            password_hash($_POST['reg_password'], PASSWORD_DEFAULT);
 
         /* Spremi korisnika u bazu s vrijednostima:
             ID = 0 (MySQL će dodijeliti jedinstveni ID)
             ID_household = 0 (dodijelit ćemo mu kućanstvo kad potvrdi e-mail)
-            username = $_POST['member_name']
+            username = $_POST['reg_name']
             password = $passwordHash,
-            email = $_POST['member_email']
+            email = $_POST['reg_email']
             points = 0
             admin = 1 (svi novoregistrirani će automatski biti administratori)
             registration_sequence = $sequence
             registered = 0.
         */
-        $user = New User(0, 0, $_POST['member_name'], $passwordHash,
-                $_POST['member_email'], 0, 1, $sequence, 0);
+        $user = New User(0, 0, $_POST['reg_name'], $passwordHash,
+                $_POST['reg_email'], 0, 1, $sequence, 0);
 
         $userID = $cs->addNewUser($user);
 
@@ -116,7 +142,7 @@ public function register() {
         tome na kojem se serveru skripta trenutno nalazi.
         */
 
-        $email = $_POST['member_email'];
+        $email = $_POST['reg_email'];
         $subject = 'Dobrodošli na Chorez!';
 
         $body = 'Kako biste uspješno dovršili registraciju na Chorezo' .
@@ -130,16 +156,17 @@ public function register() {
         // i još malo popraviti poruku.
         mail($email, $subject, $bodyWrapped);
 
-        $message_name = 'Uspješna registracija! Da biste dovršili ' .
-            'registraciju, trebate potvrditi svoju e-mail adresu.';
+        $message_info = 'Uspješna registracija! Da biste dovršili ' .
+        'registraciju, trebate potvrditi svoju e-mail adresu. ' .
+        'Link za potvrdu poslan je na Vaš e-mail. <br>' . 
+        '(napomena: provjerite neželjenu poštu)';
     }
 
     global $title, $dir;
-    $title = 'Uvodna stranica';
+    $title = 'Dobrodošli u CHOREZ';
 
     // Preusmjeri korisnika na početnu stranicu.
     require_once platformSlashes($dir . '/view/_header.php');
-    require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/login.php');
     require_once platformSlashes($dir . '/view/site_description.php');
     require_once platformSlashes($dir . '/view/_footer.php');
@@ -171,14 +198,13 @@ public function activate() {
     }
 
     global $title, $dir;
-    $title = 'Uvodna stranica';
+    $title = 'Dobrodošli u CHOREZ';
 
     // Preusmjeri korisnika na početnu stranicu i ispiši potvrdu o
     // uspješnoj aktivaciji računa.
-    $message = 'Uspješno ste aktivirali svoj račun! Prijavite se.';
+    $message_info = 'Uspješno ste aktivirali svoj račun! Prijavite se.';
 
     require_once platformSlashes($dir . '/view/_header.php');
-    require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/login.php');
     require_once platformSlashes($dir . '/view/site_description.php');
     require_once platformSlashes($dir . '/view/_footer.php');
