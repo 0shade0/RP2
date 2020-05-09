@@ -27,6 +27,7 @@ accountController
 
 * addNewHousehold(Household) - vraća ID dodanog kućanstva
 * getHouseholdByID
+* getAllCategories - vraća array s imenima svih kategorija
 
 
 User (isto kao u bazi)
