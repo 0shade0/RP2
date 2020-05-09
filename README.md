@@ -9,7 +9,6 @@ userController
 * pregled mojih podataka - index
 * pregled podataka ukućana - show&id=...
 * pregled kućanstva - household
-* moji zadaci - chores
 * nagrade - rewards
 
 accountController
