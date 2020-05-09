@@ -12,7 +12,7 @@ userController
 * moji zadaci - chores
 * nagrade - rewards
 
-accountController (**u izradi**)
+accountController
 * login
 * register
 * activate
@@ -30,7 +30,7 @@ accountController (**u izradi**)
 * getHouseholdByID
 
 
-User(isto kao u bazi)
+User (isto kao u bazi)
 
 Household (isto kao u bazi)
 
