@@ -31,7 +31,7 @@ public function checkLogin() {
     // Neuspješan login.
     if (!$success) {
         global $title, $dir;
-        $title = 'User page';
+        $title = 'Uvodna stranica';
         $message = 'Krivo korisničko ime ili lozinka.';
 
         require_once platformSlashes($dir . '/view/_header.php');
@@ -42,14 +42,13 @@ public function checkLogin() {
     }
     // Uspješan login.
     else {
-        // TODO: Preusmjeri korisnika na neku stranicu --- vjerojatno
-        // popis zadataka.
         global $title, $dir;
-        $title = 'User page';
+        $title = 'Popis zadataka';
 
+        // Prikaži popis zadataka.
         require_once platformSlashes($dir . '/view/_header.php');
         require_once platformSlashes($dir . '/view/main_menu.php');
-        require_once platformSlashes($dir . '/view/site_description.php');
+        require_once platformSlashes($dir . '/view/chore_list.php');
         require_once platformSlashes($dir . '/view/_footer.php');
     }
 }
@@ -61,9 +60,6 @@ public function register() {
     ponovljena lozinka. Najbolje da to napravimo pomoću Javascripta.
     */
     $cs = new ChorezService();
-
-    global $title, $dir;
-    $title = 'User page';
 
     // Provjeri postoji jesu li varijable postavljene, i postoje li već
     // u bazi korisnici s istim korisničkim imenom ili e-mail adresom.
@@ -108,10 +104,7 @@ public function register() {
         $user = New User(0, 0, $_POST['member_name'], $passwordHash,
                 $_POST['member_email'], 0, 1, $sequence, 0);
 
-        $cs->addNewUser($user);
-
-        // Kada je korisnik ubačen u bazu, nađi ID koji mu je dodijeljen.
-        $user = $cs->getUserByUsername($_POST['member_name']);
+        $userID = $cs->addNewUser($user);
 
         /* Link za registraciju šaljemo na mail, a on je oblika
             main.php?rt=account/activate&
@@ -129,7 +122,7 @@ public function register() {
         $body = 'Kako biste uspješno dovršili registraciju na Chorezo' .
             'pritisnite ili prekopirajte link' .
             'https://rp2.studenti.math.hr/~korisnicko_ime/projekt/main.php?' .
-            'rt=account/activate&sequence=' . $sequence . '&userID=' . $user->ID;
+            'rt=account/activate&sequence=' . $sequence . '&userID=' . $userID;
 
         $bodyWrapped = wordwrap($body, 70, "<br>\n");
 
@@ -141,7 +134,10 @@ public function register() {
             'registraciju, trebate potvrditi svoju e-mail adresu.';
     }
 
-    // TODO: Provjeriti je li ovo aktualno.
+    global $title, $dir;
+    $title = 'Uvodna stranica';
+
+    // Preusmjeri korisnika na početnu stranicu.
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/login.php');
@@ -174,7 +170,18 @@ public function activate() {
         }
     }
 
-    // TODO: Preusmjeriti korisnika.
+    global $title, $dir;
+    $title = 'Uvodna stranica';
+
+    // Preusmjeri korisnika na početnu stranicu i ispiši potvrdu o
+    // uspješnoj aktivaciji računa.
+    $message = 'Uspješno ste aktivirali svoj račun! Prijavite se.';
+
+    require_once platformSlashes($dir . '/view/_header.php');
+    require_once platformSlashes($dir . '/view/main_menu.php');
+    require_once platformSlashes($dir . '/view/login.php');
+    require_once platformSlashes($dir . '/view/site_description.php');
+    require_once platformSlashes($dir . '/view/_footer.php');
 }
 }
  ?>
