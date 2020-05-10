@@ -41,6 +41,39 @@ public function rewards() {
 
     $title = 'Nagrade';
     $cs = new ChorezService();
+    $user = $cs->getUserByID($_SESSION['user']);
+
+    $enter = False;
+
+// Provjerava ima li pristup korisniku
+    if(isset($_GET['id'])) {
+        $enter = True;
+
+        if(!$user->admin) $enter = False;
+
+        $user_id = $cs->getUserByID($_GET['id']);
+        if($user_id->ID_household != $user->ID_household)
+            $enter = False;
+    }
+
+    if($enter)
+    {
+        $ID =  $_GET['id'];
+        $user = $user_id;
+        $title = "Nagrade - " . $user->username;
+        if($user->admin) $title.= "*";
+    }
+    else $ID = $_SESSION['user'];
+
+    $rewards = $cs->getRewardsByID($ID);
+
+// Kupovanje nagrade
+    if(isset($_POST['buy_reward'])) {
+        $reward = $cs->getRewardByID($ID, $_POST['buy_reward']);
+        $cs->buyReward($ID, $_POST['buy_reward'], $user->points, $reward->points_price);
+
+        $message_info = "Nagrada je uspješno kupljena.";
+    }
 
 // Dodavanje nagrade
     if(isset($_POST['add_reward'])) {
@@ -51,7 +84,7 @@ public function rewards() {
         else {
             $reward_new = new Reward(
                 '0',
-                $_SESSION['user'],
+                $ID,
                 $_POST['reward_name'],
                 $_POST['reward_price'],
                 '0');
@@ -64,18 +97,15 @@ public function rewards() {
 // Uklanjanje nagrade
     if(isset($_POST['remove_reward'])) {
         $cs->deleteRewardByID($_POST['remove_reward']);
-        
+
         $message_info = "Nagrada je uspješno uklonjena.";
     }
-
-    $rewards = $cs->getRewardsByID($_SESSION['user']);
-    $user = $cs->getUserByID($_SESSION['user']);
 
     if(!$rewards) $message_info = "Nema nagrada";
 
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
-    if($user->admin)
+    if($user->admin || $enter)
         require_once platformSlashes($dir . '/view/rewards_admin.php');
     else
         require_once platformSlashes($dir . '/view/rewards.php');

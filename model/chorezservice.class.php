@@ -276,9 +276,9 @@ public function getRewardsByID($userID) {
 
     try {
         $st = $db->prepare(
-            'SELECT * FROM pr_rewards  WHERE ID_user=:userID AND purchased=:purchased
+            'SELECT * FROM pr_rewards  WHERE ID_user=:userID
             ORDER BY points_price ASC');
-        $st->execute(array('userID' => $userID, 'purchased' => '0'));
+        $st->execute(array('userID' => $userID));
 
         // Bit će popunjen sa svim podacima nagrada korisnika userID
         // koje nisu kupljene.
@@ -294,6 +294,29 @@ public function getRewardsByID($userID) {
         // Vrati array sa svim nagradama korisnika userID.
         // sortiran uzlazno po cijeni u bodovima
         return $reward;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_households]: ' . $e->getMessage());
+    }
+}
+
+public function getRewardByID($userID, $rewardID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_rewards  WHERE ID_user=:userID
+            AND purchased=:purchased AND ID=:rewardID');
+
+        $st->execute(array(
+            'userID' => $userID, 'rewardID' => $rewardID, 'purchased' => '0'));
+
+        if ($r = $st->fetch()) {
+            $reward = new Reward (
+                $r['ID'], $r['ID_user'], $r['description'],
+                $r['points_price'], $r['purchased']);
+                return $reward;
+        }
     }
     catch(PDOException $e) {
         exit('PDO error [select pr_households]: ' . $e->getMessage());
@@ -331,6 +354,30 @@ public function deleteRewardByID($ID_reward) {
 
         $st->execute(array(
             'ID' => $ID_reward ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+    }
+}
+
+public function buyReward($ID_user, $ID_reward, $points, $price) {
+    $db = DB::getConnection();
+    try {
+        $st = $db->prepare(
+            'UPDATE pr_rewards SET purchased = :purchased ' .
+            'WHERE ID=:rewardID');
+
+        $st->execute(array(
+            'purchased' => 1,
+            'rewardID' => $ID_reward ));
+
+        $st = $db->prepare(
+            'UPDATE pr_users SET points = :points ' .
+            'WHERE ID=:userID');
+
+        $st->execute(array(
+            'points' => $points - $price,
+            'userID' => $ID_user ));
     }
     catch(PDOException $e) {
         exit('PDO error [insert pr_users]: ' . $e->getMessage());

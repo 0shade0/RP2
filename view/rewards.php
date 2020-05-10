@@ -8,15 +8,15 @@
 <! –– ili ako je nagrada kupljena maknemo            -->
     <?php if($rewards != NULL) foreach($rewards as $row): ?>
     <?php if($row->purchased) continue; else {?>
-    <tr <?php if($user->points >= $row->points_price)
-                echo "class=expensive"; ?>>
+    <tr <?php if($user->points < $row->points_price)
+                echo "class=expensive";?>>
 
         <td id="first_col"><?=$row->description;?></td>
         <td id= second_col><?=number_format( $row->points_price );?></td>
         <td id="Third_col">
             <?php if($user->points >= $row->points_price): ?>
                 <form action="" method="post">
-                    <input id="bod" type=submit value="" name="buy_reward">
+                    <input id="bod" type=submit value="<?=$row->ID?>" name="buy_reward">
                 </form>
             <?php endif; ?>
         <td>
