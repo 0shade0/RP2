@@ -32,8 +32,8 @@ accountController
 * addNewHousehold(Household) - vraća ID dodanog kućanstva
 * getHouseholdByID
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na iduci period.
-* getAllCategories - vraća array s imenima svih kategorija
-
+* getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
+* addNewCategory(Household, str) - vraća ID dodane kategorije
 
 User (isto kao u bazi)
 

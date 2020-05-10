@@ -226,27 +226,30 @@ public function setCompleted ($chore) {
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kategorija
 //--------------------------------------------------------------------------
-public function getAllCategories() {
+
+// Vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
+public function getAllCategories($household = NULL) {
     $db = DB::getConnection();
     
-    try {
-        $st = $db->prepare('SELECT * FROM pr_categories');
+    $ret = Category::getDefaultCategories();
     
-        $st->execute();
+    if ($household !== NULL) {
+        try {
+            $st = $db->prepare('SELECT * FROM pr_categories WHERE ID_household=:ID_household');
+        
+            $st->execute(array("ID_household" => $household->ID_household));
     
-        // Bit će popunjen sa imenima svih kategorija.
-        $ret = array();
-
-        while ($row = $st->fetch()) {
-            array_push($ret, $row["name"]);
+            while ($row = $st->fetch()) {
+                array_push($ret, $row["name"]);
+            }
+    
+        } catch(PDOException $e) {
+            exit('PDO error [select pr_categories]: ' . $e->getMessage());
         }
-
-        // Vrati array s imenima svih kategorija.
-        return $ret;
-
-    } catch(PDOException $e) {
-        exit('PDO error [select pr_categories]: ' . $e->getMessage());
     }
+
+    // Vrati array s imenima kategorija.
+    return $ret;
 }
 
 public function addNewCategory($household, $name) {
