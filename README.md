@@ -35,7 +35,8 @@ accountController
 * getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
 * addNewCategory(Household, str) - vraća ID dodane kategorije
 
-* getRewardsByID(str) 
+* getRewardsByID(userID) 
+* getRewardByID(userID, rewardID)
 * addNewReward(Reward) - vraća ID dodane nagrade
 * deleteRewardByID(str)
 * buyReward(userID, rewardID, points, price)
