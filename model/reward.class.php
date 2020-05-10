@@ -7,19 +7,20 @@
         protected $purchased;
 
         // Konstruktor.
-        public function __construct ($ID, $ID_user, $description, $points_price) {
+        public function __construct ($ID, $ID_user, $description, $points_price, $purchased) {
 
             $this->ID = intval($ID);
             $this->ID_user = intval($ID_user);
             $this->description = $description;
             $this->points_price = intval($points_price);
+            $this->purchased = intval($purchased);
         }
 
         // Stvara novi objekt iz retka iz tablice pr_rewards.
         // Koristi se kao:
         //      $reward = Reward::fromRow($row);
         public static function fromRow(array $row) {
-            $instance = new self($row["ID"], $row["ID_user"], $row["description"], $row["points_price"]);
+            $instance = new self($row["ID"], $row["ID_user"], $row["description"], $row["points_price"], $row["purchased"]);
 
             return $instance;
         }
