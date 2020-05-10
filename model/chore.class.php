@@ -12,7 +12,7 @@
 
         // Konstruktor.
         public function __construct ($ID, $ID_user, $ID_category, $description,
-            $time_next, $mandatory, $type, $points) {
+            $time_next, $mandatory, $type, $points, $done) {
 
             $this->ID = intval($ID);
             $this->ID_user = intval($ID_user);
@@ -22,6 +22,7 @@
             $this->mandatory = intval($mandatory);
             $this->type = intval($type);
             $this->points = intval($points);
+            $this->done = intval($done);
         }
 
         // Stvara novi objekt iz retka iz tablice pr_chores.
@@ -29,7 +30,7 @@
         //      $chore = Chore::fromRow($row);
         public static function fromRow(array $row) {
             $instance = new self($row["ID"], $row["ID_user"], $row["ID_category"], $row["description"],
-                $row["time_next"], $row["mandatory"], $row["type"], $row["points"]);
+                $row["time_next"], $row["mandatory"], $row["type"], $row["points"], $row["done"]);
 
             return $instance;
         }
