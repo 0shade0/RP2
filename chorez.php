@@ -44,7 +44,7 @@ else
 
 $controllerName = $controller . 'Controller';
 
-require_once platformSlashes($dir . './controller/' . $controllerName . '.php');
+require_once platformSlashes($dir . '/controller/' . $controllerName . '.php');
 $con = new $controllerName();
 $con->$action();
 

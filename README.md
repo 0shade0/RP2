@@ -70,6 +70,7 @@ pr_chores
 * mandatory (da/ne)
 * type (jednom(0), dnevni(1), tjedni(2), mjesečni(3), godišnji(4))
 * points (vrijednost)
+* done (da/ne)
 
 pr_categories
 * ID
@@ -81,3 +82,4 @@ pr_rewards
 * ID_user (kojem korisniku se prikazuju)
 * description
 * points_price
+* purchased (da/ne)

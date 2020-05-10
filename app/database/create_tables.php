@@ -101,7 +101,8 @@ function create_table_chores()
 			'time_next datetime NOT NULL,' .
 			'mandatory int NOT NULL,' .
 			'type int NOT NULL,' .
-			'points int NOT NULL)'
+			'points int NOT NULL,' .
+			'done int NOT NULL)'
 		);
 
 		$st->execute();
@@ -150,7 +151,8 @@ function create_table_rewards()
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 			'ID_user int NOT NULL,' .
 			'description varchar(300) NOT NULL,' .
-			'points_price int NOT NULL)'
+			'points_price int NOT NULL, ' .
+			'purchased int NOT NULL)'
 		);
 
 		$st->execute();

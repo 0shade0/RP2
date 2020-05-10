@@ -108,9 +108,9 @@ function seed_table_chores()
 	try {
 		$st = $db->prepare('INSERT INTO pr_chores' .
 			'(ID_user, ID_category, description, time_next, mandatory, ' .
-			'type, points) VALUES ' .
+			'type, points, done) VALUES ' .
 			'(:ID_user, :ID_category, :description, :time_next, :mandatory, ' .
-			':type, :points)');
+			':type, :points, :done)');
 
 		// Zadaci za korisnike u prvom kućanstvu.
 		$st->execute(array(
@@ -120,7 +120,8 @@ function seed_table_chores()
 			'time_next' => '2020-05-15 20:20:00',
 			'mandatory' => 0,
 			'type' => 1,
-			'points' => 20));
+			'points' => 20,
+			'done' => 0));
 
 		$st->execute(array(
 			'ID_user' => 2,
@@ -129,7 +130,8 @@ function seed_table_chores()
 			'time_next' => '2020-05-15 20:20:00',
 			'mandatory' => 0,
 			'type' => 1,
-			'points' => 20));
+			'points' => 20,
+			'done' => 0));
 
 		$st->execute(array(
 			'ID_user' => 3,
@@ -138,7 +140,8 @@ function seed_table_chores()
 			'time_next' => '2020-06-07 15:30:00',
 			'mandatory' => 1,
 			'type' => 3,
-			'points' => 50));
+			'points' => 50,
+			'done' => 0));
 
 		// Zadaci za korisnike u drugom kućanstvu.
 		$st->execute(array(
@@ -148,7 +151,8 @@ function seed_table_chores()
 			'time_next' => '2020-05-20 17:15:00',
 			'mandatory' => 1,
 			'type' => 1,
-			'points' => 15));
+			'points' => 15,
+			'done' => 0));
 
 		$st->execute(array(
 			'ID_user' => 4,
@@ -157,7 +161,8 @@ function seed_table_chores()
 			'time_next' => '2020-05-21 16:00:00',
 			'mandatory' => 0,
 			'type' => 2,
-			'points' => 10));
+			'points' => 10,
+			'done' => 0));
 
 		$st->execute(array(
 			'ID_user' => 5,
@@ -166,7 +171,8 @@ function seed_table_chores()
 			'time_next' => '2020-05-21 16:00:00',
 			'mandatory' => 0,
 			'type' => 2,
-			'points' => 10));
+			'points' => 10,
+			'done' => 0));
 
 	}
 	catch(PDOException $e) {
@@ -216,28 +222,32 @@ function seed_table_rewards()
 
 	try {
 		$st = $db->prepare('INSERT INTO pr_rewards' .
-			'(ID_user, description, points_price) VALUES ' .
-			'(:ID_user, :description, :points_price)');
+			'(ID_user, description, points_price, purchased) VALUES ' .
+			'(:ID_user, :description, :points_price, :purchased)');
 
 		$st->execute(array(
 			'ID_user' => 3,
 			'description' => 'Sladoled',
-			'points_price' => '50'));
+			'points_price' => '50',
+			'purchased' => 0));
 
 		$st->execute(array(
 			'ID_user' => 1,
 			'description' => 'Odlazak na odmor',
-			'points_price' => '10000'));
+			'points_price' => '10000',
+			'purchased' => 0));
 
 		$st->execute(array(
 			'ID_user' => 2,
 			'description' => 'Odlazak na odmor',
-			'points_price' => '10000'));
+			'points_price' => '10000',
+			'purchased' => 0));
 
 		$st->execute(array(
 			'ID_user' => 3,
 			'description' => 'Odlazak na odmor',
-			'points_price' => '10000'));
+			'points_price' => '10000',
+			'purchased' => 0));
 	}
 	catch(PDOException $e) {
 		exit("PDO error [insert pr_rewards]: " . $e->getMessage());

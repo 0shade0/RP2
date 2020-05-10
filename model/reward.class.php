@@ -4,7 +4,8 @@
         protected $ID_user;
         protected $description;
         protected $points_price;
-    
+        protected $purchased;
+
         // Konstruktor.
         public function __construct ($ID, $ID_user, $description, $points_price) {
 
@@ -22,17 +23,17 @@
 
             return $instance;
         }
-    
+
         // Getteri i setteri.
         public function __get($property) {
             if (property_exists($this, $property))
                 return $this->$property;
         }
-    
+
         public function __set($property, $value) {
             if (property_exists($this, $property))
                 $this->$property = $value;
-    
+
             // Za omogućavanje ulančavanja.
             return $this;
         }
