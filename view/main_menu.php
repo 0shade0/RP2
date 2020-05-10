@@ -5,10 +5,9 @@
         echo "<a id=user href='chorez.php?rt=user'> </a>";
         else echo "<span id=user class=not_selected> </span>";?>
         
-        <?php if($controller!='chore')
+        <?php if($controller!='chore' && $controller!='account')
         echo "<a id=chores href='chorez.php?rt=chore'> </a>";
         else echo "<span id=chores class=not_selected> </span>";?>
-        
         
         <?php if($controller!='user' || $action!='household')
         echo "<a id=household href='chorez.php?rt=user/household'> </a>";
@@ -21,4 +20,4 @@
         <a href='chorez.php?rt=account&logout=y' id="logout"></a>
 </div>
 
-<br> <div class = "title"> <?php echo $title; ?> </div> <br>
+<br> <div class = "title"> <?php echo $title; ?> </div>

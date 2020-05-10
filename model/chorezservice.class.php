@@ -271,5 +271,71 @@ public function addNewCategory($household, $name) {
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice nagrade
 //--------------------------------------------------------------------------
+public function getRewardsByID($userID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_rewards  WHERE ID_user=:userID AND purchased=:purchased
+            ORDER BY points_price ASC');
+        $st->execute(array('userID' => $userID, 'purchased' => '0'));
+
+        // Bit će popunjen sa svim podacima nagrada korisnika userID
+        // koje nisu kupljene.
+        $reward = array();
+
+        while ($r = $st->fetch()) {
+            array_push($reward, new Reward (
+                $r['ID'], $r['ID_user'], $r['description'],
+                $r['points_price'], $r['purchased']));
+
+        }
+
+        // Vrati array sa svim nagradama korisnika userID.
+        // sortiran uzlazno po cijeni u bodovima
+        return $reward;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_households]: ' . $e->getMessage());
+    }
+}
+
+public function addNewReward($reward) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare(
+        'INSERT INTO pr_rewards(ID_user, description, points_price, ' .
+        'purchased) VALUES (:ID_user, :description, :points_price, ' .
+        ':purchased)');
+
+    $st->execute(array(
+        'ID_user' => $reward->ID_user,
+        'description' => $reward->description,
+        'points_price' => $reward->points_price,
+        'purchased' => $reward->purchased ));
+
+    // Vrati ID dodane nagrade.
+    return $db->lastInsertId();
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+    }
+}
+
+public function deleteRewardByID($ID_reward) {
+    $db = DB::getConnection();
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_rewards WHERE ID=:ID');
+
+        $st->execute(array(
+            'ID' => $ID_reward ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+    }
+}
+
 }
 ?>

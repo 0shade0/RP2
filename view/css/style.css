@@ -1,5 +1,5 @@
 :root {
-    --orange: #eb9c39;
+    --orange: rgb(249, 149, 37);
     --pink: #e86898;
     --teal: #60e8ef;
     --gray: #C0C0C0;
@@ -86,7 +86,7 @@ br {
 
 .box {
     width: 400px;
-    float: right;
+    float: left;
     clear: both;
     margin: 20px;
 }
@@ -223,6 +223,7 @@ body {
 }
 
 .wrapper {
+    position: relative;
     width: 1024px;
     margin: 0 auto;
     padding-bottom: 20px;
@@ -282,7 +283,7 @@ body {
     transform: scale(1.25);
     transition-duration: 0.2s;
     transition-delay: 0.005s;
-    filter: brightness(115%);
+    filter: brightness(105%);
 }
 
 #chores, #rewards, #household, #user, #logout{
@@ -318,7 +319,271 @@ body {
     transition-duration: 0.05s;
 }
 
+.rewards {
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    margin-bottom: 60px;
+    border-spacing: 0px 10px;
+}
+
+.rewards tr {
+    height: 60px;
+    border: none;
+}
+
+.rewards tr:hover {
+    background-color: var(--blue);
+    border: none;
+}
+
+.rewards tr.expensive {
+    filter: opacity(60%);
+}
+
+.rewards tr.expensive:hover {
+    background-color: rgba(0,0,0,0);
+    filter: opacity(60%);
+}
+
+.rewards th {
+    font-size: 24pt;
+    text-align: center;
+}
+
+.rewards form {
+    margin:0;
+    padding:0;
+    padding-left: 10px;
+    border-radius: 50%;
+}
+
+.rewards form:hover {
+    filter: brightness(110%);
+    transform: scale(1.4);
+}
+
+.rewards form input[type=submit] {
+    height: 50px;
+    width: 50px;
+
+    background-color: transparent;
+    
+    border: none;
+    background-size: cover;
+    background-position: center center;
+}
+
+#bod {
+    background-image: url(../../app/bod.png);
+}
+
+#x {
+    background-image: url(../../app/x.png);
+}
+
+.rewards form input[type=submit]:hover {
+    transform: rotate(1440deg);
+    transition-duration: 8s;
+    transition-delay: 0.005s;
+    transition-timing-function: linear;
+    cursor: pointer;
+}
+
+#first_col {
+    width: 55%;
+    background-color: white;
+    padding: 20px;
+    padding-left: 35px;
+    font-size: 18pt;
+
+    position: relative;
+
+    border-bottom-left-radius: 35px;
+    border-top-left-radius: 35px;
+}
+
+#second_col {
+    width:32%;
+    background-color: var(--blue);
+    color: white;
+    text-align: right;
+    padding-right: 5px;
+    font-size: 32pt;
+    font-family: Marker;
+}
+
+#third_col {
+    width:13%;
+    padding: 0;
+    padding-left: 15px;
+    
+}
+
+.balance {
+    position: absolute;
+    right: 100px;
+    bottom: 60px;
+    height: 60px;
+    width: 450px;
+    padding-left: 10px;
+    border-bottom: solid 5px var(--blue);
+}
+
+.balance table {
+    color: var(--orange);
+    font-size: 42pt;
+    font-family: Marker;
+    text-align: right;
+
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    margin: 0;
+}
+
+.balance p {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.balance p.moji_bodovi {
+    position: absolute;
+    bottom: 10px;
+    margin: 0;
+}
+
+#left {
+    float: left;
+}
+
+.reward_left {
+    display: hidden;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    width: 10px;
+    transform: scale(0.6);
+}
+
+.reward_left form {
+    filter: grayscale(100%);
+}
+
+.reward_left form:hover {
+    filter: grayscale(0%);
+    transform: scale(1.1);
+}
+
+.reward_left form input[type=submit] {
+    color: rgba(0,0,0,0);
+}
+
+.reward_left form input[type=submit]:hover {
+    transform: rotate(0deg);
+    transition-duration: 0s;
+    cursor: pointer;
+}
+
+.reward_left:hover {
+    display: flex;
+}
+
+.reward_right {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-left: 50px;
+    width: 80%;
+    height: auto;
+}
+
+.balance img {
+    width: 40px;
+}
+
+.input_line form {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    height: 50px;
+    padding-top: 0px;
+    overflow: visible;
+}
+
+.input_line input[type="text"] {
+    background-color: white;
+    width: 80%;
+    height: 100%;
+
+    padding-left: 35px;
+    font-family: Comfortaa;
+    font-size: 14pt;
+
+    border: none;
+}
+
+.input_line form input[type="text"]:focus {
+    outline: none;
+}
+
+.input_line input[type="submit"] {
+    width: 20%;
+    height: 100%;
+    float: right;
+    background-color: var(--blue);
+    color: white;
+    font-family: Comfortaa;
+    font-size: 20pt;
+    transition-duration: 0.1s;
+    transition-delay: 0.005s;
+    border-bottom-right-radius: 35px;
+    border-top-right-radius: 35px;
+    border: none;
+}
+
+.input_line input[type="submit"]:hover {
+    background-color: var(--orange);
+    transform: translateX(-5px);
+    transition-duration: 0.1s;
+    transition-delay: 0.005s;
+    cursor: pointer;
+}
+
+.input_line form input::placeholder {
+    font-family: Comfortaa;
+    font-size: 18px;
+    transition-duration: 0.2s;
+}
+
+.input_line form input:focus::placeholder {
+    color: rgba(255,255,255,0.2);
+    transition-duration: 0.5s;
+}
+
+#long {
+    border-bottom-left-radius: 35px;
+    border-top-left-radius: 35px;
+    width:65%;
+    margin: 0;
+}
+
+#short {
+    width:14%;
+    margin: 0;
+    text-align: right;
+    padding: 0;
+    padding-right: 20px;
+    border-radius: 0px;
+}
+
 @font-face {
     font-family: Comfortaa;
     src: url("../../app/Comfortaa-Regular.ttf");
+}
+
+@font-face {
+    font-family: Marker;
+    src: url("../../app/123Marker.ttf");
 }

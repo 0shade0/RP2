@@ -22,4 +22,4 @@
         </table>
     </div>
 <br><br>
-    <div class = "wrapper">
+    <div class = "wrapper" id="noselect">
