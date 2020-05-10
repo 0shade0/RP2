@@ -42,6 +42,7 @@ Household (isto kao u bazi)
 Chore (isto kao u bazi)
 
 Category (isto kao u bazi)
+* getDefaultCategories - vraća defaultne kategorije
 
 Reward (isto kao u bazi)
 
