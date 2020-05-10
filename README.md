@@ -1,5 +1,9 @@
-# RP2
-## Controlleri
+# Chorez
+* [Controlleri](#Controlleri)
+* [Modeli](#Modeli)
+* [Baza podataka](#Baza)
+
+## Controlleri <a name="Controlleri"></a>
 choreController
 * popis mojih zadataka - index
 * detalj nekog zadatka - show&id=...
@@ -16,7 +20,7 @@ accountController
 * register
 * activate
 
-## Modeli
+## Modeli <a name="Modeli"></a>
 **ChorezService** --- za dohvat iz baze podataka
 * getUserByID(str)
 * getUserByUsername(str)
@@ -40,7 +44,7 @@ Category (isto kao u bazi)
 
 Reward (isto kao u bazi)
 
-## Baza podataka
+## Baza podataka <a name="Baza"></a>
 
 pr_users
 * ID
