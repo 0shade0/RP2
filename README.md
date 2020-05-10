@@ -13,8 +13,7 @@ userController
 * pregled mojih podataka - index
 * pregled podataka ukućana - show&id=...
 * pregled kućanstva - household
-* nagrade - my_rewards?
-* nečije nagrade - show_rewards? (za admina)
+* nagrade - rewards&id=... (za admine)
 
 accountController
 * login
@@ -39,6 +38,7 @@ accountController
 * getRewardsByID(str) 
 * addNewReward(Reward) - vraća ID dodane nagrade
 * deleteRewardByID(str)
+* buyReward(userID, rewardID, points, price)
 
 **User** (isto kao u bazi)
 
