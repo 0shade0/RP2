@@ -2,7 +2,7 @@
     --orange: #eb9c39;
     --pink: #e86898;
     --teal: #60e8ef;
-    --gray: #4c7b7c;
+    --gray: #C0C0C0;
     --blue: #4651e9;
 }
 
@@ -12,6 +12,22 @@
 
 body {
     -ms-overflow-style: none;
+}
+
+br {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#noselect {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .logo, .logo_gif {
@@ -35,6 +51,8 @@ body {
 }
 
 .by {
+    border-collapse: separate;
+    border-spacing: 30px 0px;
     color: var(--teal);
     text-transform: uppercase;
     font-weight: bold;
@@ -46,18 +64,27 @@ body {
 }
 
 .by td {
+    text-align: center;
     padding: 20px;
+    padding-left: 50px;
     transition-duration: 0.2s;
     transition-delay: 0.005s;
 }
 
 .by td:hover {
+    color: white;
     transform: scale(1.2);
     transition-duration: 0.2s;
     transition-delay: 0.005s;
 }
 
-.yarn {
+
+#noeffect:hover {
+    transform: scale(1);
+    color: var(--teal);
+}
+
+.box {
     width: 400px;
     float: right;
     clear: both;
@@ -208,6 +235,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    padding-bottom: 10px;
 
     position: realtive;
 
@@ -227,37 +255,62 @@ body {
 }
 
 .menu{
-    font-size: 18pt;
-    font-weight: bold;
-    padding: 30px;
-    padding-bottom: 15px;
-    text-align: center;
-    height: 60px;
+    padding: 10px;
+    padding-left: 40px;
+    padding-top: 25px;
+    height: 90px;
     transform:scale(1.0);
-    background-color: var(--teal);
-    border-bottom: 5px solid var(--blue);
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    background-color: var(--blue);
 }
 
 .menu a {
     display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
-    padding-left:30px;
-    padding-right:30px;
-    color: var(--blue);
-    text-decoration: none;
+    height:90px;
+    width:120px;
+    margin: 0;
+    margin-left: 25px;
+    margin-right: 40px;
     transition-delay: 0.005s;
-    transition-duration: 0.5s;
+    transition-duration: 0.3s;
 }
 
 .menu a:hover {
-    color: var(--orange);
-    filter: brightness(140%);
-    transform: scale(1.75);
+    transform: scale(1.4);
     transition-duration: 0.2s;
     transition-delay: 0.005s;
+}
+
+#chores, #rewards, #household, #user, #logout{
+    background-color:transparent;
+    background-size: cover;
+    background-position: center center;
+}
+
+#chores {
+    background-image: url("../../app/Mchores.png");
+}
+
+#rewards {
+    background-image: url("../../app/Mbox.png");
+}
+
+#household {
+    background-image: url("../../app/Mhouse.png");
+}
+
+#user {
+    background-image: url("../../app/Muser.png");
+}
+
+#logout {
+    background-image: url("../../app/Mdoor_closed.png");
+    transition-duration: 0.05s;
+}
+
+#logout:hover {
+    background-image: url("../../app/Mdoor_open.png");
+    transform: scale(1.2);
+    transition-duration: 0.05s;
 }
 
 @font-face {

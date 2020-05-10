@@ -1,4 +1,4 @@
 <div class = "rewards">
 </div>
 
-<img class = "yarn" src="./app/yarn.png">
+<img class = "box" src="./app/box.png">

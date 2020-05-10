@@ -6,22 +6,18 @@
     </head>
 
     <body>
-    <div class = "header_wrapper">
+    <div class = "header_wrapper" id = "noselect">
         <img class = "logo_gif" src="./app/chorez.gif" repeat alt="gif">   
         <img class = "logo" src="./app/chorez.png" repeat alt="logo">
         <table class = "by">
             <tr>
-                <td></td>
-                <td>tin štefanić</td>
-                <td></td>
-                <td>tihana štifanić</td>
+                <td id="noeffect" rowspan="2">autori: </td>
+                <td  colspan="2">tin štefanić</td>
+                <td  colspan="2">tihana štifanić</td>
             </tr>
             <tr>
-                <td>damir čupić</td>
-                <td></td>
-                <td>karlo murtezani</td>
-                <td></td>
-                
+                <td  colspan="2">damir čupić</td>
+                <td  colspan="2">karlo murtezani</td>
             </tr>
         </table>
     </div>

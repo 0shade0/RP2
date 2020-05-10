@@ -24,6 +24,7 @@ public function index() {
                     session_start();
 
                 $_SESSION['user'] = $user->ID;
+                $_SESSION['name'] = $user->username;
 
                 $success = True;
             }
