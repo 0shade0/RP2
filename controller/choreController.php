@@ -20,6 +20,20 @@ public function show() {
 
 // Stvori novi zadatak
 public function create() {
+    global $title, $db, $dir;
+
+    $title = 'Novi zadatak';
+
+    $cs = new ChorezService();
+
+    // Varijable koje su za /view/chore_create.php .
+    $categories = $cs->getAllCategories();
+
+    require_once platformSlashes($dir . '/view/_header.php');
+    require_once platformSlashes($dir . '/view/main_menu.php');
+    require_once platformSlashes($dir . '/view/chore_create.php');
+    require_once platformSlashes($dir . '/view/_footer.php');
+}
 }
 
-}
+?>

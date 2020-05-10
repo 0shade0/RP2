@@ -9,7 +9,6 @@ userController
 * pregled mojih podataka - index
 * pregled podataka ukućana - show&id=...
 * pregled kućanstva - household
-* moji zadaci - chores
 * nagrade - rewards
 
 accountController
@@ -28,6 +27,7 @@ accountController
 
 * addNewHousehold(Household) - vraća ID dodanog kućanstva
 * getHouseholdByID
+* getAllCategories - vraća array s imenima svih kategorija
 
 
 User (isto kao u bazi)
