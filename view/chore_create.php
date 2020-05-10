@@ -30,5 +30,7 @@
         
         Koliko bodova vrijedi zadatak?
         <input type="text" name="chore_points" required> <br>
+        
+        <input type="submit" name="chore_submit" value="Stvori novi zadatak!"> <br>
     </form>
 </div>
