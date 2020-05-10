@@ -13,7 +13,8 @@ userController
 * pregled mojih podataka - index
 * pregled podataka ukućana - show&id=...
 * pregled kućanstva - household
-* nagrade - rewards
+* nagrade - my_rewards?
+* nečije nagrade - show_rewards? (za admina)
 
 accountController
 * login
@@ -35,13 +36,17 @@ accountController
 * getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
 * addNewCategory(Household, str) - vraća ID dodane kategorije
 
-User (isto kao u bazi)
+* getRewardsByID(str) 
+* addNewReward(Reward) - vraća ID dodane nagrade
+* deleteRewardByID(str)
 
-Household (isto kao u bazi)
+**User** (isto kao u bazi)
 
-Chore (isto kao u bazi)
+**Household** (isto kao u bazi)
 
-Category (isto kao u bazi)
+**Chore** (isto kao u bazi)
+
+**Category** (isto kao u bazi)
 * getDefaultCategories - vraća defaultne kategorije
 
 Reward (isto kao u bazi)
