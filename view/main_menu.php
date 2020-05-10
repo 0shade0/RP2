@@ -1,8 +1,23 @@
+<?php global $controller, $action; ?>
+
 <div class = "menu" id = "noselect">
-        <a href='chorez.php?rt=user' id="user"></a>
-        <a href='chorez.php?rt=chore' id="chores"></a>
-        <a href='chorez.php?rt=user/household' id="household"></a>
-        <a href='chorez.php?rt=user/rewards' id="rewards"></a>
+        <?php if($controller!='user' || $action!='index')
+        echo "<a id=user href='chorez.php?rt=user'> </a>";
+        else echo "<span id=user class=not_selected> </span>";?>
+        
+        <?php if($controller!='chore')
+        echo "<a id=chores href='chorez.php?rt=chore'> </a>";
+        else echo "<span id=chores class=not_selected> </span>";?>
+        
+        
+        <?php if($controller!='user' || $action!='household')
+        echo "<a id=household href='chorez.php?rt=user/household'> </a>";
+        else echo "<span id=household class=not_selected> </span>";?>
+
+        <?php if($controller!='user' || $action!='rewards')
+         echo "<a id=rewards href='chorez.php?rt=user/rewards'> </a>";
+         else echo "<span id=rewards class=not_selected> </span>";?>
+        
         <a href='chorez.php?rt=account&logout=y' id="logout"></a>
 </div>
 

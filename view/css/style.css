@@ -255,7 +255,7 @@ body {
 }
 
 .menu{
-    padding: 10px;
+    padding: 15px;
     padding-left: 40px;
     padding-top: 25px;
     height: 90px;
@@ -263,7 +263,7 @@ body {
     background-color: var(--blue);
 }
 
-.menu a {
+.menu a, span {
     display: inline-block;
     height:90px;
     width:120px;
@@ -274,10 +274,15 @@ body {
     transition-duration: 0.3s;
 }
 
+.menu a {
+    filter: grayscale(80%);
+}
+
 .menu a:hover {
-    transform: scale(1.4);
+    transform: scale(1.25);
     transition-duration: 0.2s;
     transition-delay: 0.005s;
+    filter: brightness(115%);
 }
 
 #chores, #rewards, #household, #user, #logout{
