@@ -168,7 +168,7 @@ public function addNewHousehold($household) {
 //  Funkcije za dohvaćanje iz tablice zadataka
 //--------------------------------------------------------------------------
 
-// Stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na iduci period.
+// Stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
 public function setCompleted ($chore) {
     $db = DB::getConnection();
 
@@ -211,7 +211,8 @@ public function setCompleted ($chore) {
         'WHERE ID=:choreID');
 
     // Stupac done će biti "1" za zadatke koji se ne ponavljaju, inače "0".
-    $st->execute(array('time_next' => $time_next, "done" => intval(! $chore->type), 'choreID' => $chore->ID));
+    $st->execute(array('time_next' => $time_next, "done" => intval(! $chore->type),
+         'choreID' => $chore->ID));
 
     // Ako dođe do ovdje tablica je uspješno promijenjena.
     $chore->time_next = $time_next;
@@ -223,11 +224,89 @@ public function setCompleted ($chore) {
     }
 }
 
+public function getChoreByID($choreID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_chores  WHERE ID=:choreID');
+        $st->execute(array('choreID' => $choreID));
+
+        if ($row = $st->fetch()) {
+            $chore = Chore::fromRow($row);
+    
+            return $chore;
+        }
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_chores]: ' . $e->getMessage());
+    }
+}
+
+public function getChoresByUser($user) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_chores  WHERE ID_user=:userID');
+        $st->execute(array('userID' => $user->ID_user));
+
+        $chores = array();
+
+        while ($row = $st->fetch())
+            array_push($chores, Chore::fromRow($row));
+
+        return $chores;
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_chores]: ' . $e->getMessage());
+    }
+}
+
+public function addNewChore($chore) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare("INSERT INTO pr_chores(" .
+            "ID_user, ID_category, description, time_next, mandatory, type, points, done)" .
+            "VALUES (:ID_user, :ID_category, :description, :time_next, :mandatory, :type," .
+            ":points, :done)");
+
+        $st->execute(array('ID_user' => $chore->ID_user, "ID_category" => $chore->ID_category,
+            "description" => $chore->description, "time_next" => $chore->time_next,
+            "mandatory" => $chore->mandatory, "type" => $chore->type, 
+            "points" => $chore->points, "done" => $chore->done));
+
+        // Vrati ID dodanog zadatka.
+        return $db->lastInsertId();
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_chores]: ' . $e->getMessage());
+    }
+}
+
+public function deleteChore($chore) {
+    $db = DB::getConnection();
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_chores WHERE ID=:ID');
+
+        $st->execute(array(
+            'ID' => $chore->ID ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [delete pr_chore]: ' . $e->getMessage());
+    }
+}
+
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kategorija
 //--------------------------------------------------------------------------
 
-// Vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
+// Vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo
+// prosljeđeno funkciji.
 public function getAllCategories($household = NULL) {
     $db = DB::getConnection();
     
@@ -256,7 +335,8 @@ public function addNewCategory($household, $name) {
     $db = DB::getConnection();
 
     try {
-    $st = $db->prepare('INSERT INTO pr_categories (ID_household, name) VALUES (:ID_household, :name)');
+    $st = $db->prepare('INSERT INTO pr_categories (ID_household, name) 
+        VALUES (:ID_household, :name)');
 
     $st->execute(array("ID_household" => $household->ID, 'name' => $name));
 
@@ -296,7 +376,7 @@ public function getRewardsByID($userID) {
         return $reward;
     }
     catch(PDOException $e) {
-        exit('PDO error [select pr_households]: ' . $e->getMessage());
+        exit('PDO error [select pr_rewards]: ' . $e->getMessage());
     }
 }
 
@@ -319,7 +399,7 @@ public function getRewardByID($userID, $rewardID) {
         }
     }
     catch(PDOException $e) {
-        exit('PDO error [select pr_households]: ' . $e->getMessage());
+        exit('PDO error [select pr_rewards]: ' . $e->getMessage());
     }
 }
 
@@ -342,7 +422,7 @@ public function addNewReward($reward) {
     return $db->lastInsertId();
     }
     catch(PDOException $e) {
-        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+        exit('PDO error [insert pr_rewards]: ' . $e->getMessage());
     }
 }
 
@@ -356,7 +436,7 @@ public function deleteRewardByID($ID_reward) {
             'ID' => $ID_reward ));
     }
     catch(PDOException $e) {
-        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+        exit('PDO error [delete pr_rewards]: ' . $e->getMessage());
     }
 }
 
@@ -380,7 +460,7 @@ public function buyReward($ID_user, $ID_reward, $points, $price) {
             'userID' => $ID_user ));
     }
     catch(PDOException $e) {
-        exit('PDO error [insert pr_users]: ' . $e->getMessage());
+        exit('PDO error [update pr_rewards]: ' . $e->getMessage());
     }
 }
 
