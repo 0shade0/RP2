@@ -72,9 +72,11 @@ public function rewards() {
 // Kupovanje nagrade
     if(isset($_POST['buy_reward'])) {
         $reward = $cs->getRewardByID($ID, $_POST['buy_reward']);
-        $cs->buyReward($ID, $_POST['buy_reward'], $user->points, $reward->points_price);
 
-        $message_info = "Nagrada je uspješno kupljena.";
+        if($reward) {
+            $cs->buyReward($ID, $_POST['buy_reward'], $user->points, $reward->points_price);
+            $message_info = "Nagrada je uspješno kupljena.";
+        }
     }
 
 // Dodavanje nagrade

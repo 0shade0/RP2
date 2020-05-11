@@ -17,9 +17,9 @@
 <! –– ako nemamo dovoljno bodova za nagradu označimo -->
 <! –– ili ako je nagrada kupljena maknemo            -->
     <?php if($rewards != NULL) foreach($rewards as $row): ?>
-    <tr <?php if($user->points < $row->points_price && !$enter)
-                echo "class=expensive";
-            elseif($row->purchased) echo "class=green";?>>
+    <tr <?php if($row->purchased) echo "class=green";
+            elseif($user->points < $row->points_price && !$enter)
+                echo "class=expensive";?>>
     
         <td id="first_col">
             <text class="reward_left">
