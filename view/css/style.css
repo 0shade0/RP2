@@ -92,11 +92,53 @@ br {
 }
 
 .title {
+    position: relative;
     font-size: 36pt;
     text-align: center;
     margin: 0 auto;
     margin-top: 10px;
     margin-bottom: 30px;
+}
+
+.help {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    overflow: hidden;
+
+    width: 40px;
+    height: 40px;
+    transition-duration: 0.1s;
+}
+
+.help:hover {
+    overflow: visible;
+    transform: scale(1.1);
+    transition-duration: 0s;
+}
+
+.help img {
+    width: 40px;
+    float: right;
+    clear: both;
+    margin: 0;
+}
+
+.help p {
+    float: right;
+    clear: both;
+    margin: 0;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: white;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    font-size: 14pt;
+    width: 400px;
+}
+
+.help p:hover {
+    display: none;
 }
 
 .description {
@@ -514,13 +556,20 @@ body {
     width: 40px;
 }
 
-.input_line form {
+.input_line {
     display: block;
     margin: 0 auto;
     width: 80%;
     height: 50px;
     padding-top: 0px;
     overflow: visible;
+}
+
+.input_line form {
+    display: block;
+    margin: 0;
+    width: 100%;
+    margin-block-end: 0em;
 }
 
 .input_line input[type="text"] {

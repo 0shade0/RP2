@@ -1,4 +1,4 @@
-<?php global $controller, $action; ?>
+<?php global $controller, $action, $help; ?>
 
 <div class = "menu" id = "noselect">
         <?php if($controller!='user' || $action!='index')
@@ -20,4 +20,12 @@
         <a href='chorez.php?rt=account&logout=y' id="logout"></a>
 </div>
 
-<br> <div class = "title"> <?php echo $title; ?> </div>
+<br>
+
+<div class = "title">
+        <?php echo $title; ?>
+        <div class = "help">
+                <img src="./app/qMark.png">
+                <p> <?=$help;?> </p>
+        </div>
+</div>
