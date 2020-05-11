@@ -4,7 +4,7 @@
 <div class = "input_line">
         <div class = "error"><?php if(isset($message)) echo $message . "<br><br>";?></div>
 
-        <form name="add_reward_form" action="chorez.php?rt=user/rewards" method="post">
+        <form name="add_reward_form" action="chorez.php?rt=user/rewards<?php if($enter) echo "&id=".$ID; ?>" method="post">
             <input id="long" type="text" name="reward_name" placeholder="Nova nagrada" required>
             <input id="short" type="text" name="reward_price" placeholder="Bodovi" required>
             <input type="submit" name="add_reward" value="Dodaj">
@@ -23,7 +23,7 @@
     
         <td id="first_col">
             <text class="reward_left">
-                <form action="" method="post">
+                <form action="chorez.php?rt=user/rewards<?php if($enter) echo "&id=".$ID; ?>" method="post">
                     <input id="x" type="submit" value="<?=$row->ID?>" name="remove_reward">
                 </form>
             </text>
@@ -37,7 +37,7 @@
         </td>
         <td id="third_col">
             <?php if($user->points >= $row->points_price && !$row->purchased && !$enter): ?>
-                <form action="" method="post">
+                <form action="chorez.php?rt=user/rewards<?php if($enter) echo "&id=".$ID; ?>" method="post">
                     <input id="bod" type=submit value="<?=$row->ID?>" name="buy_reward">
                 </form>
             <?php endif; ?>

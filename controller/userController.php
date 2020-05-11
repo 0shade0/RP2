@@ -54,6 +54,9 @@ public function rewards() {
         $user_id = $cs->getUserByID($_GET['id']);
         if($user_id->ID_household != $user->ID_household)
             $enter = False;
+
+        if($user_id->ID === $_SESSION['user'])
+            $enter = False;
     }
 
     if($enter)
@@ -77,6 +80,7 @@ public function rewards() {
             $cs->buyReward($ID, $_POST['buy_reward'], $user->points, $reward->points_price);
             $message_info = "Nagrada je uspješno kupljena.";
         }
+        unset($_POST['buy_reward']);
     }
 
 // Dodavanje nagrade
@@ -93,9 +97,10 @@ public function rewards() {
                 $_POST['reward_price'],
                 '0');
             $cs->addNewReward($reward_new);
+            $message_info = "Nagrada je uspješno dodana.";
         }
 
-        $message_info = "Nagrada je uspješno dodana.";
+        unset($_POST['add_reward']);
     }
 
 // Uklanjanje nagrade
@@ -103,6 +108,7 @@ public function rewards() {
         $cs->deleteRewardByID($_POST['remove_reward']);
 
         $message_info = "Nagrada je uspješno uklonjena.";
+        unset($_POST['remove_reward']);
     }
 
 // Dohvat varijabli NAKON promjena

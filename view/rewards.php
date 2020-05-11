@@ -15,7 +15,7 @@
         <td id= second_col><?=number_format( $row->points_price );?></td>
         <td id="Third_col">
             <?php if($user->points >= $row->points_price): ?>
-                <form action="" method="post">
+                <form action="chorez.php?rt=user/rewards" method="post">
                     <input id="bod" type=submit value="<?=$row->ID?>" name="buy_reward">
                 </form>
             <?php endif; ?>

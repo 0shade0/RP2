@@ -11,7 +11,7 @@ $db = DB::getConnection();
 if(session_id() == '') session_start();
 
 $title = 'Naslov nije zadan';
-$help = 'Poruka za pomoć nije zadana. Poruka za pomoć nije zadana. Poruka za pomoć nije zadana. Poruka za pomoć nije zadana. Poruka za pomoć nije zadana. Poruka za pomoć nije zadana.';
+$help = 'Poruka za pomoć nije zadana.';
 
 if(isset($_POST['register']))
 {
@@ -48,5 +48,9 @@ $controllerName = $controller . 'Controller';
 require_once platformSlashes($dir . '/controller/' . $controllerName . '.php');
 $con = new $controllerName();
 $con->$action();
+
+
+// Čišćenje formi nakon obavljanja
+unset($_POST);
 
 ?>
