@@ -293,7 +293,8 @@ body {
     cursor: pointer;
 
     background-color: var(--teal);
-    transition-duration: 0.2s;
+    transition-duration: 0.3s;
+    transition-delay: 0.1s;
     transition-timing-function: ease-in;
     overflow: hidden;
 }
@@ -336,7 +337,7 @@ body {
     transform: scale(1.25);
     transition-duration: 0.2s;
     transition-delay: 0.005s;
-    filter: brightness(105%);
+    filter: brightness(100%);
 }
 
 #chores, #rewards, #household, #user, #logout{

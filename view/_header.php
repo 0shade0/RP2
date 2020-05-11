@@ -9,8 +9,8 @@
 
     <body id = "noselect">
 
-    <script> clicker_header = true; id = 'header_wrapper'</script>
-    <div class = "header_wrapper" id = "header_wrapper" onclick="headerWrapper(225, 270, 0, -210, id)">
+    <script> var clicker_header = true; </script>
+    <div class = "header_wrapper" id = "header_wrapper" onclick="headerWrapper(0, 225, '#4651e9')">
         <img class = "logo_gif" src="./app/chorez.gif" repeat alt="gif">   
         <img class = "logo" src="./app/chorez.png" repeat alt="logo">
         <table class = "by">
