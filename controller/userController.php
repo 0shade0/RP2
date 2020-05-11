@@ -61,11 +61,13 @@ public function rewards() {
         $ID =  $_GET['id'];
         $user = $user_id;
         $title = "Nagrade - " . $user->username;
-        if($user->admin) $title.= "*";
+        if($user_id->admin) $title.= "*";
     }
-    else $ID = $_SESSION['user'];
-
-    $rewards = $cs->getRewardsByID($ID);
+    else
+    {
+        $ID = $_SESSION['user'];
+        $user = $cs->getUserByID($ID);
+    }
 
 // Kupovanje nagrade
     if(isset($_POST['buy_reward'])) {
@@ -100,6 +102,10 @@ public function rewards() {
 
         $message_info = "Nagrada je uspješno uklonjena.";
     }
+
+// Dohvat varijabli NAKON promjena
+    $rewards = $cs->getRewardsByID($ID);
+    $user = $cs->getUserByID($ID);
 
     if(!$rewards) $message_info = "Nema nagrada";
 
