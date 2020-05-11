@@ -16,12 +16,3 @@ function headerWrapper(hFirst, hSecond, tFirst, tSecond, id) {
 
     clicker_header = !clicker_header;
 }
-
-
-
-// Brisanje podataka is formova nakon što se stranica učita
-$(document).ready(function(){
-    $("form").submit(function(){
-      event.preventDefault();
-    });
-  });
