@@ -331,6 +331,26 @@ public function getAllCategories($household = NULL) {
     return $ret;
 }
 
+public function getCategoryByID($categoryID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_categories  WHERE ID=:categoryID');
+        $st->execute(array('categoryID' => $categoryID));
+
+        if ($row = $st->fetch()) {
+            $category = Category::fromRow($row);
+    
+            return $category;
+        }
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_categories]: ' . $e->getMessage());
+    }
+}
+
 public function addNewCategory($household, $name) {
     $db = DB::getConnection();
 
@@ -345,6 +365,20 @@ public function addNewCategory($household, $name) {
     }
     catch(PDOException $e) {
         exit('PDO error [insert pr_categories]: ' . $e->getMessage());
+    }
+}
+
+public function deleteCategory($category) {
+    $db = DB::getConnection();
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_categories WHERE ID=:ID');
+
+        $st->execute(array(
+            'ID' => $category->ID ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [delete pr_categories]: ' . $e->getMessage());
     }
 }
 

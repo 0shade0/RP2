@@ -39,7 +39,9 @@ accountController
 * deleteChore(Chore)
 
 * getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
+* getCategoryByID(int)
 * addNewCategory(Household, str) - vraća ID dodane kategorije
+* deleteCategory(Category)
 
 * getRewardsByID(userID) 
 * getRewardByID(userID, rewardID)
