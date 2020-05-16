@@ -21,7 +21,7 @@ public function getUserByID($userID) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -38,7 +38,7 @@ public function getUserByUsername($username) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -56,7 +56,7 @@ public function getUserByEmail($email) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -74,8 +74,8 @@ public function addNewUser($user) {
     try {
     $st = $db->prepare(
         'INSERT INTO pr_users(ID_household, username, password, ' .
-        'email, points, admin, registration_sequence, registered) VALUES ' .
-        '(:ID_household, :username, :password, :email, :points, ' .
+        'email, points, image, admin, registration_sequence, registered) VALUES ' .
+        '(:ID_household, :username, :password, :email, :points, :image, ' .
         ':admin, :registration_sequence, :registered)');
 
     $st->execute(array(

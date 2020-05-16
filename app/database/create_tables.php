@@ -46,6 +46,7 @@ function create_table_users()
 			'password varchar(255) NOT NULL,'.
 			'email varchar(50) NOT NULL,' .
 			'points int NOT NULL,' .
+			'image int NOT NULL,' .
 			'admin int NOT NULL,' .
 			'registration_sequence varchar(20) NOT NULL,' .
 			'registered int NOT NULL)'

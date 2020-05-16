@@ -84,7 +84,7 @@ br {
     color: var(--teal);
 }
 
-.box {
+.box, .book, .house, .user_image {
     width: 400px;
     float: left;
     clear: both;
@@ -255,7 +255,7 @@ br {
 }
 
 body {
-    background-image: url("../../app/background.png");
+    background-image: url("../../app/image/background.png");
     background-size: cover;
     background-attachment: fixed;
     margin: 0;
@@ -347,28 +347,28 @@ body {
 }
 
 #chores {
-    background-image: url("../../app/Mchores.png");
+    background-image: url("../../app/image/Mchores.png");
 }
 
 #rewards {
-    background-image: url("../../app/Mbox.png");
+    background-image: url("../../app/image/Mbox.png");
 }
 
 #household {
-    background-image: url("../../app/Mhouse.png");
+    background-image: url("../../app/image/Mhouse.png");
 }
 
 #user {
-    background-image: url("../../app/Muser.png");
+    background-image: url("../../app/image/Muser.png");
 }
 
 #logout {
-    background-image: url("../../app/Mdoor_closed.png");
+    background-image: url("../../app/image/Mdoor_closed.png");
     transition-duration: 0.05s;
 }
 
 #logout:hover {
-    background-image: url("../../app/Mdoor_open.png");
+    background-image: url("../../app/image/Mdoor_open.png");
     transform: scale(1.2);
     transition-duration: 0.05s;
 }
@@ -437,11 +437,11 @@ body {
 }
 
 #bod {
-    background-image: url(../../app/bod.png);
+    background-image: url("../../app/image/bod.png");
 }
 
 #x {
-    background-image: url(../../app/x.png);
+    background-image: url("../../app/image/x.png");
 }
 
 
@@ -655,10 +655,10 @@ body {
 
 @font-face {
     font-family: Comfortaa;
-    src: url("../../app/Comfortaa-Regular.ttf");
+    src: url("../../app/image/font/Comfortaa-Regular.ttf");
 }
 
 @font-face {
     font-family: Marker;
-    src: url("../../app/123Marker.ttf");
+    src: url("../../app/image/font/123Marker.ttf");
 }

@@ -6,6 +6,7 @@ class User {
     protected $password;
     protected $email;
     protected $points;
+    protected $image;
     protected $admin;
     protected $registration_sequence;
     protected $registered;
