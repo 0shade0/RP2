@@ -31,7 +31,7 @@ br {
 }
 
 .logo, .logo_gif {
-    width: 480px;
+    width: 400px;
     margin: 25px;
     margin-bottom: 35px;
 
@@ -53,7 +53,7 @@ br {
 .by {
     border-collapse: separate;
     border-spacing: 30px 0px;
-    color: var(--teal);
+    color: var(--blue);
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14pt;
@@ -81,10 +81,10 @@ br {
 
 #noeffect:hover {
     transform: scale(1);
-    color: var(--teal);
+    color: var(--blue);
 }
 
-.box {
+.box, .book, .house, .user_image {
     width: 400px;
     float: left;
     clear: both;
@@ -255,7 +255,7 @@ br {
 }
 
 body {
-    background-image: url("../../app/background.png");
+    background-image: url("../../app/image/background.png");
     background-size: cover;
     background-attachment: fixed;
     margin: 0;
@@ -266,13 +266,14 @@ body {
 }
 
 .wrapper {
-    position: absolute;
-    top: 115px;
+    position: relative;
+    top: 60px;
     left: 0;
     right: 0;
 
     width: 1024px;
     margin: 0 auto;
+    margin-bottom: 50px;
     padding-bottom: 20px;
     overflow: hidden;
     background-color: #ffffff8a;
@@ -284,15 +285,14 @@ body {
     margin: 0;
     padding: 0;
     padding-bottom: 20px;
-    height: 270px;
+    height: 180px;
 
-    position: fixed;
-    top: -210px;
+    position: relative;
     z-index: 2;
 
     cursor: pointer;
 
-    background-color: var(--teal);
+    background-color: var(--blue);
     transition-duration: 0.3s;
     transition-delay: 0.1s;
     transition-timing-function: ease-in;
@@ -300,9 +300,9 @@ body {
 }
 
 .header_wrapper:hover {
-    background-color: var(--blue);
+    background-color: var(--teal);
     color: black;
-    transition-duration: 1s;
+    transition-duration: 0.3s;
     transition-timing-function: ease-out;
 }
 
@@ -347,28 +347,24 @@ body {
 }
 
 #chores {
-    background-image: url("../../app/Mchores.png");
+    background-image: url("../../app/image/Mchores.png");
 }
 
 #rewards {
-    background-image: url("../../app/Mbox.png");
+    background-image: url("../../app/image/Mbox.png");
 }
 
 #household {
-    background-image: url("../../app/Mhouse.png");
-}
-
-#user {
-    background-image: url("../../app/Muser.png");
+    background-image: url("../../app/image/Mhouse.png");
 }
 
 #logout {
-    background-image: url("../../app/Mdoor_closed.png");
+    background-image: url("../../app/image/Mdoor_closed.png");
     transition-duration: 0.05s;
 }
 
 #logout:hover {
-    background-image: url("../../app/Mdoor_open.png");
+    background-image: url("../../app/image/Mdoor_open.png");
     transform: scale(1.2);
     transition-duration: 0.05s;
 }
@@ -437,13 +433,12 @@ body {
 }
 
 #bod {
-    background-image: url(../../app/bod.png);
+    background-image: url("../../app/image/bod.png");
 }
 
 #x {
-    background-image: url(../../app/x.png);
+    background-image: url("../../app/image/x.png");
 }
-
 
 #second_col.green {
     background-color: green;
@@ -653,12 +648,73 @@ body {
     border-radius: 0px;
 }
 
+button.pick_Image {
+    position: absolute;
+    bottom: 50px;
+    right: 30px;
+
+    width: 90px;
+    height: 90px;
+
+    z-index: 3;
+    outline: none;
+    transition-duration: 0.3s;
+    background-color: var(--teal);
+    color: white;
+
+    font-size: 20pt;
+    font-family: Comfortaa;
+
+    cursor: pointer;
+
+    border: 20px solid var(--blue);
+    border-radius: 50%;
+}
+
+button.pick_Image:hover {
+    background-color: var(--orange);
+    border-width: 10px;
+}
+
+table.pick_Image {
+    table-layout: fixed;
+    transition-duration: 0.5s;
+    border-spacing: 0px;
+    position: absolute;
+    bottom: 50px;
+    right: 60px;
+
+    width: 0px;
+    height: 90px;
+    padding-right: 70px;
+
+    border: 2px solid var(--blue);
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.pick_Image td input[type=submit]{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: transparent;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+}
+
 @font-face {
     font-family: Comfortaa;
-    src: url("../../app/Comfortaa-Regular.ttf");
+    src: url("../../app/font/Comfortaa-Regular.ttf");
 }
 
 @font-face {
     font-family: Marker;
-    src: url("../../app/123Marker.ttf");
+    src: url("../../app/font/123Marker.ttf");
 }

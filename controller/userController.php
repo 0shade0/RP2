@@ -10,6 +10,12 @@ public function index() {
     $user = $cs->getUserByID($_SESSION['user']);
     $title = $user->username;
 
+    if(isset($_POST['user'])) {
+        if($_POST['user'] != $user->image) {
+            $cs->setUserImage($user->ID, $_POST['user']);
+        }
+    }
+
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/user.php');

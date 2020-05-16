@@ -6,19 +6,21 @@ class User {
     protected $password;
     protected $email;
     protected $points;
+    protected $image;
     protected $admin;
     protected $registration_sequence;
     protected $registered;
 
     // Konstruktor.
     public function __construct ($ID, $ID_household, $username, $password,
-        $email, $points, $admin, $registration_sequence, $registered) {
+        $email, $points, $image, $admin, $registration_sequence, $registered) {
         $this->ID = $ID;
         $this->ID_household = $ID_household;
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
         $this->points = $points;
+        $this->image = $image;
         $this->admin = $admin;
         $this->registration_sequence = $registration_sequence;
         $this->registered = $registered;

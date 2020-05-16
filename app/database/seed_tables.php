@@ -17,9 +17,9 @@ function seed_table_users()
 
 	try {
 		$st = $db->prepare('INSERT INTO pr_users' .
-			'(ID_household, username, password, email, points, ' .
+			'(ID_household, username, password, email, points, image,' .
 			'admin, registration_sequence, registered) VALUES ' .
-			'(:ID_household, :username, :password, :email, :points, ' .
+			'(:ID_household, :username, :password, :email, :points, :image,' .
 			':admin, :registration_sequence, :registered)');
 
 		// Prvo kućanstvo.
@@ -28,7 +28,8 @@ function seed_table_users()
 			'username' => 'Mirjana',
 			'password' => password_hash('mirjaninalozinka', PASSWORD_DEFAULT),
 			'email' => 'mirjana@mail.com',
-		 	'points' => 20,
+			'points' => 20,
+			'image' => 1,
 			'admin' => 1,
 			'registration_sequence' => 'abc',
 			'registered' => 1));
@@ -38,7 +39,8 @@ function seed_table_users()
 			'username' => 'Goran',
 			'password' => password_hash('goranovalozinka', PASSWORD_DEFAULT),
 			'email' => 'goran@mail.com',
-		 	'points' => 5,
+			'points' => 5,
+			'image' => 1,
 			'admin' => 1,
 			'registration_sequence' => 'def',
 			'registered' => 1));
@@ -48,7 +50,8 @@ function seed_table_users()
 			'username' => 'Josip',
 			'password' => password_hash('josipovalozinka', PASSWORD_DEFAULT),
 			'email' => 'josip@mail.com',
-		 	'points' => 1000,
+			'points' => 1000,
+			'image' => 1,
 			'admin' => 0,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
@@ -60,6 +63,7 @@ function seed_table_users()
 			'password' => password_hash('filipinalozinka', PASSWORD_DEFAULT),
 			'email' => 'filipa@mail.com',
 		 	'points' => 250,
+			'image' => 1,
 			'admin' => 1,
 			'registration_sequence' => 'jkl',
 			'registered' => 1));
@@ -70,6 +74,7 @@ function seed_table_users()
 			'password' => password_hash('aninalozinka', PASSWORD_DEFAULT),
 			'email' => 'ana@mail.com',
 		 	'points' => 315,
+			'image' => 1,
 			'admin' => 1,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
