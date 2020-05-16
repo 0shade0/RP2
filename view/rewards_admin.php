@@ -53,9 +53,9 @@
         <p id="left" class = "moji_bodovi"> Moji bodovi:</p>
         <table> <tr>
             <td><?=number_format( $user->points);?></td>
-            <td><img src="app/bod.png"></td>
+            <td><img src="./app/image/bod.png"></td>
         </tr> </table>
     </div>
 <?php endif; ?>
 
-<img class = "box" src="./app/Mbox.png">
+<img class = "box" src="./app/image/Mbox.png">

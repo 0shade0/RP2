@@ -127,6 +127,20 @@ public function addUserToHousehold($user, $household) {
     }
 }
 
+public function setUserImage($userID, $value) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare('UPDATE pr_users SET image = :value ' .
+            'WHERE ID=:userID');
+    
+        $st->execute(array('value' => $value, 'userID' => $userID));
+        }
+        catch(PDOException $e) {
+            exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kućanstava
 //--------------------------------------------------------------------------
