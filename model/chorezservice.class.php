@@ -142,6 +142,35 @@ public function setUserImage($userID, $value) {
     }
 }
 
+public function getUsersByHousehold($household_ID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_users  WHERE ID_household=:householdID
+            ORDER BY admin DESC');
+        $st->execute(array('householdID' => $household_ID));
+
+        // Bit će popunjen sa svim korisnicima iz kućanstva household_ID
+        $users = array();
+
+        while ($r = $st->fetch()) {
+            array_push($users, new User (
+                $r['ID'], $r['ID_household'], $r['username'],
+                $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
+                $r['registration_sequence'], $r['registered']));
+
+        }
+
+        // Vrati array sa svim nagradama korisnika userID.
+        // sortiran uzlazno po cijeni u bodovima
+        return $users;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_users]: ' . $e->getMessage());
+    }
+}
+
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kućanstava
 //--------------------------------------------------------------------------

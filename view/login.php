@@ -55,7 +55,7 @@
 
 	<p> Podaci kućanstva: </p>
 	<div>
-		<input placeholder="Ime" name="house_name" type="text" value="<?php if(isset($_POST['house_name']) && isset($_POST['register_new'])) echo $_POST['house_name'];?>">
+		<input placeholder="Ime kućanstva" name="house_name" type="text" value="<?php if(isset($_POST['house_name']) && isset($_POST['register_new'])) echo $_POST['house_name'];?>">
 	</div>
 	<div class = "error"><?php if(isset($message_hname)) { echo $message_hname; } ?></div>
 	<div>
@@ -70,7 +70,7 @@
 
 
 	<div>
-		<input placeholder="#ID" name="house_id" type="text" value="<?php if(isset($_POST['house_id']) && isset($_POST['register'])) echo $_POST['house_id'];?>">
+		<input placeholder="#ID kućanstva" name="house_id" type="text" value="<?php if(isset($_POST['house_id']) && isset($_POST['register'])) echo $_POST['house_id'];?>">
 	</div>
 	<div class = "error"><?php if(isset($message_hid)) { echo $message_hid; } ?></div>
 	<div>

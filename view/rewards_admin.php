@@ -1,6 +1,8 @@
 <div class = "info"><?php if(isset($message_info)) 
     echo $message_info . "<br><br>";?></div>
 
+<! -- Ubaci traku za dodavanje nagrada samo ako nisi u svom pofilu -->
+<?php if($enter): ?>
 <div class = "input_line">
         <div class = "error"><?php if(isset($message)) echo $message . "<br><br>";?></div>
 
@@ -11,6 +13,8 @@
         </form>
 </div>
 <br>
+<?php endif; ?>
+
 
 <! –– lista nagrada -->
 <table class = "rewards">
@@ -24,7 +28,8 @@
         <td id="first_col">
             <text class="reward_left">
                 <form action="chorez.php?rt=user/rewards<?php if($enter) echo "&id=".$ID; ?>" method="post">
-                    <input id="x" type="submit" value="<?=$row->ID?>" name="remove_reward">
+                    <input id="<?php if($row->purchased) echo 'check'; else echo 'x';?>"
+                        type="submit" value="<?=$row->ID?>" name="remove_reward">
                 </form>
             </text>
             <text class="reward_right">

@@ -33,7 +33,10 @@ public function household() {
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
     $household = $cs->getHouseholdByID($user->ID_household);
+    $users = $cs->getUsersByHousehold($user->ID_household);
     $title = $household->name;
+
+    if(!$users) $message_info = "Nema nagrada";
 
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');

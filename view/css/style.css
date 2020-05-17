@@ -12,6 +12,7 @@
 
 body {
     -ms-overflow-style: none;
+    height: auto;
 }
 
 br {
@@ -283,7 +284,7 @@ body {
 }
 
 .header_wrapper {
-    width: 120%;
+    width: 105%;
     margin: 0;
     padding: 0;
     padding-bottom: 20px;
@@ -359,6 +360,57 @@ body {
     transition-duration: 0.05s;
 }
 
+.household {
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    margin-bottom: 60px;
+    border-style: hidden;
+    vertical-align: center;
+
+    background-color: white;
+    border-radius: 50px;
+    border-collapse: collapse; 
+}
+
+.household tr {
+    height: 160px;
+}
+
+.household td {
+    border-bottom: 3px solid var(--blue);
+}
+
+
+.household #first_col {
+    width: 200px;
+    background-size: 150px 115px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 0;
+    margin: 0;
+}
+
+.household #second_col {
+    padding-left: 20px;
+    font-size: 24pt;
+}
+
+.household #third_col {
+    width: 25%;
+    font-family: Marker;
+    font-size: 24pt;
+    text-align: center;
+    padding-right: 20px;
+}
+
+.household #third_col img, .household #second_col img {
+    width: 30px;
+    position: relative;
+    top: 5px;
+}
+
+
 .rewards {
     margin: 0 auto;
     width: 75%;
@@ -430,6 +482,10 @@ body {
     background-image: url("../../app/image/x.png");
 }
 
+#check {
+    background-image: url("../../app/image/check.png");
+}
+
 #second_col.green {
     background-color: green;
 }
@@ -442,7 +498,7 @@ body {
     cursor: pointer;
 }
 
-#first_col {
+.rewards #first_col {
     width: 55%;
     background-color: white;
     padding: 20px;
@@ -455,7 +511,7 @@ body {
     border-top-left-radius: 35px;
 }
 
-#second_col {
+.rewards #second_col {
     width:32%;
     background-color: var(--blue);
     color: white;
@@ -465,7 +521,11 @@ body {
     font-family: Marker;
 }
 
-#third_col {
+.rewards #second_col.green {
+    background-color: green;
+}
+
+.rewards #third_col {
     width:13%;
     padding: 0;
     padding-left: 15px;
