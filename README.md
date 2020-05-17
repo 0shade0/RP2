@@ -28,8 +28,11 @@ accountController
 * addNewUser(User) - vraća ID dodanog korisnika
 * addUserToHousehold(User, Household)
 * set_registered(int) - postavlja vrijednost registered u bazi
+* setUserImage(ID, num)
+* getUsersByHousehold(ID)
 
-* addNewHousehold(Household) - vraća ID dodanog kućanstva
+
+* addNewHousehold(name, password) - vraća ID dodanog kućanstva
 * getHouseholdByID
 
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
