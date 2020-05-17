@@ -2,11 +2,13 @@
 class Household {
     protected $ID;
     protected $name;
+    protected $password;
 
     // Konstruktor.
-    public function __construct ($ID, $name) {
+    public function __construct ($ID, $name, $password) {
         $this->ID = $ID;
         $this->name = $name;
+        $this->password = $password;
     }
 
     // Getteri i setteri.

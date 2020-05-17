@@ -91,13 +91,17 @@ function seed_table_households()
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO pr_households (name) VALUES (:name)');
+		$st = $db->prepare('INSERT INTO pr_households (name, password) VALUES (:name, :password)');
 
 		// Prvo kućanstvo.
-		$st->execute(array('name' => 'Mirjanina obitelj'));
+		$st->execute(array(
+			'name' => 'Mirjanina obitelj',
+			'password' => password_hash('mirjaninaobitelj', PASSWORD_DEFAULT)));
 
 		// Drugo kućanstvo.
-		$st->execute(array('name' => 'Best friends'));
+		$st->execute(array(
+			'name' => 'Best friends',
+			'password' => password_hash('bestfriends', PASSWORD_DEFAULT)));
 	}
 	catch(PDOException $e) {
 		exit("PDO error [insert pr_households]: " . $e->getMessage());

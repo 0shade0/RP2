@@ -13,7 +13,7 @@ if(session_id() == '') session_start();
 $title = 'Naslov nije zadan';
 $help = 'Poruka za pomoć nije zadana.';
 
-if(isset($_POST['register']))
+if(isset($_POST['register']) || isset($_POST['register_new']))
 {
     $controller = 'account';
     $action = 'register';
