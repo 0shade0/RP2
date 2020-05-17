@@ -72,7 +72,7 @@ function create_table_households()
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS pr_households (' .
 			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-			'name varchar(100) NOT NULL)'
+			'name varchar(100) NOT NULL, password varchar(255) NOT NULL)'
 		);
 
 		$st->execute();

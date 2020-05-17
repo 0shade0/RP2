@@ -31,7 +31,7 @@ br {
 }
 
 .logo, .logo_gif {
-    width: 400px;
+    width: 300px;
     margin: 25px;
     margin-bottom: 35px;
 
@@ -51,31 +51,32 @@ br {
 }
 
 .by {
+    position:relative;
+    left: 360px;
+    top: 80px;
     border-collapse: separate;
-    border-spacing: 30px 0px;
     color: var(--blue);
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14pt;
-    float: right;
+    float: left;
     clear: both;
-    margin: 30px;
-    margin-top: 60px;
+    margin: 10px;
+    width: 950px;
 }
 
 .by td {
+    color: var(--teal);
     text-align: center;
     padding: 20px;
-    padding-left: 50px;
     transition-duration: 0.2s;
-    transition-delay: 0.005s;
+    transition-delay: 0s;
 }
 
 .by td:hover {
     color: white;
     transform: scale(1.2);
     transition-duration: 0.2s;
-    transition-delay: 0.005s;
 }
 
 
@@ -211,6 +212,7 @@ br {
 
     font-size: 20pt;
     height: 60px;
+    clear:both;
 }
 
 .login form input[type=submit]:hover {
@@ -267,7 +269,7 @@ body {
 
 .wrapper {
     position: relative;
-    top: 60px;
+    top: 40px;
     left: 0;
     right: 0;
 
@@ -281,29 +283,17 @@ body {
 }
 
 .header_wrapper {
-    width: 100%;
+    width: 120%;
     margin: 0;
     padding: 0;
     padding-bottom: 20px;
-    height: 180px;
+    height: 140px;
 
     position: relative;
     z-index: 2;
 
-    cursor: pointer;
-
     background-color: var(--blue);
-    transition-duration: 0.3s;
-    transition-delay: 0.1s;
-    transition-timing-function: ease-in;
     overflow: hidden;
-}
-
-.header_wrapper:hover {
-    background-color: var(--teal);
-    color: black;
-    transition-duration: 0.3s;
-    transition-timing-function: ease-out;
 }
 
 .menu{
@@ -650,7 +640,7 @@ body {
 
 button.pick_Image {
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     right: 30px;
 
     width: 90px;
@@ -659,7 +649,7 @@ button.pick_Image {
     z-index: 3;
     outline: none;
     transition-duration: 0.3s;
-    background-color: var(--teal);
+    background-color: white;
     color: white;
 
     font-size: 20pt;
@@ -672,7 +662,7 @@ button.pick_Image {
 }
 
 button.pick_Image:hover {
-    background-color: var(--orange);
+    background-color: var(--teal);
     border-width: 10px;
 }
 
@@ -681,7 +671,7 @@ table.pick_Image {
     transition-duration: 0.5s;
     border-spacing: 0px;
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     right: 60px;
 
     width: 0px;

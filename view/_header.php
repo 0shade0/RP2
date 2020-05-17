@@ -14,13 +14,10 @@
         <img class = "logo" src="./app/image/chorez.png" repeat alt="logo">
         <table class = "by">
             <tr>
-                <td id="noeffect" rowspan="2">autori: </td>
-                <td  colspan="2">tin štefanić</td>
-                <td  colspan="2">tihana štifanić</td>
-            </tr>
-            <tr>
-                <td  colspan="2">damir čupić</td>
-                <td  colspan="2">karlo murtezani</td>
+                <td>tin štefanić</td>
+                <td>tihana štifanić</td>
+                <td>damir čupić</td>
+                <td>karlo murtezani</td>
             </tr>
         </table>
     </div>

@@ -84,6 +84,7 @@ public function addNewUser($user) {
         'password' => $user->password,
         'email' => $user->email,
         'points' => $user->points,
+        'image' => $user->image,
         'admin' => $user->admin,
         'registration_sequence' => $user->registration_sequence,
         'registered' => $user->registered));
@@ -147,28 +148,24 @@ public function setUserImage($userID, $value) {
 public function getHouseholdByID($householdID) {
     $db = DB::getConnection();
 
-    try {
     $st = $db->prepare('SELECT * FROM pr_households  WHERE ID=:householdID');
     $st->execute(array('householdID' => $householdID));
 
     if ($r = $st->fetch()) {
-        $household = new Household ($r['ID'], $r['name']);
+        $household = new Household (
+            $r['ID'], $r['name'], $r['password']);
 
         return $household;
     }
-    }
-    catch(PDOException $e) {
-        exit('PDO error [select pr_households]: ' . $e->getMessage());
-    }
 }
 
-public function addNewHousehold($household) {
+public function addNewHousehold($name, $password) {
     $db = DB::getConnection();
 
     try {
-    $st = $db->prepare('INSERT INTO pr_households(name) VALUES (:name)');
+        $st = $db->prepare('INSERT INTO pr_households(name, password) VALUES (:name, :password)');
 
-    $st->execute(array('name' => $household->name));
+        $st->execute(array('name' => $name, 'password' => $password));
 
     // Vrati ID dodanog kućanstva.
     return $db->lastInsertId();

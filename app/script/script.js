@@ -1,28 +1,5 @@
 
 $( document ).ready(function() {
-// pulldown header
-    var count1 = 0;
-    $(".user_footer").click(function() {
-    count1++;
-    count1 % 2 ? $firstFunction() : $secondFunction();
-
-    function $firstFunction() {
-        $('#user_footer').css({
-            'height':'200%',
-            'background-color':'#4651e9',
-            'cursor':'default'
-        })
-    }
-
-    function $secondFunction() {
-        $('#user_footer').css({
-            'height':'270px',
-            'background-color':'',
-            'cursor':'pointer'
-        })
-    }
-
-    });
 
 // izaberi profilnu sliku / prikaži slike
     var count2 = 0;

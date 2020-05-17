@@ -26,6 +26,10 @@ public function index() {
                 $_SESSION['user'] = $user->ID;
                 $_SESSION['name'] = $user->username;
 
+                if(isset($_POST['remember']))
+                    setcookie("member_login", $user->username, time() + (86400 * 30), "/");
+                else setcookie('member_login', null, -1, '/'); 
+
                 $success = True;
             }
             else $message = 'Neispravna lozinka.';
@@ -58,24 +62,25 @@ public function index() {
 
 // Obrada korisnikovog zahtjeva za registracijom.
 public function register() {
-    /* Ovdje za sad uopće neću provjeravati u kojem je obliku korisnik
-    napisao email, username, lozinku i podudaraju li se lozinka i
-    ponovljena lozinka. Najbolje da to napravimo pomoću Javascripta.
-    */
+
     $cs = new ChorezService();
 
     // Provjeri postoji jesu li varijable postavljene, i postoje li već
     // u bazi korisnici s istim korisničkim imenom ili e-mail adresom.
 
+    if(isset($_POST['register'])) $novo = False;
+    else $novo = True;
+
     // korisničko ime
     if (!isset($_POST['reg_name']))
         $message_name = 'Morate upisati korisničko ime.';
 
-    else if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['reg_name']))
+    else if (!preg_match("/^[A-Za-z0-9\d\s]+$/", $_POST['reg_name']))
         $message_name = 'Korisničko ime može se sastojati samo od slova i znamenki.';
 
     else if ($cs->getUserByUsername($_POST['reg_name']) !== null)
         $message_name = 'Korisnik s tim korisničkim imenom već postoji.'; 
+
 
     // e-mail adresa
     if (!isset($_POST['reg_email']))
@@ -104,10 +109,59 @@ public function register() {
     else if ($_POST['reg_password'] != $_POST['reg_repeat'])
         $message_password = 'Lozinke nisu jednake.';
 
+
+
+    // ime i lozinka novog kućanstva
+    if(isset($novo) && $novo) {
+        if (!isset($_POST['house_name']) || $_POST['house_name'] === "")
+            $message_hname = 'Morate upisati ime kućanstva.';
+
+        else if (!preg_match("/^[A-Za-z0-9\d\s]+$/", $_POST['house_name']))
+            $message_hname = 'Ime kućanstva može se sastojati samo od slova i znamenki.';
+
         
 
+        if(!isset($_POST['house_newpassword']) || $_POST['house_newpassword'] === "") 
+            $message_hpassword_new = 'Morate upisati lozinku.';
+
+    }
+
+
+    // ID i lozinka postojećeg kućanstva
+    if (isset($novo) && !$novo) {
+        if (!isset($_POST['house_id']) || $_POST['house_id'] === "")
+            $message_hid = 'Morate upisati ime kućanstva.';
+
+        else if (!preg_match("/^[1-9][0-9]*$/", $_POST['house_id']))
+            $message_hid = '#ID kućanstva mora biti broj (različit od 0).';
+
+        else if ($cs->getHouseholdByID($_POST['house_id']) === null)
+            $message_hid = 'Kućanstvo s tim #ID ne postoji.';
+        
+        
+            
+        
+        if(!isset($_POST['house_password']) || $_POST['house_password'] === "") 
+            $message_hpassword = 'Morate upisati lozinku.';
+
+        else if (!isset($message_hid)) {
+            $household =  $cs->getHouseholdByID($_POST['house_id']);
+
+            if(password_verify($_POST['house_password'], $household->password)) {
+                $passwordHash =
+                    password_hash($_POST['house_password'], PASSWORD_DEFAULT);
+                $ID_household = $household->ID;
+            }
+                
+            else $message_hpassword = 'Neispravna lozinka.';
+        }
+    }
+
+
     // Registracija.
-    if(!isset($message_name) && !isset($message_email) && !isset($message_password) ) {
+    if(
+        !isset($message_name) && !isset($message_email) && !isset($message_password) &&
+        !isset($message_hname) && !isset($message_hpassword_new) && !isset($message_hid) && !isset($message_hpassword)) {
         // Generiraj registracijski niz = niz znakova duljine 20.
         $sequence = '';
         for ($i = 0; $i < 20; ++$i)
@@ -117,19 +171,30 @@ public function register() {
         $passwordHash =
             password_hash($_POST['reg_password'], PASSWORD_DEFAULT);
 
+
         /* Spremi korisnika u bazu s vrijednostima:
             ID = 0 (MySQL će dodijeliti jedinstveni ID)
-            ID_household = 0 (dodijelit ćemo mu kućanstvo kad potvrdi e-mail)
+            ID_household = broj novog odnosno postojećeg kućanstva ovisno o vrsti registracije
             username = $_POST['reg_name']
             password = $passwordHash,
             email = $_POST['reg_email']
             points = 0
-            admin = 1 (svi novoregistrirani će automatski biti administratori)
+            image = 1
+            admin = 0 ako ulazi u neko kućanstvo, 1 ako stvara novo kućanstvo
             registration_sequence = $sequence
             registered = 0.
         */
-        $user = New User(0, 0, $_POST['reg_name'], $passwordHash,
-                $_POST['reg_email'], 0, 1, $sequence, 0);
+        $admin = 0;
+
+        // Stvaramo novo kućanstvo ako je izabrana ta opcija
+        if($novo) {
+            $password_household = password_hash($_POST['house_newpassword'], PASSWORD_DEFAULT);
+            $ID_household = $cs->addNewHousehold($_POST['house_name'], $password_household);
+            $admin = 1;
+        }
+
+        $user = New User(0, $ID_household, $_POST['reg_name'], $passwordHash,
+                $_POST['reg_email'], 0, 1, $admin, $sequence, 0);
 
         $userID = $cs->addNewUser($user);
 
@@ -155,12 +220,14 @@ public function register() {
 
         // TODO: Testirati na serveru RP2, dodati automatsko ime servera
         // i još malo popraviti poruku.
-        mail($email, $subject, $bodyWrapped);
+        //mail($email, $subject, $bodyWrapped);
 
         $message_info = 'Uspješna registracija! Da biste dovršili ' .
         'registraciju, trebate potvrditi svoju e-mail adresu. ' .
         'Link za potvrdu poslan je na Vaš e-mail. <br>' . 
         '(napomena: provjerite neželjenu poštu)';
+
+        $_POST = array();
     }
 
     global $title, $dir;
@@ -183,18 +250,6 @@ public function activate() {
 
             // Postavi registriran na 1.
             $cs->set_registered($_GET['userID'], 1);
-
-            // Stvori kućanstvo i dodaj ga u njega.
-            $householdName = 'Kućanstvo korisnika ' . $user->username;
-            $household = new Household(0, $householdName);
-
-            $householdID = $cs->addNewHousehold($household);
-
-            // Uzmi kućanstvo iz baze s dodijeljenim ID-jem.
-            $household = $cs->getHouseholdByID($householdID);
-
-            // Dodaj korisnika u kućanstvo.
-            $cs->addUserToHousehold($user, $household);
         }
     }
 
