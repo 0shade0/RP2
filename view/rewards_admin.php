@@ -2,7 +2,6 @@
     echo $message_info . "<br><br>";?></div>
 
 <! -- Ubaci traku za dodavanje nagrada samo ako nisi u svom pofilu -->
-<?php if($enter): ?>
 <div class = "input_line">
         <div class = "error"><?php if(isset($message)) echo $message . "<br><br>";?></div>
 
@@ -13,7 +12,6 @@
         </form>
 </div>
 <br>
-<?php endif; ?>
 
 
 <! –– lista nagrada -->

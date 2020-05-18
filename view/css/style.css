@@ -730,15 +730,14 @@ table.pick_Image {
     table-layout: fixed;
     transition-duration: 0.5s;
     border-spacing: 0px;
+    border-collapse: collapse;
     position: absolute;
-    bottom: 40px;
-    right: 60px;
+    bottom: 20px;
+    right: 135px;
 
     width: 0px;
-    height: 90px;
-    padding-right: 70px;
+    height: 180px;
 
-    border: 2px solid var(--blue);
     background-color: white;
     border-radius: 25px;
     cursor: pointer;

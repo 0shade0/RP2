@@ -3,7 +3,6 @@ $( document ).ready(function() {
 
 // izaberi profilnu sliku / prikaži slike
     var count2 = 0;
-    $("table.pick_Image").hide();
     $("button.pick_Image").click(function() {
         count2++;
         count2 % 2 ? $firstFunction() : $secondFunction();
@@ -11,15 +10,19 @@ $( document ).ready(function() {
     function $firstFunction() {
         $("button.pick_Image").css('background-color', 'var(--orange)');
         $("button.pick_Image").css('border-width', '10');
-        $("table.pick_Image").show();
-        $("table.pick_Image").width(600);
+
+        $("table.pick_Image").css('width','560px');
+        $("table.pick_Image").css('border','2px solid var(--blue)');
+        $(".pick_Image input").css('display','');
     }
 
     function $secondFunction() {
         $("button.pick_Image").css('background-color', '');
         $("button.pick_Image").css('border-width', '');
-        $("table.pick_Image").fadeOut(500);
-        $("table.pick_Image").width(0);
+
+        $("table.pick_Image").css('width','0px');
+        $("table.pick_Image").css('border','none');
+        $(".pick_Image input").css('display','none');
     }
 })
 
