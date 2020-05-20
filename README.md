@@ -30,6 +30,7 @@ accountController
 * set_registered(int) - postavlja vrijednost registered u bazi
 * setUserImage(ID, num)
 * getUsersByHousehold(ID)
+* giveUserPoints(ID, points)
 
 
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
