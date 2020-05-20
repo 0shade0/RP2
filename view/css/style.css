@@ -13,6 +13,7 @@
 body {
     -ms-overflow-style: none;
     height: auto;
+    overflow-anchor: none;
 }
 
 br {
@@ -89,7 +90,7 @@ br {
 .box, .book, .house, .user_image {
     width: 400px;
     float: left;
-    clear: both;
+    clear: none;
     margin: 20px;
 }
 
@@ -360,6 +361,87 @@ body {
     transition-duration: 0.05s;
 }
 
+.chores {
+    margin: 0 auto;
+    width: 85%;
+    text-align: left;
+    margin-bottom: 30px;
+    font-size: 14pt;
+    border-spacing: 0px 0px;
+    border-radius: 20px;
+}
+
+.chores th {
+    text-align: center;
+}
+
+.chores tr {
+    height: 65px;
+    background-color: rgba(255,255,255,0.8);
+}
+
+.chores td {
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 60px;  
+}
+
+.chores td.chore_category {
+    width: 140px;
+}
+
+.chores td.chore_time {
+    text-align: right;
+    width: 70px;
+}
+
+.chores td.chore_points {
+    text-align: right;
+    font-family: Marker;
+    font-size: 16pt;
+    width: 120px;
+}
+
+.chores td.chore_points img {
+    width: 25px;
+    position: relative;
+    top: 5px;
+}
+
+.chores td.chore_confirm {
+    width: 50px;
+    border: none;
+    background-color: none;
+}
+
+.chores td.chore_confirm input {
+    border: 2px solid;
+    width: 40px;
+    height: 40px;
+}
+
+.chore_submit {
+    float: right;
+    clear: none;
+    margin-right: 5%;
+    width: 100px;
+    height: 100px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center center;
+    background-image: url("../../app/image/check_blue.png");
+
+    transition-duration: 0.2s;
+}
+
+.chore_submit:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+
 .household {
     margin: 0 auto;
     width: 75%;
@@ -369,12 +451,15 @@ body {
     vertical-align: center;
 
     background-color: white;
-    border-radius: 50px;
     border-collapse: collapse; 
 }
 
 .household tr {
     height: 160px;
+}
+
+.household tr.me {
+    background-color: var(--blue);
 }
 
 .household td {
@@ -396,12 +481,16 @@ body {
     font-size: 24pt;
 }
 
+#admin_col img{
+    width:80px;
+}
+
 .household #third_col {
     width: 25%;
     font-family: Marker;
     font-size: 24pt;
-    text-align: center;
-    padding-right: 20px;
+    text-align: right;
+    padding-right: 30px;
 }
 
 .household #third_col img, .household #second_col img {
@@ -467,11 +556,11 @@ body {
     width: 50px;
 
     background-color: transparent;
+    background-size: cover;
+    background-position: center center;
     color: rgba(0,0,0,0);
     
     border: none;
-    background-size: cover;
-    background-position: center center;
 }
 
 #bod {
@@ -534,6 +623,7 @@ body {
 
 .balance {
     position: absolute;
+    z-index: 1;
     right: 100px;
     bottom: 60px;
     height: 60px;
@@ -700,8 +790,8 @@ body {
 
 button.pick_Image {
     position: absolute;
-    bottom: 40px;
-    right: 30px;
+    bottom: 60px;
+    left: 290px;
 
     width: 90px;
     height: 90px;
@@ -726,17 +816,22 @@ button.pick_Image:hover {
     border-width: 10px;
 }
 
+
 table.pick_Image {
+    z-index: 4;
+
+    overflow: hidden;
     table-layout: fixed;
     transition-duration: 0.5s;
     border-spacing: 0px;
     border-collapse: collapse;
     position: absolute;
-    bottom: 20px;
-    right: 135px;
+    bottom: 70px;
+    left: 380px;
 
     width: 0px;
-    height: 180px;
+    height: 0px;
+    padding: 10px;
 
     background-color: white;
     border-radius: 25px;

@@ -124,7 +124,7 @@ function seed_table_chores()
 		// Zadaci za korisnike u prvom kućanstvu.
 		$st->execute(array(
 			'ID_user' => 1,
-			'ID_category' => 1,
+			'ID_category' => 7,
 			'description' => 'Oprati suđe',
 			'time_next' => '2020-05-15 20:20:00',
 			'mandatory' => 0,
@@ -133,8 +133,18 @@ function seed_table_chores()
 			'done' => 0));
 
 		$st->execute(array(
+			'ID_user' => 1,
+			'ID_category' => 8,
+			'description' => 'Oprati prozore',
+			'time_next' => '2020-05-17 15:30:00',
+			'mandatory' => 1,
+			'type' => 3,
+			'points' => 50,
+			'done' => 0));
+
+		$st->execute(array(
 			'ID_user' => 2,
-			'ID_category' => 1,
+			'ID_category' => 7,
 			'description' => 'Oprati suđe',
 			'time_next' => '2020-05-15 20:20:00',
 			'mandatory' => 0,
@@ -144,9 +154,9 @@ function seed_table_chores()
 
 		$st->execute(array(
 			'ID_user' => 3,
-			'ID_category' => 2,
+			'ID_category' => 8,
 			'description' => 'Oprati prozore',
-			'time_next' => '2020-06-07 15:30:00',
+			'time_next' => '2020-05-07 15:30:00',
 			'mandatory' => 1,
 			'type' => 3,
 			'points' => 50,
@@ -155,7 +165,7 @@ function seed_table_chores()
 		// Zadaci za korisnike u drugom kućanstvu.
 		$st->execute(array(
 			'ID_user' => 4,
-			'ID_category' => 1,
+			'ID_category' => 9,
 			'description' => 'Izvesti Flokija',
 			'time_next' => '2020-05-20 17:15:00',
 			'mandatory' => 1,
@@ -165,7 +175,7 @@ function seed_table_chores()
 
 		$st->execute(array(
 			'ID_user' => 4,
-			'ID_category' => 2,
+			'ID_category' => 10,
 			'description' => 'Iznijeti smeće',
 			'time_next' => '2020-05-21 16:00:00',
 			'mandatory' => 0,
@@ -175,7 +185,7 @@ function seed_table_chores()
 
 		$st->execute(array(
 			'ID_user' => 5,
-			'ID_category' => 2,
+			'ID_category' => 10,
 			'description' => 'Iznijeti smeće',
 			'time_next' => '2020-05-21 16:00:00',
 			'mandatory' => 0,
@@ -198,6 +208,31 @@ function seed_table_categories()
 	try {
 		$st = $db->prepare('INSERT INTO pr_categories' .
 			'(ID_household, name) VALUES (:ID_household, :name)');
+
+		// Default kategorije
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Čišćenje'));
+
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Vrt'));	
+
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Higijena'));	
+
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Zdravlje'));	
+
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Održavanje'));	
+
+		$st->execute(array(
+			'ID_household' => 0,
+			'name' => 'Škola'));	
 
 		// Kategorije prvog kućanstva.
 		$st->execute(array(

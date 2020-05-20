@@ -171,6 +171,22 @@ public function getUsersByHousehold($household_ID) {
     }
 }
 
+public function giveUserPoints($ID, $points) {
+    $db = DB::getConnection();
+
+    $user = $this->getUserByID($ID);
+
+    try {
+        $st = $db->prepare('UPDATE pr_users SET points = :points ' .
+            'WHERE ID=:userID');
+    
+        $st->execute(array('points' => $user->points + $points, 'userID' => $ID));
+        }
+        catch(PDOException $e) {
+            exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kućanstava
 //--------------------------------------------------------------------------
@@ -214,6 +230,17 @@ public function setCompleted ($chore) {
 
     $time_next = $chore->time_next;
 
+    // Ako je zadatak riješen, gotovo
+    if($chore->done) return;
+
+    // Provjeri je li zadatak riješiv tj. je li mu vrijeme
+    $now = new DateTime();
+    $date = new DateTime($time_next);
+
+    $interval = $now->diff($date);
+
+    if($interval->invert !== 1) return;
+
     // Ako je zadatak ponavljajući, onda će postati aktivan od ponoći.
     $today = date("Y-m-d") . " 00:00:00";
 
@@ -225,39 +252,26 @@ public function setCompleted ($chore) {
 
     // Mijenjam mjesec u idući mjesec.
     } else if ($chore->type == 3) {
-        $month = substr($time_next, 5, 2);
-        $year = substr($time_next, 0, 4);
-
-        if ($month === "09") $month = "10";
-        else if ($month === "12") {
-            $month = "00";
-            $year = strval($year + 1);
-        } else {
-            $month[1] = strval($month[1] + 1);
-        }
-
-        $time_next = $year . "-" . $month . "01 00:00:00";
+        $time_next = date("Y-m-d", time() + 30*24*60*60) . " 00:00:00";
     
     } else if ($chore->type == 4) {
-        $year = substr($time_next, 0, 4);
-
-        $year = strval($year + 1);
-
-        $time_next = $year . substr($time_next, 4);
+        $time_next = date("Y-m-d", time() + 365*24*60*60) . " 00:00:00";
     }
 
     try {
-    $st = $db->prepare('UPDATE pr_chores SET time_next = :time_next, done = :done' .
-        'WHERE ID=:choreID');
+        $st = $db->prepare('UPDATE pr_chores SET time_next = :time_next, done = :done ' .
+            'WHERE ID=:choreID');
 
-    // Stupac done će biti "1" za zadatke koji se ne ponavljaju, inače "0".
-    $st->execute(array('time_next' => $time_next, "done" => intval(! $chore->type),
-         'choreID' => $chore->ID));
+        // Stupac done će biti "1" za zadatke koji se ne ponavljaju, inače "0".
+        $st->execute(array('time_next' => $time_next, 'done' => intval(! $chore->type),
+            'choreID' => $chore->ID));
 
-    // Ako dođe do ovdje tablica je uspješno promijenjena.
-    $chore->time_next = $time_next;
-    $chore->done = intval(! $chore->type);
-    
+        // Ako dođe do ovdje tablica je uspješno promijenjena.
+        $chore->time_next = $time_next;
+        $chore->done = intval(! $chore->type);
+
+        $this->giveUserPoints($chore->ID_user, $chore->points);
+
     }
     catch(PDOException $e) {
         exit('PDO error [update pr_chores]: ' . $e->getMessage());
@@ -284,13 +298,13 @@ public function getChoreByID($choreID) {
     }
 }
 
-public function getChoresByUser($user) {
+public function getChoresByUser($ID_user) {
     $db = DB::getConnection();
 
     try {
         $st = $db->prepare(
-            'SELECT * FROM pr_chores  WHERE ID_user=:userID');
-        $st->execute(array('userID' => $user->ID_user));
+            'SELECT * FROM pr_chores  WHERE ID_user=:userID ORDER BY time_next DESC');
+        $st->execute(array('userID' => $ID_user));
 
         $chores = array();
 
@@ -354,7 +368,7 @@ public function getAllCategories($household = NULL) {
     
     if ($household !== NULL) {
         try {
-            $st = $db->prepare('SELECT * FROM pr_categories WHERE ID_household=:ID_household');
+            $st = $db->prepare('SELECT * FROM pr_categories WHERE ID_household=:ID_household OR ID_household="0"');
         
             $st->execute(array("ID_household" => $household->ID_household));
     

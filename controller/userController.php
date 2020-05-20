@@ -22,10 +22,6 @@ public function index() {
     require_once platformSlashes($dir . '/view/_footer.php');
 }
 
-// Pregled podataka pojedinog ukućana
-public function show() {
-}
-
 // Pregled kućanstva
 public function household() {
     global $title, $db, $dir;

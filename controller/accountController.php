@@ -49,14 +49,10 @@ public function index() {
     }
     // Uspješan login.
     else {
-        global $title, $dir;
-        $title = 'Popis zadataka';
-
-        // Prikaži popis zadataka.
-        require_once platformSlashes($dir . '/view/_header.php');
-        require_once platformSlashes($dir . '/view/main_menu.php');
-        require_once platformSlashes($dir . '/view/chore_list.php');
-        require_once platformSlashes($dir . '/view/_footer.php');
+        global $dir;
+        require_once platformSlashes($dir . '/controller/choreController.php');
+        $forward = New choreController();
+        $forward->index();
     }
 }
 
