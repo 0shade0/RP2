@@ -278,6 +278,62 @@ public function setCompleted ($chore) {
     }
 }
 
+// Stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
+public function setCompletedAlt ($chore) {
+    $db = DB::getConnection();
+
+    $time_next = $chore->time_next;
+
+    // Ako je zadatak ponavljajući, onda će postati aktivan od ponoći.
+    $today = date("Y-m-d") . " 00:00:00";
+
+    if ($chore->type == 1) { // Dnevni zadatak.
+        // time vraća vrijeme u sekundama, dan ima 24*60*60 sekundi.
+        $time_next = date("Y-m-d", time() + 24*60*60) . " 00:00:00"; 
+    } else if ($chore->type == 2) {
+        $time_next = date("Y-m-d", time() + 7*24*60*60) . " 00:00:00";
+
+    // Mijenjam mjesec u idući mjesec.
+    } else if ($chore->type == 3) {
+        $month = substr($time_next, 5, 2);
+        $year = substr($time_next, 0, 4);
+
+        if ($month === "09") $month = "10";
+        else if ($month === "12") {
+            $month = "00";
+            $year = strval($year + 1);
+        } else {
+            $month[1] = strval($month[1] + 1);
+        }
+
+        $time_next = $year . "-" . $month . "-01 00:00:00";
+    
+    } else if ($chore->type == 4) {
+        $year = substr($time_next, 0, 4);
+
+        $year = strval($year + 1);
+
+        $time_next = $year . substr($time_next, 4);
+    }
+
+    try {
+    $st = $db->prepare('UPDATE pr_chores SET time_next = :time_next, done = :done' .
+        'WHERE ID=:choreID');
+
+    // Stupac done će biti "1" za zadatke koji se ne ponavljaju, inače "0".
+    $st->execute(array('time_next' => $time_next, "done" => intval(! $chore->type),
+         'choreID' => $chore->ID));
+
+    // Ako dođe do ovdje tablica je uspješno promijenjena.
+    $chore->time_next = $time_next;
+    $chore->done = intval(! $chore->type);
+    
+    }
+    catch(PDOException $e) {
+        exit('PDO error [update pr_chores]: ' . $e->getMessage());
+    }
+}
+
 public function getChoreByID($choreID) {
     $db = DB::getConnection();
 
