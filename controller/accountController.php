@@ -6,8 +6,6 @@ class accountController {
 public function index() {
     $success = False;
 
-    if(isset($_GET['logout']) && $_GET['logout']==='y') unset ($_SESSION['user']);
-
     if (isset($_POST['log_name']) && isset($_POST['log_password'])) {
         $cs = new ChorezService();
         // Dohvaćamo hashirani password iz baze.

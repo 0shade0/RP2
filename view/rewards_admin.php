@@ -1,7 +1,7 @@
 <div class = "info"><?php if(isset($message_info)) 
     echo $message_info . "<br><br>";?></div>
 
-<! -- Ubaci traku za dodavanje nagrada samo ako nisi u svom pofilu -->
+<!-- Ubaci traku za dodavanje nagrada samo ako nisi u svom pofilu -->
 <div class = "input_line">
         <div class = "error"><?php if(isset($message)) echo $message . "<br><br>";?></div>
 
@@ -14,10 +14,10 @@
 <br>
 
 
-<! –– lista nagrada -->
+<!–– lista nagrada -->
 <table class = "rewards">
-<! –– ako nemamo dovoljno bodova za nagradu označimo -->
-<! –– ili ako je nagrada kupljena maknemo            -->
+<!–– ako nemamo dovoljno bodova za nagradu označimo -->
+<!–– ili ako je nagrada kupljena maknemo            -->
     <?php if($rewards != NULL) foreach($rewards as $row): ?>
     <tr <?php if($row->purchased) echo "class=green";
             elseif($user->points < $row->points_price && !$enter)
@@ -51,14 +51,14 @@
 <?php endforeach;?>
 </table>
 
-<?php if(!$enter): ?>
-    <div class = "balance">
-        <p id="left" class = "moji_bodovi"> Moji bodovi:</p>
-        <table> <tr>
-            <td><?=number_format( $user->points);?></td>
-            <td><img src="./app/image/bod.png"></td>
-        </tr> </table>
-    </div>
-<?php endif; ?>
+<div class = "balance">
+    <p id="left" class = "moji_bodovi">
+        <?php if(!$enter) echo 'Moji bodovi:';
+            else echo 'Bodovi';?>   </p>
+    <table> <tr>
+        <td><?=number_format( $user->points);?></td>
+        <td><img src="./app/image/bod.png"></td>
+    </tr> </table>
+</div>
 
 <img class = "box" src="./app/image/Mbox.png">

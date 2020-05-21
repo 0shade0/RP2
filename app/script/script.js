@@ -58,18 +58,60 @@ $( document ).ready(function() {
 
     $("table.chores td.chore_category").each( function() {
         $(this).css('background-color', `${stringToColour($(this).text())}B3`)
+        $(this).css('border-top', `2px solid ${stringToColour($(this).text())}`)
         $(this).siblings().css('border-top', `2px solid ${stringToColour($(this).text())}`)
     })
 
 // ako je zadatak označen onda se nešto dogodi
     $('.chores td.chore_confirm input[type="checkbox"]').click(function(){
         if($(this).prop("checked") == true){
-            $(this).parent().parent().css('filter','brightness(75%)')
+            $(this).parent().parent().css('transform','scale(1.05)')
+            $(this).parent().css('background-color','var(--blue)')
         }
         else if($(this).prop("checked") == false){
-            $(this).parent().parent().css('filter','brightness(100%)')
+            $(this).parent().parent().css('transform','scale(1.0)')
+            $(this).parent().css('background-color','')
         }
     });
     
+// chore_create opcije
+// Obojaj kategorije
+    $("div.create_category div").each( function() {
+        $(this).css('background-color', `${stringToColour($(this).text())}B3`)
+        $(this).css('transition-curation', '0.2s')
+    })
+// Klikom na kategoriju ubaci u text input
+    $("div.create_category div").click( function() {
+        $(".category_input").val($(this).text())
+    })
+// Klikom na kratnost ubaci u text input
+    $.fn.checkinput = function() {
+        switch($(".time_input").val()) {
+            case "1":
+                $(".create_time span").text("Dnevni")
+              break;
+            case "2":
+                $(".create_time span").text("Tjedni")
+              break;
+            case "3":
+                $(".create_time span").text("Mjesečni")
+            break;
+            case "4":
+                $(".create_time span").text("Godišnji")
+            break;
+            default:
+                $(".time_input").val(0)
+                $(".create_time span").text("Jednokratan")
+          }
+    }
+
+    $("div.create_frequency div").click( function() {
+        $(".time_input").val($(this).children("p").text())
+        $.fn.checkinput()
+    })
+
+    $(".time_input").change(function(){
+        $.fn.checkinput()
+    })
 
 });

@@ -2,10 +2,10 @@
     echo $message_info . "<br><br>";?></div>
 
 
-<! –– lista nagrada -->
+<!–– lista nagrada -->
 <table class = "rewards">
-<! –– ako nemamo dovoljno bodova za nagradu označimo -->
-<! –– ili ako je nagrada kupljena maknemo            -->
+<!–– ako nemamo dovoljno bodova za nagradu označimo -->
+<!–– ili ako je nagrada kupljena maknemo            -->
     <?php if($rewards != NULL) foreach($rewards as $row): ?>
     <?php if($row->purchased) continue; else {?>
     <tr <?php if($user->points < $row->points_price)

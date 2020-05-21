@@ -1,36 +1,48 @@
-<!-- Ovo je placeholder view. -->
 
-<div class="chore_create">
-    <form action="chorez.php?rt=chore" method="post" id="chore_create_form">
-        Ime zadatka:
-        <input type="text" name="chore_name" required> <br>
+<div class="chore_create_form">
+    <form action="chorez.php?rt=chore/show&id=<?=$user->ID?>" method="post" id="chore_create_form">
+        <p> Opis zadatka </p>
+        <input class="chore_description" type="text" name="chore_description" required> <br>
 
-        Opis zadatka: <br>
-        <textarea name="chore_description" rows="4" cols="50" required>
-        </textarea> <br>
+        <p> Kategorija zadatka </p>
+        <div class="create_category">
+            <?php foreach ($categories as $row): ?>
+                <div> <?=$row->name?>
+                    <?php if($row->ID_household !== 0): ?>
+                        <a href="chorez.php?rt=chore/create&id=<?=$user->ID?>&rmv=<?=$row->ID?>">
+                            <img src="./app/image/x.png">
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
-        Tip zadataka: 
-        <select name="chore_category">
-            <?php
-                foreach ($categories as $key => $category) {
-                	if ($key === 0) $selected = "selected";
-                    else $selected = "";
-                    echo "<option value='" . $category . "'" . $selected . ">" . $category;
-                    
-                    echo "</option>";
-                }
-            ?>
-        </select> <br>
+        <p> Učestalost zadatka </p>
+        <div class="create_frequency" >
+            <div> <p>0</p> Jednokratan </div>
+            <div> <p>1</p> Dnevni </div>
+            <div> <p>2</p> Tjedni </div>
+            <div> <p>3</p> Mjesečni </div>
+            <div> <p>4</p> Godišnji </div>
+        </div>
 
-        Kada treba obaviti zadatak?
-        <input type="text" name="chore_time_next" value= <?php echo "'" . date("Y-m-d H:i:s") . "'"; ?> required> <br>
+        <input class="category_input" type=text placeholder=Kategorija name="chore_category" required>
 
-        Je li zadatak nužan?
-       	<input type="checkbox" name="chore_mandatory" value="True"> <br>
+        <div class="create_time">
+            <input class="time_input" type=text placeholder=# value=0 name="time_input" required>
+            <span> Jednokratan </span>
+        </div>
+
+        <div class="create_time">
+            <input type=checkbox class="create_mandatory" name="create_mandatory">
+            <label name="create_mandatory"> Za cijelo kućanstvo </label>
+        </div>
+
+        <div class="create_points">
+            <input type="text" name="chore_points" required>
+            <img src="./app/image/bod.png">
+        </div>
         
-        Koliko bodova vrijedi zadatak?
-        <input type="text" name="chore_points" required> <br>
-        
-        <input type="submit" name="chore_submit" value="Stvori novi zadatak!"> <br>
+        <input class="create_submit" type="submit" name="chore_submit" value="Stvori novi zadatak!">
     </form>
 </div>

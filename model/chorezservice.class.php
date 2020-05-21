@@ -298,13 +298,73 @@ public function getChoreByID($choreID) {
     }
 }
 
+// dohvaća zadatke koji tek trebaju doći /osobne i od kućanstva
+public function getFutureChoresByUser($ID_user, $ID_household) {
+    $db = DB::getConnection();
+
+    try {
+        $chores = array();
+
+        $st = $db->prepare(
+            'SELECT * FROM pr_chores ' .
+            'WHERE ID_user=:userID AND time_next > DATE(NOW()) ' .
+            'AND mandatory=1 ORDER BY time_next ASC');
+        $st->execute(array('userID' => $ID_user));
+
+        while ($row = $st->fetch())
+            array_push($chores, Chore::fromRow($row));
+
+        $st = $db->prepare(
+            'SELECT pr_chores.* FROM pr_users JOIN pr_chores ' .
+            'WHERE ID_user = pr_users.ID AND ID_household=:householdID ' .
+            'AND time_next > DATE(NOW()) AND mandatory=0 ORDER BY time_next ASC');
+        $st->execute(array('householdID' => $ID_household));
+
+        while ($row = $st->fetch())
+            array_push($chores, Chore::fromRow($row));
+
+        return $chores;
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_chores]: ' . $e->getMessage());
+    }
+}
+
+// dohvaća zadatke čiji je datum prošao (dakle sada trebaju biti vidljivi)
 public function getChoresByUser($ID_user) {
     $db = DB::getConnection();
 
     try {
         $st = $db->prepare(
-            'SELECT * FROM pr_chores  WHERE ID_user=:userID ORDER BY time_next DESC');
+            'SELECT * FROM pr_chores ' .
+            'WHERE ID_user=:userID AND time_next < DATE(NOW()) ' .
+            'AND mandatory=1 ORDER BY time_next DESC');
         $st->execute(array('userID' => $ID_user));
+
+        $chores = array();
+
+        while ($row = $st->fetch())
+            array_push($chores, Chore::fromRow($row));
+
+        return $chores;
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_chores]: ' . $e->getMessage());
+    }
+}
+
+// Dohvaća samo mandatory:0 zadatke iz kućanstva
+public function getChoresByHousehold($ID_household) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT pr_chores.* FROM pr_users JOIN pr_chores ' . 
+            'WHERE ID_user = pr_users.ID AND ID_household=:householdID ' .
+            'AND time_next < DATE(NOW()) AND mandatory=0 ORDER BY time_next DESC');
+        $st->execute(array('householdID' => $ID_household));
 
         $chores = array();
 
@@ -361,19 +421,19 @@ public function deleteChore($chore) {
 
 // Vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo
 // prosljeđeno funkciji.
-public function getAllCategories($household = NULL) {
+public function getAllCategories($ID_household = NULL) {
     $db = DB::getConnection();
     
-    $ret = Category::getDefaultCategories();
+    $ret = array();
     
-    if ($household !== NULL) {
+    if ($ID_household !== NULL) {
         try {
             $st = $db->prepare('SELECT * FROM pr_categories WHERE ID_household=:ID_household OR ID_household="0"');
         
-            $st->execute(array("ID_household" => $household->ID_household));
+            $st->execute(array("ID_household" => $ID_household));
     
             while ($row = $st->fetch()) {
-                array_push($ret, $row["name"]);
+                array_push($ret, new Category ($row['ID'], $row['ID_household'], $row['name']));
             }
     
         } catch(PDOException $e) {

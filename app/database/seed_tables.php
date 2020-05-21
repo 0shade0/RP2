@@ -29,7 +29,7 @@ function seed_table_users()
 			'password' => password_hash('mirjaninalozinka', PASSWORD_DEFAULT),
 			'email' => 'mirjana@mail.com',
 			'points' => 20,
-			'image' => 1,
+			'image' => 13,
 			'admin' => 1,
 			'registration_sequence' => 'abc',
 			'registered' => 1));
@@ -40,7 +40,7 @@ function seed_table_users()
 			'password' => password_hash('goranovalozinka', PASSWORD_DEFAULT),
 			'email' => 'goran@mail.com',
 			'points' => 5,
-			'image' => 1,
+			'image' => 11,
 			'admin' => 1,
 			'registration_sequence' => 'def',
 			'registered' => 1));
@@ -51,7 +51,7 @@ function seed_table_users()
 			'password' => password_hash('josipovalozinka', PASSWORD_DEFAULT),
 			'email' => 'josip@mail.com',
 			'points' => 1000,
-			'image' => 1,
+			'image' => 9,
 			'admin' => 0,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
@@ -63,7 +63,7 @@ function seed_table_users()
 			'password' => password_hash('filipinalozinka', PASSWORD_DEFAULT),
 			'email' => 'filipa@mail.com',
 		 	'points' => 250,
-			'image' => 1,
+			'image' => 2,
 			'admin' => 1,
 			'registration_sequence' => 'jkl',
 			'registered' => 1));
@@ -74,7 +74,7 @@ function seed_table_users()
 			'password' => password_hash('aninalozinka', PASSWORD_DEFAULT),
 			'email' => 'ana@mail.com',
 		 	'points' => 315,
-			'image' => 1,
+			'image' => 4,
 			'admin' => 1,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
@@ -145,9 +145,9 @@ function seed_table_chores()
 		$st->execute(array(
 			'ID_user' => 2,
 			'ID_category' => 7,
-			'description' => 'Oprati suđe',
-			'time_next' => '2020-05-15 20:20:00',
-			'mandatory' => 0,
+			'description' => 'Oprati veš',
+			'time_next' => '2020-05-23 20:20:00',
+			'mandatory' => 1,
 			'type' => 1,
 			'points' => 20,
 			'done' => 0));
@@ -162,6 +162,88 @@ function seed_table_chores()
 			'points' => 50,
 			'done' => 0));
 
+		$st->execute(array(
+			'ID_user' => 1,
+			'ID_category' => 2,
+			'description' => 'Okopaj krumpir',
+			'time_next' => '2020-05-20 20:20:00',
+			'mandatory' => 1,
+			'type' => 0,
+			'points' => 150,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 1,
+			'ID_category' => 5,
+			'description' => 'Usisati kuću',
+			'time_next' => '2020-05-22 15:30:00',
+			'mandatory' => 0,
+			'type' => 2,
+			'points' => 50,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 2,
+			'ID_category' => 7,
+			'description' => 'Skuhati ručak',
+			'time_next' => '2020-05-15 20:20:00',
+			'mandatory' => 1,
+			'type' => 1,
+			'points' => 200,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 3,
+			'ID_category' => 6,
+			'description' => 'Riješiti zadaću',
+			'time_next' => '2020-05-07 15:30:00',
+			'mandatory' => 1,
+			'type' => 1,
+			'points' => 100,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 1,
+			'ID_category' => 5,
+			'description' => 'Obrisati prašinu',
+			'time_next' => '2020-05-15 20:20:00',
+			'mandatory' => 0,
+			'type' => 2,
+			'points' => 40,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 1,
+			'ID_category' => 2,
+			'description' => 'Zaliti cvijeće',
+			'time_next' => '2020-05-17 15:30:00',
+			'mandatory' => 0,
+			'type' => 3,
+			'points' => 100,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 2,
+			'ID_category' => 3,
+			'description' => 'Obrisati kupaonicu',
+			'time_next' => '2020-05-15 20:20:00',
+			'mandatory' => 0,
+			'type' => 2,
+			'points' => 50,
+			'done' => 0));
+
+		$st->execute(array(
+			'ID_user' => 3,
+			'ID_category' => 6,
+			'description' => 'Pročitati lektiru',
+			'time_next' => '2020-05-07 15:30:00',
+			'mandatory' => 1,
+			'type' => 3,
+			'points' => 300,
+			'done' => 0));
+
+			
+
 		// Zadaci za korisnike u drugom kućanstvu.
 		$st->execute(array(
 			'ID_user' => 4,
@@ -175,16 +257,6 @@ function seed_table_chores()
 
 		$st->execute(array(
 			'ID_user' => 4,
-			'ID_category' => 10,
-			'description' => 'Iznijeti smeće',
-			'time_next' => '2020-05-21 16:00:00',
-			'mandatory' => 0,
-			'type' => 2,
-			'points' => 10,
-			'done' => 0));
-
-		$st->execute(array(
-			'ID_user' => 5,
 			'ID_category' => 10,
 			'description' => 'Iznijeti smeće',
 			'time_next' => '2020-05-21 16:00:00',

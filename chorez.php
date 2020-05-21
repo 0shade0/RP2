@@ -6,9 +6,12 @@ function platformSlashes($path){
     return str_replace('/', DIRECTORY_SEPARATOR, $path);
 }
 
+// Logout opcija
+if(session_id() == '') session_start();
+if(isset($_GET['logout']) && $_GET['logout']==='y') unset ($_SESSION['user']);
+
 require_once platformSlashes($dir . '/app/database/db.class.php');
 $db = DB::getConnection();
-if(session_id() == '') session_start();
 
 $title = 'Naslov nije zadan';
 $help = 'Poruka za pomoć nije zadana.';
@@ -41,6 +44,12 @@ else
         $action = $parts[1];
     else
         $action = 'index';
+}
+
+// Ako sam ulogiran, onda preusmjeri account screen na chore screen
+if(isset($_SESSION['user']) && $controller === 'account') {
+    $controller = 'chore';
+    $action = 'index';
 }
 
 $controllerName = $controller . 'Controller';
