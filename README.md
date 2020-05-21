@@ -39,7 +39,9 @@ accountController
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
 * setCompletedAlt(Chore) - alternativa za gornju funkciju
 * getChoreByID(int)
+* getFutureChoresByUser(User)
 * getChoresByUser(User)
+* getChoresByHousehold(Household)
 * addNewChore(Chore) - vraća ID dodanog zadatka
 * deleteChore(Chore)
 
