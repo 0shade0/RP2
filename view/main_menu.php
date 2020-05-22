@@ -13,22 +13,25 @@ $user_menu = $cs->getUserByID($_SESSION['user']);?>
                         "style = background-image:url('./app/image/user" . $user_menu->image . ".png')> </span>";?>
         </td>
         <td>
+                <?php if($title !== 'Događaji' && isset($_SESSION['event']) && $_SESSION['event'])
+                echo "<a id=events_alert href='chorez.php?rt=user/events'> </a>";
+
+                else if($title !=='Događaji')
+                echo "<a id=events href='chorez.php?rt=user/events'> </a>";
+                else echo "<span id=events class=not_selected> </span>";?>
+        </td>
+        <td>
+                <?php if($title !== 'Popis zadataka')
+                echo "<a id=chores href='chorez.php?rt=chore'> </a>";
+                else echo "<span id=chores class=not_selected> </span>";?>
+        </td>
+        <td>
                 <?php if($controller!='user' || $action!='household')
                 echo "<a id=household href='chorez.php?rt=user/household'> </a>";
                 else echo "<span id=household class=not_selected> </span>";?>
         </td>
         <td>
-                <?php if($title !== 'Popis mojih zadataka')
-                echo "<a id=chores href='chorez.php?rt=chore'> </a>";
-                else echo "<span id=chores class=not_selected> </span>";?>
-        </td>
-        <td>
-                <?php if(True)
-                echo "<a id=events href='chorez.php?rt=user/'> </a>";
-                else echo "<span id=events class=not_selected> </span>";?>
-        </td>
-        <td>
-                <?php if($title !== 'Moje nagrade')
+                <?php if($title !== 'Nagrade')
                 echo "<a id=rewards href='chorez.php?rt=user/rewards'> </a>";
                 else echo "<span id=rewards class=not_selected> </span>";?>
         </td>

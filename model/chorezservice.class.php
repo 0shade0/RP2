@@ -5,6 +5,7 @@ require_once platformSlashes($dir . '/model/household.class.php');
 require_once platformSlashes($dir . '/model/chore.class.php');
 require_once platformSlashes($dir . '/model/category.class.php');
 require_once platformSlashes($dir . '/model/reward.class.php');
+require_once platformSlashes($dir . '/model/event.class.php');
 
 class ChorezService {
 //--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ public function getUserByID($userID) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['event'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -38,7 +39,7 @@ public function getUserByUsername($username) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['event'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -56,7 +57,7 @@ public function getUserByEmail($email) {
     if ($r = $st->fetch()) {
         $user = new User (
             $r['ID'], $r['ID_household'], $r['username'],
-            $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
+            $r['password'], $r['email'], $r['points'], $r['image'], $r['event'], $r['admin'],
             $r['registration_sequence'], $r['registered']);
 
         return $user;
@@ -74,8 +75,8 @@ public function addNewUser($user) {
     try {
     $st = $db->prepare(
         'INSERT INTO pr_users(ID_household, username, password, ' .
-        'email, points, image, admin, registration_sequence, registered) VALUES ' .
-        '(:ID_household, :username, :password, :email, :points, :image, ' .
+        'email, points, image, event, admin, registration_sequence, registered) VALUES ' .
+        '(:ID_household, :username, :password, :email, :points, :image, :event, ' .
         ':admin, :registration_sequence, :registered)');
 
     $st->execute(array(
@@ -85,6 +86,7 @@ public function addNewUser($user) {
         'email' => $user->email,
         'points' => $user->points,
         'image' => $user->image,
+        'event' => $user->event,
         'admin' => $user->admin,
         'registration_sequence' => $user->registration_sequence,
         'registered' => $user->registered));
@@ -157,7 +159,7 @@ public function getUsersByHousehold($household_ID) {
         while ($r = $st->fetch()) {
             array_push($users, new User (
                 $r['ID'], $r['ID_household'], $r['username'],
-                $r['password'], $r['email'], $r['points'], $r['image'], $r['admin'],
+                $r['password'], $r['email'], $r['points'], $r['image'], $r['event'], $r['admin'],
                 $r['registration_sequence'], $r['registered']));
 
         }
@@ -181,6 +183,34 @@ public function giveUserPoints($ID, $points) {
             'WHERE ID=:userID');
     
         $st->execute(array('points' => $user->points + $points, 'userID' => $ID));
+        }
+        catch(PDOException $e) {
+            exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
+public function setEventsSeen($ID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare('UPDATE pr_users SET event = 1 ' .
+            'WHERE ID=:userID');
+    
+        $st->execute(array('userID' => $ID));
+        }
+        catch(PDOException $e) {
+            exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
+public function setEventsUnseen($ID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare('UPDATE pr_users SET event = 0 ' .
+            'WHERE ID=:userID');
+    
+        $st->execute(array('userID' => $ID));
         }
         catch(PDOException $e) {
             exit('PDO error [update pr_users]: ' . $e->getMessage());
@@ -709,6 +739,94 @@ public function buyReward($ID_user, $ID_reward, $points, $price) {
     }
     catch(PDOException $e) {
         exit('PDO error [update pr_rewards]: ' . $e->getMessage());
+    }
+}
+//--------------------------------------------------------------------------
+//  Funkcije za dohvaćanje iz tablice događaja
+//--------------------------------------------------------------------------
+public function getEventsByUser($user) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_events  WHERE ID_user=:userID
+            ORDER BY time_set DESC');
+        $st->execute(array('userID' => $user->ID));
+
+        // Bit će popunjen sa svim podacima eventova korisnika user
+        $events = array();
+
+        while ($row = $st->fetch()) {
+            array_push($events, Event::fromRow($row));
+        }
+
+        // Vrati array sa svim eventovima korisnika user
+        return $events;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_rewards]: ' . $e->getMessage());
+    }
+}
+
+public function getEventsByHousehold($household) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_events  WHERE ID_household=:householdID AND ID_user=0
+            ORDER BY time_set DESC');
+        $st->execute(array('householdID' => $household->ID));
+
+        // Bit će popunjen sa svim podacima eventova kućanstva household koji nisu osobni eventovi (id_user = 0)
+        $events = array();
+
+        while ($row = $st->fetch()) {
+            array_push($events, Event::fromRow($row));
+        }
+
+        // Vrati array sa svim eventovima korisnika kućanstva household.
+        return $events;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_rewards]: ' . $e->getMessage());
+    }
+}
+
+
+// Brisanje događaja starijih od tjedan dana
+public function cleanEvents() {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_events WHERE datetime < NOW() - INTERVAL 1 WEEK');
+        $st->execute();
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_rewards]: ' . $e->getMessage());
+    }
+}
+
+
+// Stvara novi event pomoću user podataka i opisa text
+public function createEvent($user, $text) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare(
+        'INSERT INTO pr_events(ID_user, ID_household, description, time_set) ' .
+        'VALUES (:ID_user, :ID_household, :description, NOW())');
+
+    $st->execute(array(
+        'ID_user' => $user->ID,
+        'ID_household' => $user->ID_household,
+        'description' => $text ));
+
+        // Podigni zastavicu da user nije vidio poruke
+        $this->setEventsUnseen($user->ID);
+    }
+    catch(PDOException $e) {
+        exit('PDO error [insert pr_rewards]: ' . $e->getMessage());
     }
 }
 

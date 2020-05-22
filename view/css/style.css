@@ -6,8 +6,24 @@
     --blue: #4651e9;
 }
 
+/* width */
 ::-webkit-scrollbar {
-    display: none;
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--blue); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    filter: brightness(90%);
 }
 
 a, img {
@@ -18,6 +34,8 @@ body {
     -ms-overflow-style: none;
     height: auto;
     overflow-anchor: none;
+
+    overflow-x: hidden;
 }
 
 br {
@@ -91,8 +109,9 @@ br {
     color: var(--blue);
 }
 
-.box, .book, .house, .user_image {
+.box, .book, .house, .user_image, .events {
     width: 400px;
+    height: 300px;
     float: left;
     clear: none;
     margin: 20px;
@@ -312,18 +331,20 @@ body {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 25px;
-    height: 90px;
+    height: 100px;
     transform:scale(1.0);
     background-color: var(--blue);
+
 }
 
 .menu table {
     width: 100%;
+    border-spacing: 0 0;
 }
 
 .menu a, span {
     display: inline-block;
-    height:90px;
+    height:100px;
     width:120px;
     margin: 0;
     transition-delay: 0.005s;
@@ -341,7 +362,7 @@ body {
     filter: brightness(100%);
 }
 
-#chores, #rewards, #household, #user, #events, #logout{
+#chores, #rewards, #household, #user, #events, #events_alert,#logout{
     background-color:transparent;
     background-size: cover;
     background-position: center center;
@@ -361,6 +382,11 @@ body {
 
 #events {
     background-image: url("../../app/image/Mevents.png");
+}
+
+#events_alert {
+    background-image: url("../../app/image/MeventsAlert.png");
+    filter: none;
 }
 
 #logout {
@@ -421,7 +447,8 @@ body {
 
 .chores td.chore_time {
     text-align: center;
-    width: 140px;
+    width: 120px;
+    padding-left: 0;
 }
 
 .chores td.chore_points {
@@ -430,6 +457,7 @@ body {
     font-size: 16pt;
     width: 120px;
     padding-right: 10px;
+    padding-left: 0;
 }
 
 .chores td.chore_points img {
@@ -711,7 +739,7 @@ body {
 }
 
 .household #third_col {
-    width: 20%;
+    width: 30%;
     font-family: Marker;
     font-size: 24pt;
     text-align: right;
@@ -719,7 +747,7 @@ body {
 }
 
 .household #third_col img, .household #second_col img {
-    width: 30px;
+    width: 35px;
     position: relative;
     top: 5px;
 }
@@ -802,6 +830,11 @@ body {
 
 #second_col.green {
     background-color: green;
+}
+
+.rewards form input[type=submit]:focus {
+    outline: none;
+    border: none;
 }
 
 .rewards form input[type=submit]:hover {
@@ -1077,6 +1110,84 @@ table.pick_Image {
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
+}
+
+.event_wrapper::-webkit-scrollbar {
+    display: default;
+}
+
+.event_wrapper {
+    width: 75%;
+    
+    background-color: white;
+    margin: 0 auto;
+
+    margin-top: 20px;
+}
+
+.events_household, .events_my {
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+
+    padding-top: 30px;
+}
+
+.event_wrapper button {
+    float: left;
+    clear: none;
+    height: 60px;
+
+    border: none;
+    outline: none;
+
+    font-family: Comfortaa;
+    font-size: 16pt;
+
+    background-color: transparent;
+    transition-duration: 0s;
+}
+
+.bluedot, .orangedot {
+    height: 20px;
+    width: 20px;
+    
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.bluedot {
+    background-color: var(--blue);
+}
+
+.orangedot {
+    background-color: var(--orange);
+}
+
+.event_wrapper table {
+    width: 90%;
+    border-spacing: 0px 20px;
+
+    margin: 0 auto;
+
+    font-size: 16pt;
+    font-family: Comfortaa;
+}
+
+.event_wrapper table tr {
+    min-height: 40px;
+}
+
+.event_wrapper #firstcol {
+    width: 80%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.event_wrapper #secondcol {
+    width: 20%;
+    text-align: center;
 }
 
 @font-face {

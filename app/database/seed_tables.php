@@ -8,6 +8,7 @@ seed_table_households();
 seed_table_chores();
 seed_table_categories();
 seed_table_rewards();
+seed_table_events();
 
 exit(0);
 
@@ -17,9 +18,9 @@ function seed_table_users()
 
 	try {
 		$st = $db->prepare('INSERT INTO pr_users' .
-			'(ID_household, username, password, email, points, image,' .
+			'(ID_household, username, password, email, points, image, event, ' .
 			'admin, registration_sequence, registered) VALUES ' .
-			'(:ID_household, :username, :password, :email, :points, :image,' .
+			'(:ID_household, :username, :password, :email, :points, :image, :event, ' .
 			':admin, :registration_sequence, :registered)');
 
 		// Prvo kućanstvo.
@@ -30,6 +31,7 @@ function seed_table_users()
 			'email' => 'mirjana@mail.com',
 			'points' => 20,
 			'image' => 13,
+			'event' => 0,
 			'admin' => 1,
 			'registration_sequence' => 'abc',
 			'registered' => 1));
@@ -41,6 +43,7 @@ function seed_table_users()
 			'email' => 'goran@mail.com',
 			'points' => 5,
 			'image' => 11,
+			'event' => 0,
 			'admin' => 1,
 			'registration_sequence' => 'def',
 			'registered' => 1));
@@ -52,6 +55,7 @@ function seed_table_users()
 			'email' => 'josip@mail.com',
 			'points' => 1000,
 			'image' => 9,
+			'event' => 0,
 			'admin' => 0,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
@@ -64,6 +68,7 @@ function seed_table_users()
 			'email' => 'filipa@mail.com',
 		 	'points' => 250,
 			'image' => 2,
+			'event' => 0,
 			'admin' => 1,
 			'registration_sequence' => 'jkl',
 			'registered' => 1));
@@ -75,6 +80,7 @@ function seed_table_users()
 			'email' => 'ana@mail.com',
 		 	'points' => 315,
 			'image' => 4,
+			'event' => 0,
 			'admin' => 1,
 			'registration_sequence' => 'ghi',
 			'registered' => 1));
@@ -371,5 +377,40 @@ function seed_table_rewards()
 
 	echo 'Ubacio u tablicu pr_rewards.<br>';
 }
+
+function seed_table_events()
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare('INSERT INTO pr_events' .
+			'(ID_user, ID_household, description, time_set) VALUES ' .
+			'(:ID_user, :ID_household, :description, :time_set)');
+
+		$st->execute(array(
+			'ID_user' => 3,
+			'ID_household' => 1,
+			'description' => 'Kupljena nagrada - Sladoled',
+			'time_set' => '2020-05-21 16:00:00'));
+
+		$st->execute(array(
+			'ID_user' => 3,
+			'ID_household' => 1,
+			'description' => 'Novi zadatak - Riješi zadaću (Mirjana)',
+			'time_set' => '2020-05-19 8:00:00'));
+
+		$st->execute(array(
+			'ID_user' => 0,
+			'ID_household' => 1,
+			'description' => 'Novi zadatak - Iznijeti smeće (Mirjana)',
+			'time_set' => '2020-05-20 12:00:00'));
+	}
+	catch(PDOException $e) {
+		exit("PDO error [insert pr_events]: " . $e->getMessage());
+	}
+
+	echo 'Ubacio u tablicu pr_rewards.<br>';
+}
+
 
 ?>

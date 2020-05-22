@@ -122,4 +122,58 @@ $( document ).ready(function() {
         $.fn.checkinput()
     })
 
+// Events gumbovi za toggle između mojih i kućanskih obavjesti
+    $("div.events_household").hide()
+    $(".my_button").css({
+        'background-color':'white',
+        'color':'black',
+        'cursor':'default',
+        'width':'60%'
+    })
+    $(".household_button").css({
+        'background-color':'var(--blue)',
+        'color':'white',
+        'cursor':'pointer',
+        'width':'40%'
+    })
+
+    $(".my_button").mouseover(function () {
+        $(".event_wrapper button").css('transition-duration','0.3s')
+    })
+
+
+    $(".my_button").click( function () {
+        $("div.events_household").hide()
+        $("div.events_my").show()
+        $(".my_button").css({
+            'background-color':'white',
+            'color':'black',
+            'cursor':'default',
+            'width':'60%'
+        })
+        $(".household_button").css({
+            'background-color':'var(--blue)',
+            'color':'white',
+            'cursor':'pointer',
+            'width':'40%'
+        })
+    })
+
+    $(".household_button").click( function () {
+        $("div.events_household").show()
+        $("div.events_my").hide()
+        $(".household_button").css({
+            'background-color':'white',
+            'color':'black',
+            'cursor':'default',
+            'width':'60%'
+        })
+        $(".my_button").css({
+            'background-color':'var(--orange)',
+            'color':'white',
+            'cursor':'pointer',
+            'width':'40%'
+        })
+    })
+
 });

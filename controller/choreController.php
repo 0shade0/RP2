@@ -6,7 +6,7 @@ class choreController {
 public function index() {
     global $title, $db, $dir;
 
-    $title = 'Popis mojih zadataka';
+    $title = 'Popis zadataka';
     $cs = new ChorezService();
     // Provjeravamo je li neki od zadataka označen kao riješen ili obrisan
     if(isset($_POST['chore_submit'])) {
@@ -59,7 +59,7 @@ public function index() {
 public function show() {
     global $title, $db, $dir;
 
-    $title = 'Popis mojih zadataka';
+    $title = 'Popis zadataka';
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
     $id=$user->ID;
@@ -86,7 +86,7 @@ public function show() {
     if($user_show->admin) $title .= '*';
 
     if($_GET['id'] === $_SESSION['user']) {
-        $title = "Popis mojih zadataka";
+        $title = "Popis zadataka";
         $my_page = True;
     }
 

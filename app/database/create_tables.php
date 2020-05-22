@@ -6,6 +6,7 @@ create_table_households();
 create_table_chores();
 create_table_categories();
 create_table_rewards();
+create_table_events();
 
 exit(0);
 
@@ -47,6 +48,7 @@ function create_table_users()
 			'email varchar(50) NOT NULL,' .
 			'points int NOT NULL,' .
 			'image int NOT NULL,' .
+			'event int NOT NULL,' .
 			'admin int NOT NULL,' .
 			'registration_sequence varchar(20) NOT NULL,' .
 			'registered int NOT NULL)'
@@ -179,7 +181,7 @@ function create_table_events()
 			'ID_user int NOT NULL,' .
 			'ID_household int NOT NULL,' .
 			'description varchar(300) NOT NULL,' .
-			'time_next datetime NOT NULL,' .
+			'time_set datetime NOT NULL )'
 		);
 
 		$st->execute();

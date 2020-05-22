@@ -44,7 +44,7 @@ public function household() {
 public function rewards() {
     global $title, $db, $dir;
 
-    $title = 'Moje nagrade';
+    $title = 'Nagrade';
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
 
@@ -131,4 +131,48 @@ public function rewards() {
     require_once platformSlashes($dir . '/view/_footer.php');
 }
 
+// Popis događaja
+public function events() {
+    global $title, $db, $dir;
+
+    $title = 'Događaji';
+    $cs = new ChorezService();
+
+    $cs->cleanEvents();
+
+    sleep(0.5);
+
+    $user = $cs->getUserByID($_SESSION['user']);
+    $household = $cs->getHouseholdByID($user->ID_household);
+
+    $events_user = $cs->getEventsbyUser($user);
+    $events_household = $cs->getEventsByHousehold($household);
+
+    if(!$events_user) $message_info_my = "Nema događaja";
+    if(!$events_household) $message_info_household = "Nema događaja";
+
+    require_once platformSlashes($dir . '/view/_header.php');
+    require_once platformSlashes($dir . '/view/main_menu.php');
+    require_once platformSlashes($dir . '/view/event_list.php');
+    require_once platformSlashes($dir . '/view/_footer.php');
+
+    $cs->setEventsSeen($user->ID);
 }
+}
+
+function DateDiff($date) {
+    $now = new DateTime();
+    $date = new DateTime($date);
+
+    $interval = $date->diff($now);
+
+    if ($interval->format('%a') === '0') {
+        if ($interval->format('%h') === '0')
+            return $interval->format("%imin");
+        else return $interval->format("%hh");
+    }
+    else return $interval->format("%ad");
+}
+
+
+?>
