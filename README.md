@@ -42,11 +42,13 @@ accountController
 * getFutureChoresByUser(User)
 * getChoresByUser(User)
 * getChoresByHousehold(Household)
+* getChoresByCategory(Category)
 * addNewChore(Chore) - vraća ID dodanog zadatka
 * deleteChore(Chore)
 
 * getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
 * getCategoryByID(int)
+* getCategoryByName(name)
 * addNewCategory(Household, str) - vraća ID dodane kategorije
 * deleteCategory(Category)
 
