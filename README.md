@@ -14,6 +14,7 @@ userController
 * pregled podataka ukućana - show&id=...
 * pregled kućanstva - household
 * nagrade - rewards&id=... (za admine)
+* event
 
 accountController
 * login
@@ -31,7 +32,8 @@ accountController
 * setUserImage(ID, num)
 * getUsersByHousehold(ID)
 * giveUserPoints(ID, points)
-
+* setEventsSeen(user) - zastavica za notifikacije
+* setEventsUnseen(user)
 
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
 * getHouseholdByID
@@ -58,6 +60,11 @@ accountController
 * deleteRewardByID(str)
 * buyReward(userID, rewardID, points, price)
 
+* getEventsByUser(user) - osobni događaji
+* getEventsByHousehold(household) - kućanski događaji
+* cleanEvents() - čisti događaje starije od tjedan dana
+* createEvent(user, text) - koristi se nakon nekih događaja po cijeloj stranici
+
 **User** (isto kao u bazi)
 
 **Household** (isto kao u bazi)
@@ -69,6 +76,8 @@ accountController
 
 **Reward** (isto kao u bazi)
 
+**Event** (isto kao u bazi)
+
 ## Baza podataka <a name="Baza"></a>
 
 pr_users
@@ -78,6 +87,8 @@ pr_users
 * password (hashirani)
 * email
 * points
+* image
+* event - 1 ako ima novih događaja, 0 inače
 * admin (da/ne)
 * registration_sequence
 * registered (da/ne)
@@ -108,3 +119,10 @@ pr_rewards
 * description
 * points_price
 * purchased (da/ne)
+
+pr_events
+* ID
+* ID_user
+* ID_household
+* description
+* time_set
