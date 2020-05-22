@@ -6,7 +6,7 @@ class choreController {
 public function index() {
     global $title, $db, $dir;
 
-    $title = 'Popis zadataka';
+    $title = 'Popis mojih zadataka';
     $cs = new ChorezService();
     // Provjeravamo je li neki od zadataka označen kao riješen ili obrisan
     if(isset($_POST['chore_submit'])) {
@@ -14,6 +14,8 @@ public function index() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->setCompleted($chore);
+            $dbChange = True;
+            $title_message = "Uspješno riješeni zadaci.";
         }
     }
     else if(isset($_POST['chore_delete'])) {
@@ -21,8 +23,12 @@ public function index() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->deleteChore($chore);
+            $dbChange = True;
+            $title_message = "Uspješno obrisani zadaci.";
         }
     }
+
+    if(isset($dbChange)) sleep(1.5); 
 
     $user = $cs->getUserByID($_SESSION['user']);
     $chores = $cs->getChoresByUser($_SESSION['user']);
@@ -53,13 +59,13 @@ public function index() {
 public function show() {
     global $title, $db, $dir;
 
-    $title = 'Popis zadataka';
+    $title = 'Popis mojih zadataka';
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
     $id=$user->ID;
 
     // Ako ID nije postavljen ili ako je ID moj ID ili ako nisam admin idi na moje zadatke
-    if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['user'] || !$user->admin) {
+    if(!isset($_GET['id']) || !$user->admin) {
         $this->index();
         return;
     }
@@ -77,6 +83,48 @@ public function show() {
     // Sada smo uspješno ušli u nečije zadatke
 
     $title .= " - " . $user_show->username;
+    if($user_show->admin) $title .= '*';
+
+    if($_GET['id'] === $_SESSION['user']) {
+        $title = "Popis mojih zadataka";
+        $my_page = True;
+    }
+
+    // Provjeravamo je li stvoren novi zadatak
+    if(isset($_POST['chore_create_submit']) &&
+        isset($_POST['chore_description']) &&
+        isset($_POST['chore_category']) &&
+        isset($_POST['time_input']) &&
+        isset($_POST['chore_points'])) {
+
+            // Ako je označeno za sve ukućane, onda je mandatory = 0;
+            if(isset($_POST['create_mandatory']))
+                $mandatory = 0;
+            else $mandatory = 1;
+
+            //Ako kategorija ne postoji, dodaj novu kategoriju
+            $category = $cs->getCategoryByName($_POST['chore_category']);
+            if(!$category)
+                $category_id = $cs->addNewCategory($user_show->ID_household, $_POST['chore_category']);
+            else
+                $category_id = $category->ID;
+
+            // Novi zadatak sa podacima iz form-a
+            $chore = New Chore(
+                0,
+                $user_show->ID,
+                $category_id,
+                $_POST["chore_description"],
+                date("Y-m-d H:i:s", time()),
+                $mandatory,
+                $_POST['time_input'],
+                $_POST['chore_points'],
+                0);
+
+            $cs->addNewChore($chore);
+            $dbChange = True;
+            $title_message = "Uspješno dodan zadatak " . $_POST['chore_description'] . ".";
+        }
 
     // Provjeravamo je li neki od zadataka označen kao riješen ili obrisan
     if(isset($_POST['chore_submit'])) {
@@ -84,6 +132,8 @@ public function show() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->setCompleted($chore);
+            $dbChange = True;
+            $title_message = "Uspješno riješeni zadaci.";
         }
     }
     else if(isset($_POST['chore_delete'])) {
@@ -91,8 +141,12 @@ public function show() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->deleteChore($chore);
+            $dbChange = True;
+            $title_message = "Uspješno obrisani zadaci.";
         }
     }
+
+    if(isset($dbChange)) sleep(1.5); 
 
     $chores = $cs->getChoresByUser($user_show->ID);
     $chores_group = $cs->getChoresByHousehold($user_show->ID_household);
@@ -118,11 +172,34 @@ public function create() {
     $title = 'Novi zadatak za mene';
     $user = $cs->getUserByID($_SESSION['user']);
 
+    if(!$user->admin) {
+        $this->index();
+        return;
+    }
+
     if(isset($_GET['id'])) {
         $user = $cs->getUserByID($_GET['id']);
-        if($user && $user->ID != $_SESSION['user'])
+        if($user && $user->ID != $_SESSION['user']) {
             $title = 'Novi zadatak za '.$user->username;
-    }  
+            if($user->admin) $title .= '*';
+        }
+    }
+
+    // Ako je neka od kategorija označena za brisanje
+    if(isset($_GET['rmv'])) {
+        $category = $cs->getCategoryByID($_GET['rmv']);
+        if($category) {
+            $chores = $cs->getChoresByCategory($category->ID);
+            foreach($chores as $row)
+                $cs->deleteChore($row);
+            $cs->deleteCategory($category);
+
+            $title_message = "Uspješno obrisana kategorija " . $category->name . ".";
+            $dbChange = True;
+        }
+    }
+
+    if(isset($dbChange)) sleep(1.5);
     
 
     // Varijable koje su za /view/chore_create.php .

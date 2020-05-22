@@ -7,7 +7,7 @@
         <p> Kategorija zadatka </p>
         <div class="create_category">
             <?php foreach ($categories as $row): ?>
-                <div> <?=$row->name?>
+                <div> <text><?=$row->name?></text>
                     <?php if($row->ID_household !== 0): ?>
                         <a href="chorez.php?rt=chore/create&id=<?=$user->ID?>&rmv=<?=$row->ID?>">
                             <img src="./app/image/x.png">
@@ -39,10 +39,10 @@
         </div>
 
         <div class="create_points">
-            <input type="text" name="chore_points" required>
+            <input type="text" name="chore_points" placeholder=Bodovi required>
             <img src="./app/image/bod.png">
         </div>
         
-        <input class="create_submit" type="submit" name="chore_submit" value="Stvori novi zadatak!">
+        <input class="create_submit" type="submit" name="chore_create_submit" value="Stvori novi zadatak!">
     </form>
 </div>

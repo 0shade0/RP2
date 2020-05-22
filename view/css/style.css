@@ -420,7 +420,7 @@ body {
 }
 
 .chores td.chore_time {
-    text-align: right;
+    text-align: center;
     width: 140px;
 }
 
@@ -519,6 +519,8 @@ body {
     margin-bottom: 40px;
     overflow: hidden;
     height: auto;
+
+    position: relative;
 }
 
 .create_category div, .create_frequency div{
@@ -645,6 +647,8 @@ body {
     bottom: 40px;
     right: 40px;
     color: white;
+
+    transition-duration: 0.2s;
 }
 
 .create_submit:hover {

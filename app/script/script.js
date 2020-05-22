@@ -82,7 +82,15 @@ $( document ).ready(function() {
     })
 // Klikom na kategoriju ubaci u text input
     $("div.create_category div").click( function() {
-        $(".category_input").val($(this).text())
+        $(".category_input").val($(this).children("text").text())
+    })
+// Prikaži delete opciju za kategoriju na hover
+    $("div.create_category div a").hide()
+    $("div.create_category div").mouseover(function() {
+        $(this).children("a").show()
+    })
+    $("div.create_category div").mouseout(function() {
+        $(this).children("a").hide()
     })
 // Klikom na kratnost ubaci u text input
     $.fn.checkinput = function() {

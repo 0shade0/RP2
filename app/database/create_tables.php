@@ -165,4 +165,30 @@ function create_table_rewards()
 	echo 'Napravio tablicu pr_rewards.<br>';
 }
 
+function create_table_events()
+{
+	$db = DB::getConnection();
+
+	if (has_table('pr_events'))
+		exit('Tablica pr_events već postoji.<br>');
+
+	try {
+		$st = $db->prepare(
+			'CREATE TABLE IF NOT EXISTS pr_events (' .
+			'ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
+			'ID_user int NOT NULL,' .
+			'ID_household int NOT NULL,' .
+			'description varchar(300) NOT NULL,' .
+			'time_next datetime NOT NULL,' .
+		);
+
+		$st->execute();
+	}
+	catch(PDOException $e) {
+		exit('PDO error [create pr_events]: ' . $e->getMessage());
+	}
+
+	echo 'Napravio tablicu pr_events.<br>';
+}
+
 ?>

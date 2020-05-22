@@ -61,4 +61,11 @@
     </tr> </table>
 </div>
 
+
+<?php if($enter): ?>
 <img class = "box" src="./app/image/Mbox.png">
+
+<?php endif; if(!$enter): ?>
+<img class = "box" src="./app/image/Mbodovi.png">
+
+<?php endif; ?>

@@ -44,7 +44,7 @@ public function household() {
 public function rewards() {
     global $title, $db, $dir;
 
-    $title = 'Nagrade';
+    $title = 'Moje nagrade';
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
 

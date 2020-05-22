@@ -35,4 +35,4 @@
     </tr> </table>
 </div>
 
-<img class = "box" src="./app/image/Mbox.png">
+<img class = "box" src="./app/image/Mbodovi.png">

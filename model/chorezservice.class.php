@@ -363,7 +363,7 @@ public function getFutureChoresByUser($ID_user, $ID_household) {
 
         $st = $db->prepare(
             'SELECT * FROM pr_chores ' .
-            'WHERE ID_user=:userID AND time_next > DATE(NOW()) ' .
+            'WHERE ID_user=:userID AND time_next > CURRENT_TIMESTAMP() ' .
             'AND mandatory=1 ORDER BY time_next ASC');
         $st->execute(array('userID' => $ID_user));
 
@@ -373,7 +373,7 @@ public function getFutureChoresByUser($ID_user, $ID_household) {
         $st = $db->prepare(
             'SELECT pr_chores.* FROM pr_users JOIN pr_chores ' .
             'WHERE ID_user = pr_users.ID AND ID_household=:householdID ' .
-            'AND time_next > DATE(NOW()) AND mandatory=0 ORDER BY time_next ASC');
+            'AND time_next > CURRENT_TIMESTAMP() AND mandatory=0 ORDER BY time_next ASC');
         $st->execute(array('householdID' => $ID_household));
 
         while ($row = $st->fetch())
@@ -394,7 +394,7 @@ public function getChoresByUser($ID_user) {
     try {
         $st = $db->prepare(
             'SELECT * FROM pr_chores ' .
-            'WHERE ID_user=:userID AND time_next < DATE(NOW()) ' .
+            'WHERE ID_user=:userID AND time_next < CURRENT_TIMESTAMP() ' .
             'AND mandatory=1 ORDER BY time_next DESC');
         $st->execute(array('userID' => $ID_user));
 
@@ -402,6 +402,30 @@ public function getChoresByUser($ID_user) {
 
         while ($row = $st->fetch())
             array_push($chores, Chore::fromRow($row));
+
+        return $chores;
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_chores]: ' . $e->getMessage());
+    }
+}
+
+// Dohvaća zadatake sa kategorijom ID_category - u svrhu brisanje kategorija
+public function getChoresByCategory($category) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_chores ' .
+            'WHERE ID_category=:categoryID ');
+
+        $st->execute(array('categoryID' => $category->ID));
+
+        $chores = array();
+
+        while ($row = $st->fetch())
+            array_push($chores,  Chore::fromRow($row));
 
         return $chores;
         
@@ -419,7 +443,7 @@ public function getChoresByHousehold($ID_household) {
         $st = $db->prepare(
             'SELECT pr_chores.* FROM pr_users JOIN pr_chores ' . 
             'WHERE ID_user = pr_users.ID AND ID_household=:householdID ' .
-            'AND time_next < DATE(NOW()) AND mandatory=0 ORDER BY time_next DESC');
+            'AND time_next < CURRENT_TIMESTAMP() AND mandatory=0 ORDER BY time_next DESC');
         $st->execute(array('householdID' => $ID_household));
 
         $chores = array();
@@ -521,14 +545,34 @@ public function getCategoryByID($categoryID) {
     }
 }
 
-public function addNewCategory($household, $name) {
+public function getCategoryByName($name) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'SELECT * FROM pr_categories  WHERE name=:name');
+        $st->execute(array('name' => $name));
+
+        if ($row = $st->fetch()) {
+            $category = Category::fromRow($row);
+    
+            return $category;
+        }
+        
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_categories]: ' . $e->getMessage());
+    }
+}
+
+public function addNewCategory($household_ID, $name) {
     $db = DB::getConnection();
 
     try {
     $st = $db->prepare('INSERT INTO pr_categories (ID_household, name) 
-        VALUES (:ID_household, :name)');
+        VALUES (:ID_household, :categoryname)');
 
-    $st->execute(array("ID_household" => $household->ID, 'name' => $name));
+    $st->execute(array("ID_household" => $household_ID, 'categoryname' => $name));
 
     // Vrati ID dodane kategorije.
     return $db->lastInsertId();

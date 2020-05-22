@@ -18,19 +18,19 @@ $user_menu = $cs->getUserByID($_SESSION['user']);?>
                 else echo "<span id=household class=not_selected> </span>";?>
         </td>
         <td>
-                <?php if($title !== 'Popis zadataka')
+                <?php if($title !== 'Popis mojih zadataka')
                 echo "<a id=chores href='chorez.php?rt=chore'> </a>";
                 else echo "<span id=chores class=not_selected> </span>";?>
-        </td>
-        <td>
-                <?php if($title !== 'Nagrade')
-                echo "<a id=rewards href='chorez.php?rt=user/rewards'> </a>";
-                else echo "<span id=rewards class=not_selected> </span>";?>
         </td>
         <td>
                 <?php if(True)
                 echo "<a id=events href='chorez.php?rt=user/'> </a>";
                 else echo "<span id=events class=not_selected> </span>";?>
+        </td>
+        <td>
+                <?php if($title !== 'Moje nagrade')
+                echo "<a id=rewards href='chorez.php?rt=user/rewards'> </a>";
+                else echo "<span id=rewards class=not_selected> </span>";?>
         </td>
         <td>
                 <a href='chorez.php?rt=account&logout=y' id="logout"></a>
@@ -40,6 +40,8 @@ $user_menu = $cs->getUserByID($_SESSION['user']);?>
 </div>
 
 <br>
+
+<div class = "info"><?php if(isset($title_message)) echo $title_message;?></div>
 
 <div class = "title">
         <?php echo $title; ?>
