@@ -29,14 +29,18 @@ accountController
 * addNewUser(User) - vraća ID dodanog korisnika
 * addUserToHousehold(User, Household)
 * set_registered(int) - postavlja vrijednost registered u bazi
+* setUserAdmin(ID) - admin=1
+* changeUserAdmin(ID) - admin=1-admin
 * setUserImage(ID, num)
 * getUsersByHousehold(ID)
+* getFirstIDInHousehold(household)
 * giveUserPoints(ID, points)
 * setEventsSeen(user) - zastavica za notifikacije
 * setEventsUnseen(user)
 
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
 * getHouseholdByID
+* setHouseholdUnseen(ID)
 
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
 * setCompletedAlt(Chore) - alternativa za gornju funkciju
