@@ -124,6 +124,41 @@ public function show() {
             $cs->addNewChore($chore);
             $dbChange = True;
             $title_message = "Uspješno dodan zadatak " . $_POST['chore_description'] . ".";
+
+            if($mandatory) {
+                $event_user = $user_show->ID;
+                if($_SESSION['user'] !== $user_show->$ID) $cs->setEventsUnseen($user->ID);
+            }
+            else {
+                $event_user = 0;
+                $cs->setHouseholdUnseen($user_show->ID_household);
+                $cs->setEventsSeen($_SESSION['user']);
+            }
+
+            switch($_POST['time_input']) {
+                case 1:
+                    $event_type = "dnevni ";
+                break;
+                case 2:
+                    $event_type = "tjedni ";
+                break;
+                case 3:
+                    $event_type = "mjesečni ";
+                break;
+                case 4:
+                    $event_type = "godišnji ";
+                break;
+                default: $event_type = "";
+            }
+
+            $event = New Event(
+                0,
+                $event_user,
+                $user_show->ID_household,
+                "<strong>(".$_SESSION['name'].")</strong>"." Novi ".$event_type."zadatak - ".$_POST['chore_description'],
+                ""
+            );
+            $cs->createEvent($event);
         }
 
     // Provjeravamo je li neki od zadataka označen kao riješen ili obrisan

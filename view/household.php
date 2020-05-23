@@ -6,8 +6,13 @@
     <tr <?php if($row->ID === $_SESSION['user']) echo 'class=me'?>>
         <td id="first_col"> <img class="household_user" src='./app/image/user<?=$row->image?>.png'> </td>
         <td id="second_col"><?=$row->username;?>
-            <?php if($row->admin) echo '<img src="./app/image/star.png">';
-                else if($user->admin) echo '<img src="./app/image/star_empty.png">'; ?>
+            <?php if(!$_SESSION['boss'] && $row->admin) echo '<img src="./app/image/star.png">';
+                else if ($_SESSION['boss'] && $row->ID === $_SESSION['user']) echo '<img src="./app/image/star.png">';
+            //Boss može mijenjati admin status korsnicima
+                else if($_SESSION['boss'] && $row->admin && $row->ID !== $_SESSION['user'])
+                    echo '<form action="" method=post class="is_admin"> <input type=submit name="admin" value='.$row->ID.'"> </form>';
+                else if($_SESSION['boss'] && !$row->admin && $row->ID !== $_SESSION['user'])
+                    echo '<form action="" method=post class="isnot_admin"> <input type=submit name="admin" value='.$row->ID.'"> </form>';?>
         </td>
 
         <?php if($user->admin): ?>

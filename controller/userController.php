@@ -28,6 +28,34 @@ public function household() {
 
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
+
+    // Provjeri je li promijenjen status admina nekom useru te imam li te privilegije
+    if($_SESSION['boss'] && isset($_POST['admin'])) {
+        $user_changed = $cs->getUserByID($_POST['admin']);
+        // Promjeni samo ako nisam ja i ako je osoba u mom kućanstvu
+        if($user_changed->ID !== $user->ID && $user_changed->ID_household === $user->ID_household) {
+            $admin_status = $cs->changeUserAdmin($_POST['admin']);
+
+            if($admin_status)
+                $event_text = "<strong>(".$user_changed->username.")</strong>"." Korisnik je postao admin";
+            else
+                $event_text = "<strong>(".$user_changed->username.")</strong>"." Korisnik više nije admin";
+
+            $event = New Event (
+                0,
+                0,
+                $user->ID_household,
+                $event_text,
+                ""
+            );
+
+            $cs->createEvent($event);
+            $cs->setHouseholdUnseen($user->ID_household);
+            $cs->setEventsSeen($_SESSION['user']);
+        }
+    }
+
+    
     $household = $cs->getHouseholdByID($user->ID_household);
     $users = $cs->getUsersByHousehold($user->ID_household);
     $title = $household->name;
@@ -85,7 +113,21 @@ public function rewards() {
             $cs->buyReward($ID, $_POST['buy_reward'], $user->points, $reward->points_price);
             $message_info = "Nagrada je uspješno kupljena.";
         }
-        unset($_POST['buy_reward']);
+
+        $event_text = "<strong>(".$user->username.")</strong>"." Kupljena je nagrada - ".$reward->description;
+
+            $event = New Event (
+                0,
+                0,
+                $user->ID_household,
+                $event_text,
+                ""
+            );
+
+            $cs->createEvent($event);
+            $cs->setHouseholdUnseen($user->ID_household);
+            $cs->setEventsSeen($_SESSION['user']);
+        
     }
 
 // Dodavanje nagrade
@@ -103,9 +145,20 @@ public function rewards() {
                 '0');
             $cs->addNewReward($reward_new);
             $message_info = "Nagrada je uspješno dodana.";
-        }
 
-        unset($_POST['add_reward']);
+            $event_text = "<strong>(".$_SESSION['name'].")</strong>"." Nova nagrada - ".$_POST['reward_name'];
+
+            $event = New Event (
+                0,
+                $user->ID,
+                $user->ID_household,
+                $event_text,
+                ""
+            );
+
+            $cs->createEvent($event);
+            if($_SESSION['user'] !== $ID) $cs->setEventsUnseen($user->ID);
+        }
     }
 
 // Uklanjanje nagrade

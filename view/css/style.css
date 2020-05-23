@@ -8,7 +8,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
 }
 
 /* Track */
@@ -727,6 +727,59 @@ body {
 .household #second_col {
     padding-left: 20px;
     font-size: 24pt;
+}
+
+#second_col form {
+    display:inline-block;
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+    bottom: 7px; 
+}
+
+#second_col form input[type=submit] {
+    background-color: transparent;
+    color: transparent;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    outline: none;
+
+    transition-duration: 0.2s;
+
+    cursor: pointer;
+}
+
+#second_col form input[type=submit]:hover {
+    transform: scale(1.2);
+}
+
+.is_admin input {
+    background-image: url("../../app/image/star.png");
+}
+
+.isnot_admin input {
+    background-image: url("../../app/image/star_empty.png");
+}
+
+
+
+.isadmin {
+    position: relative;
+    height: 35px;
+    width: 35px;
+    transition-duration: 0.2s;
+}
+
+.household #second_col a:hover {
+    transform: scale(1.1);
 }
 
 #admin_col img{

@@ -13,7 +13,7 @@ $user_menu = $cs->getUserByID($_SESSION['user']);?>
                         "style = background-image:url('./app/image/user" . $user_menu->image . ".png')> </span>";?>
         </td>
         <td>
-                <?php if($title !== 'Događaji' && isset($_SESSION['event']) && $_SESSION['event'])
+                <?php if($title !== 'Događaji' && $user_menu->event)
                 echo "<a id=events_alert href='chorez.php?rt=user/events'> </a>";
 
                 else if($title !=='Događaji')

@@ -114,6 +114,38 @@ public function set_registered ($userID, $value) {
     }
 }
 
+public function setUserAdmin ($userID) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('UPDATE pr_users SET admin = 1 ' .
+        'WHERE ID=:userID');
+
+    $st->execute(array('userID' => $userID));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
+public function changeUserAdmin ($userID) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('UPDATE pr_users SET admin = 1-admin ' .
+        'WHERE ID=:userID');
+
+    $st->execute(array('userID' => $userID));
+
+    $user = $this->getUserByID($userID);
+
+    return $user->admin;
+    }
+    catch(PDOException $e) {
+        exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
 public function addUserToHousehold($user, $household) {
     $db = DB::getConnection();
 
@@ -173,6 +205,21 @@ public function getUsersByHousehold($household_ID) {
     }
 }
 
+public function getFirstIDInHousehold($ID_household) {
+    $db = DB::getConnection();
+
+    try {
+    $st = $db->prepare('SELECT ID FROM pr_users WHERE ID_household=:householdID');
+    $st->execute(array('householdID' => $ID_household));
+
+    return $st->fetch();
+
+    }
+    catch(PDOException $e) {
+        exit('PDO error [select pr_users]: ' . $e->getMessage());
+    }
+}
+
 public function giveUserPoints($ID, $points) {
     $db = DB::getConnection();
 
@@ -193,7 +240,7 @@ public function setEventsSeen($ID) {
     $db = DB::getConnection();
 
     try {
-        $st = $db->prepare('UPDATE pr_users SET event = 1 ' .
+        $st = $db->prepare('UPDATE pr_users SET event = 0 ' .
             'WHERE ID=:userID');
     
         $st->execute(array('userID' => $ID));
@@ -207,7 +254,7 @@ public function setEventsUnseen($ID) {
     $db = DB::getConnection();
 
     try {
-        $st = $db->prepare('UPDATE pr_users SET event = 0 ' .
+        $st = $db->prepare('UPDATE pr_users SET event = 1 ' .
             'WHERE ID=:userID');
     
         $st->execute(array('userID' => $ID));
@@ -247,6 +294,20 @@ public function addNewHousehold($name, $password) {
     }
     catch(PDOException $e) {
         exit('PDO error [insert pr_households]: ' . $e->getMessage());
+    }
+}
+
+public function setHouseholdUnseen($ID_household) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare('UPDATE pr_users SET event = 1 ' .
+            'WHERE ID_household=:householdID');
+    
+        $st->execute(array('householdID' => $ID_household));
+        }
+        catch(PDOException $e) {
+            exit('PDO error [update pr_users]: ' . $e->getMessage());
     }
 }
 
@@ -809,7 +870,7 @@ public function cleanEvents() {
 
 
 // Stvara novi event pomoću user podataka i opisa text
-public function createEvent($user, $text) {
+public function createEvent($event) {
     $db = DB::getConnection();
 
     try {
@@ -818,12 +879,9 @@ public function createEvent($user, $text) {
         'VALUES (:ID_user, :ID_household, :description, NOW())');
 
     $st->execute(array(
-        'ID_user' => $user->ID,
-        'ID_household' => $user->ID_household,
-        'description' => $text ));
-
-        // Podigni zastavicu da user nije vidio poruke
-        $this->setEventsUnseen($user->ID);
+        'ID_user' => $event->ID_user,
+        'ID_household' => $event->ID_household,
+        'description' => $event->description ));
     }
     catch(PDOException $e) {
         exit('PDO error [insert pr_rewards]: ' . $e->getMessage());

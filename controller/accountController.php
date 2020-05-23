@@ -24,6 +24,13 @@ public function index() {
                 $_SESSION['user'] = $user->ID;
                 $_SESSION['name'] = $user->username;
 
+                if($cs->getFirstIDInHousehold($user->ID_household)['ID'] === $_SESSION['user']) {
+                    $_SESSION['boss'] = 1;
+                    $cs->setUserAdmin($_SESSION['user']);
+                }
+                else
+                    $_SESSION['boss'] = 0;
+
                 if(isset($_POST['remember']))
                     setcookie("member_login", $user->username, time() + (86400 * 30), "/");
                 else setcookie('member_login', null, -1, '/'); 
@@ -185,10 +192,22 @@ public function register() {
             $password_household = password_hash($_POST['house_newpassword'], PASSWORD_DEFAULT);
             $ID_household = $cs->addNewHousehold($_POST['house_name'], $password_household);
             $admin = 1;
+
+            $event_text = "Stvoreno je kućanstvo - <strong>".$_POST['house_name']."</strong>";
+
+            $event = New Event(
+                0,
+                0,
+                $ID_household,
+                $event_text,
+                ""
+            );
+    
+            $cs->createEvent($event);
         }
 
         $user = New User(0, $ID_household, $_POST['reg_name'], $passwordHash,
-                $_POST['reg_email'], 0, 1, $admin, $sequence, 0);
+                $_POST['reg_email'], 0, 1, 1, $admin, $sequence, 0);
 
         $userID = $cs->addNewUser($user);
 
@@ -221,7 +240,18 @@ public function register() {
         'Link za potvrdu poslan je na Vaš e-mail. <br>' . 
         '(napomena: provjerite neželjenu poštu)';
 
-        $_POST = array();
+        $event_text = "Kućanstvu se pridružio korisnik - <strong>".$_POST['reg_name']."</strong>";
+
+        $event = New Event(
+            0,
+            0,
+            $ID_household,
+            $event_text,
+            ""
+        );
+
+        $cs->createEvent($event);
+        $cs->setEventsUnseen($ID_household);
     }
 
     global $title, $dir;

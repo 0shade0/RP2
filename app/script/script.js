@@ -123,15 +123,15 @@ $( document ).ready(function() {
     })
 
 // Events gumbovi za toggle između mojih i kućanskih obavjesti
-    $("div.events_household").hide()
-    $(".my_button").css({
+    $("div.events_my").hide()
+    $(".household_button").css({
         'background-color':'white',
         'color':'black',
         'cursor':'default',
         'width':'60%'
     })
-    $(".household_button").css({
-        'background-color':'var(--blue)',
+    $(".my_button").css({
+        'background-color':'var(--orange)',
         'color':'white',
         'cursor':'pointer',
         'width':'40%'

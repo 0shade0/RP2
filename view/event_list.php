@@ -4,7 +4,7 @@
     <button class="household_button">Događaji u kućanstvu</button>
 
     <div class = "events_my">
-        <div class = "info"><?php if(isset($message_info_my)) 
+        <div class = "info" style="color:var(--orange);"><?php if(isset($message_info_my)) 
             echo $message_info_my;?></div>
 
         <table class = "events_table">
