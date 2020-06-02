@@ -24,6 +24,7 @@ accountController
 ## Modeli <a name="Modeli"></a>
 **ChorezService** --- za dohvat iz baze podataka
 * getUserByID(str)
+
 * getUserByUsername(str)
 * getUserByEmail(str)
 * addNewUser(User) - vraća ID dodanog korisnika
@@ -37,12 +38,13 @@ accountController
 * giveUserPoints(ID, points)
 * setEventsSeen(user) - zastavica za notifikacije
 * setEventsUnseen(user)
-
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
 * getHouseholdByID
 * setHouseholdUnseen(ID)
+<br>
 
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
+
 * setCompletedAlt(Chore) - alternativa za gornju funkciju
 * getChoreByID(int)
 * getFutureChoresByUser(User)
@@ -51,20 +53,26 @@ accountController
 * getChoresByCategory(Category)
 * addNewChore(Chore) - vraća ID dodanog zadatka
 * deleteChore(Chore)
+<br>
 
 * getAllCategories([Household]) - vraća array defaultnih kategorija, i kategorija koje koristi neko kućanstvo ako je kućanstvo prosljeđeno funkciji.
+
 * getCategoryByID(int)
 * getCategoryByName(name)
 * addNewCategory(Household, str) - vraća ID dodane kategorije
 * deleteCategory(Category)
+<br>
 
 * getRewardsByID(userID) 
+
 * getRewardByID(userID, rewardID)
 * addNewReward(Reward) - vraća ID dodane nagrade
 * deleteRewardByID(str)
 * buyReward(userID, rewardID, points, price)
+<br>
 
 * getEventsByUser(user) - osobni događaji
+
 * getEventsByHousehold(household) - kućanski događaji
 * cleanEvents() - čisti događaje starije od tjedan dana
 * createEvent(user, text) - koristi se nakon nekih događaja po cijeloj stranici
