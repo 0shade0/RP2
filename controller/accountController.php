@@ -251,7 +251,7 @@ public function register() {
         );
 
         $cs->createEvent($event);
-        $cs->setEventsUnseen($ID_household);
+        $cs->setHouseholdUnseen($ID_household);
     }
 
     global $title, $dir;

@@ -30,6 +30,15 @@ a, img {
     -webkit-user-drag: none;
 }
 
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
 body {
     -ms-overflow-style: none;
     height: auto;
@@ -77,7 +86,7 @@ br {
 .by {
     position:relative;
     left: 360px;
-    top: 80px;
+    top: 50px;
     border-collapse: separate;
     color: var(--blue);
     text-transform: uppercase;
@@ -86,7 +95,7 @@ br {
     float: left;
     clear: both;
     margin: 10px;
-    width: 950px;
+    width: 50%;
 }
 
 .by td {
@@ -107,6 +116,30 @@ br {
 #noeffect:hover {
     transform: scale(1);
     color: var(--blue);
+}
+
+#delete_account {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+
+    width: 60px;
+    height: 60px;
+
+    background-color:transparent;
+    background-size: cover;
+    background-position: center center;
+    background-image: url("../../app/image/x_blue.png");
+
+    border: none;
+    outline: none;
+
+    transition-duration: 0.2s;
+}
+
+#delete_account:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 .box, .book, .house, .user_image, .events {
@@ -174,7 +207,22 @@ br {
     width: 500px;
     padding: 10px;
     padding-right: 40px;
-    text-align: justify;
+}
+
+.description img {
+    margin-left: 12%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 80%;
+   
+    border: 5px solid var(--blue);
+    border-radius: 20px;
+
+    filter: grayscale(30%);
+}
+
+.description span {
+    margin-left: 20px;
 }
 
 .login {
@@ -299,16 +347,17 @@ body {
     right: 0;
 
     width: 1024px;
+    max-width: 100%;
     margin: 0 auto;
     margin-bottom: 50px;
     padding-bottom: 20px;
     overflow: hidden;
-    background-color: #ffffff8a;
+    background-color: #ffffffca;
     border-radius: 25px;
 }
 
 .header_wrapper {
-    width: 105%;
+    width: 100%;
     margin: 0;
     padding: 0;
     padding-bottom: 20px;
@@ -360,6 +409,33 @@ body {
     transition-duration: 0.2s;
     transition-delay: 0.005s;
     filter: brightness(100%);
+}
+
+.val {
+    margin-left: 15px;
+    font-size: 22pt;
+    font-family: Marker;
+    color: var(--orange);
+}
+
+.stats {
+    font-size: 18pt;
+    border-spacing: 10px 30px;
+
+    background-color: white;
+    border-radius: 20pt;
+    padding: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.stats img {
+    width: 30px;
+}
+
+.stats td {
+    display : flex;
+    align-items : center;
 }
 
 #chores, #rewards, #household, #user, #events, #events_alert,#logout{

@@ -6,12 +6,37 @@ function platformSlashes($path){
     return str_replace('/', DIRECTORY_SEPARATOR, $path);
 }
 
-// Logout opcija
-if(session_id() == '') session_start();
-if(isset($_GET['logout']) && $_GET['logout']==='y') unset ($_SESSION['user']);
-
 require_once platformSlashes($dir . '/app/database/db.class.php');
 $db = DB::getConnection();
+
+// Logout opcija i opcija brisanja profila
+if(session_id() == '') session_start();
+if(isset($_POST['delete_account']) && isset($_SESSION['user'])) {
+
+    require_once platformSlashes($dir . '/model/chorezservice.class.php');
+    $cs = new ChorezService();
+    $user = $cs->getUserByID($_SESSION['user']);
+    if($user) {
+        $cs->deleteUser($user->ID);
+
+        $event_text = "Kućanstvo je napustio korisnik - <strong>".$user->username."</strong>";
+
+        $event = New Event(
+            0,
+            0,
+            $user->ID_household,
+            $event_text,
+            ""
+        );
+
+        $cs->createEvent($event);
+        $cs->setHouseholdUnseen($user->ID_household);
+
+        $household = $cs->getUsersByHousehold($user->ID_household);
+        if(!$household) $cs->deleteHousehold($user->ID_household);
+    }
+}
+if(isset($_GET['logout']) && $_GET['logout']==='y') unset ($_SESSION['user']);
 
 $title = 'Naslov nije zadan';
 $help = 'Poruka za pomoć nije zadana.';

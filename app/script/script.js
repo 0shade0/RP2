@@ -176,4 +176,9 @@ $( document ).ready(function() {
         })
     })
 
+    $("#delete_account").click(function(event) {
+        if( !confirm('Želite li doista obrisati svoj račun?') ) 
+            event.preventDefault();
+    });
+
 });

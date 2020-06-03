@@ -28,12 +28,21 @@
 </table>
 </form>
 
-<div class = "balance">
-    <p id="left" class = "moji_bodovi"> Moji bodovi:</p>
-    <table> <tr>
-        <td><?=number_format( $user->points);?></td>
-        <td><img src="./app/image/bod.png"></td>
-    </tr> </table>
-</div>
+<table class = "stats">
+<tr>
+    <td> <span class="bluedot"></span> Mojih zadataka: <text class="val"> <?=$chorecount?> </text></td>
+</tr>
+<tr>
+    <td> <span class="bluedot"></span> Zadataka u kućanstvu: <text class="val"> <?=$householdchorecount?> </text></td>
+</tr>
+<tr>
+    <td> <span class="bluedot"></span> Moji bodovi: <text class="val"> <?=$user->points?> </text>
+        <img src="./app/image/bod.png"></td>
+</tr>
+</table>
+
+<form action="chorez.php?rt=account&logout=y" method=post>
+    <input type=submit id="delete_account" name=delete_account value="">
+</form>
 
 <div class = "pickImage"></div>

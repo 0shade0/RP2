@@ -23,9 +23,11 @@
 </form>
 </div>
 
-<br>
+<br> 
 
 <p style="text-align: center;"> ili </p>
+
+<br> 
 
 <div class = "register">
 <form action="chorez.php?rt=account/register" method="post" id="Register">
@@ -49,7 +51,7 @@
 
 
 
-	<br>
+	<br> <br>
 
 
 

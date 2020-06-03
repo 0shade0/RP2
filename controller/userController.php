@@ -16,6 +16,12 @@ public function index() {
         }
     }
 
+    $chores = $cs->getChoresByUser($user->ID);
+    $chorecount = sizeof($chores);
+
+    $chores = $cs->getChoresByHousehold($user->ID_household);
+    $householdchorecount = sizeof($chores);
+
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/user.php');
@@ -58,7 +64,7 @@ public function household() {
     
     $household = $cs->getHouseholdByID($user->ID_household);
     $users = $cs->getUsersByHousehold($user->ID_household);
-    $title = $household->name;
+    $title = $household->name . " #" . $household->ID;
 
     if(!$users) $message_info = "Nema nagrada";
 
@@ -192,8 +198,6 @@ public function events() {
     $cs = new ChorezService();
 
     $cs->cleanEvents();
-
-    sleep(0.5);
 
     $user = $cs->getUserByID($_SESSION['user']);
     $household = $cs->getHouseholdByID($user->ID_household);

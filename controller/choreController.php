@@ -14,7 +14,6 @@ public function index() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->setCompleted($chore);
-            $dbChange = True;
             $title_message = "Uspješno riješeni zadaci.";
         }
     }
@@ -23,12 +22,10 @@ public function index() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->deleteChore($chore);
-            $dbChange = True;
             $title_message = "Uspješno obrisani zadaci.";
         }
     }
 
-    if(isset($dbChange)) sleep(1.5); 
 
     $user = $cs->getUserByID($_SESSION['user']);
     $chores = $cs->getChoresByUser($_SESSION['user']);
@@ -122,12 +119,11 @@ public function show() {
                 0);
 
             $cs->addNewChore($chore);
-            $dbChange = True;
             $title_message = "Uspješno dodan zadatak " . $_POST['chore_description'] . ".";
 
             if($mandatory) {
                 $event_user = $user_show->ID;
-                if($_SESSION['user'] !== $user_show->$ID) $cs->setEventsUnseen($user->ID);
+                if($_SESSION['user'] !== $user_show->ID) $cs->setEventsUnseen($user->ID);
             }
             else {
                 $event_user = 0;
@@ -167,7 +163,6 @@ public function show() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->setCompleted($chore);
-            $dbChange = True;
             $title_message = "Uspješno riješeni zadaci.";
         }
     }
@@ -176,12 +171,9 @@ public function show() {
         foreach($_POST['chore'] as $selected) {
             $chore = $cs->getChoreByID($selected);
             $cs->deleteChore($chore);
-            $dbChange = True;
             $title_message = "Uspješno obrisani zadaci.";
         }
     }
-
-    if(isset($dbChange)) sleep(1.5); 
 
     $chores = $cs->getChoresByUser($user_show->ID);
     $chores_group = $cs->getChoresByHousehold($user_show->ID_household);
@@ -230,11 +222,9 @@ public function create() {
             $cs->deleteCategory($category);
 
             $title_message = "Uspješno obrisana kategorija " . $category->name . ".";
-            $dbChange = True;
         }
     }
 
-    if(isset($dbChange)) sleep(1.5);
     
 
     // Varijable koje su za /view/chore_create.php .

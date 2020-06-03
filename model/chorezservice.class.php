@@ -264,6 +264,34 @@ public function setEventsUnseen($ID) {
     }
 }
 
+public function deleteUser($ID) {
+    $db = DB::getConnection();
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_users WHERE ID=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+
+        $st = $db->prepare(
+            'DELETE FROM pr_chores WHERE ID_user=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+
+        $st = $db->prepare(
+            'DELETE FROM pr_events WHERE ID_user=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+
+        $st = $db->prepare(
+            'DELETE FROM pr_rewards WHERE ID_user=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [delete pr_users]: ' . $e->getMessage());
+    }
+}
+
 //--------------------------------------------------------------------------
 //  Funkcije za dohvaćanje iz tablice kućanstava
 //--------------------------------------------------------------------------
@@ -308,6 +336,31 @@ public function setHouseholdUnseen($ID_household) {
         }
         catch(PDOException $e) {
             exit('PDO error [update pr_users]: ' . $e->getMessage());
+    }
+}
+
+// Brisanje kućanstva ako više nema članova
+public function deleteHousehold($ID) {
+    $db = DB::getConnection();
+
+    try {
+        $st = $db->prepare(
+            'DELETE FROM pr_households WHERE ID=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+
+        $st = $db->prepare(
+            'DELETE FROM pr_categories WHERE ID_household=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+
+        $st = $db->prepare(
+            'DELETE FROM pr_events WHERE ID_household=:ID');
+        $st->execute(array(
+            'ID' => $ID ));
+    }
+    catch(PDOException $e) {
+        exit('PDO error [delete pr_users]: ' . $e->getMessage());
     }
 }
 
