@@ -42,6 +42,7 @@ accountController
 <br>
 
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
+
 * getHouseholdByID
 * setHouseholdUnseen(ID)
 * deleteHousehold(ID)
