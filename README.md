@@ -38,9 +38,13 @@ accountController
 * giveUserPoints(ID, points)
 * setEventsSeen(user) - zastavica za notifikacije
 * setEventsUnseen(user)
+* deleteUser(ID)
+<br>
+
 * addNewHousehold(name, password) - vraća ID dodanog kućanstva
 * getHouseholdByID
 * setHouseholdUnseen(ID)
+* deleteHousehold(ID)
 <br>
 
 * setCompleted(Chore) - stavlja jednokratni zadatak u stanje "done", a ako se ponavlja stavlja ga na idući period.
