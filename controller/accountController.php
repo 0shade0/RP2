@@ -223,17 +223,44 @@ public function register() {
 
         $email = $_POST['reg_email'];
         $subject = 'Dobrodošli na Chorez!';
+        $headers = "From: no-reply" . "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $body = 'Kako biste uspješno dovršili registraciju na Chorezo' .
-            'pritisnite ili prekopirajte link' .
-            'https://rp2.studenti.math.hr/~korisnicko_ime/projekt/main.php?' .
-            'rt=account/activate&sequence=' . $sequence . '&userID=' . $userID;
+        $body = '
+                <html>
+                    <body>
+                        <img src="./app/image/chorez.png" width="400" style="display:block; margin-left:20px; margin-bottom: 30px;">
+                        <div>
+                            <div>
+                            <p style=font-size:20pt;><strong>Bok '.$_POST['reg_name'].'!</strong></p>
+                            <p>Hvala Vam što ste se prijavili na Chorez. </p>
+                            <p>Preostaje Vam još samo jedan korak.
+                            Kako biste uspješno dovršili registraciju, <strong>pritisnite</strong> ili <strong>prekopirajte</strong> link:
+                            <a href="https://rp2.studenti.math.hr/~damcupi/RP2/chorez.php?rt=account/activate&sequence=&userID=">
+                                https://rp2.studenti.math.hr/~damcupi/RP2/chorez.php?rt=account/activate&sequence='.$sequence.'&userID='.$userID.' </a> </p>
+                            </div>
+                            <div>
+                            <p>Ovo su Vaši podaci:</p>
+                            <p style="margin-left: 20px;">korisničko ime: <strong>'.$_POST['reg_name'].'</strong></p>
+                            <p style="margin-left: 20px;">lozinka: <strong>'.$_POST['reg_password'].'</strong></p>
+                            </div>';
+        if($novo) $body.='
+                            <div>
+                            <p>Ako želite pozvati još članova u svoje kućanstvo, proslijedite im ove podatke za registraciju:</p>
+                            <p style="margin-left: 20px;">#ID: <strong>'.$ID_household.'</strong></p>
+                            <p style="margin-left: 20px;">lozinka: <strong>'.$_POST['house_newpassword'].'</strong></p>
+                            </div>';
+        $body.='
+                            <div style="text-align: center; font-size: 16pt;">
+                                Vaš Chorez tim ❤
+                            </div>
+                        </div>
+                    </body>
+                </html>
+                ';
 
-        $bodyWrapped = wordwrap($body, 70, "<br>\n");
-
-        // TODO: Testirati na serveru RP2, dodati automatsko ime servera
-        // i još malo popraviti poruku.
-        //mail($email, $subject, $bodyWrapped);
+        mail($email, $subject, $body, $headers);
 
         $message_info = 'Uspješna registracija! Da biste dovršili ' .
         'registraciju, trebate potvrditi svoju e-mail adresu. ' .
