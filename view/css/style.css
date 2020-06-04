@@ -32,8 +32,6 @@ a, img {
 
 html,body
 {
-    width: 100%;
-    height: 100%;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden; 
@@ -333,6 +331,7 @@ body {
     background-image: url("../../app/image/background.png");
     background-size: cover;
     background-attachment: fixed;
+    -webkit-backface-visibility: hidden;
     margin: 0;
     padding: 0;
 
@@ -347,7 +346,6 @@ body {
     right: 0;
 
     width: 1024px;
-    max-width: 100%;
     margin: 0 auto;
     margin-bottom: 50px;
     padding-bottom: 20px;
@@ -391,7 +389,7 @@ body {
     border-spacing: 0 0;
 }
 
-.menu a, span {
+.menu a, .menu span {
     display: inline-block;
     height:100px;
     width:120px;
@@ -630,7 +628,7 @@ body {
 .create_category div, .create_frequency div{
     float: left;
     clear: none;
-    width: 33%;
+    width: 33.3%;
     height: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -785,6 +783,10 @@ body {
 
 .household td {
     border-bottom: 3px solid var(--blue);
+}
+
+tr.me td {
+    border: 3px solid var(--blue);
 }
 
 .household_user {
@@ -1327,4 +1329,413 @@ table.pick_Image {
 @font-face {
     font-family: Marker;
     src: url("../../app/font/123Marker.ttf");
+}
+
+@media screen and (max-width: 800px) {
+    .title {
+        padding-right: 15%;
+        padding-left: 15%;
+        margin: auto;
+        margin-top: 20px;
+        height: auto;
+        font-size: 16pt;
+    }
+
+    .help img {
+        width:30px;
+    }
+
+    .help {
+        right: 10px;
+    }
+
+    .help p {
+        width: 250px;
+    }
+
+    body{
+        background-attachment: initial;
+        margin: 0;
+        padding: 0;
+        height: auto;
+    }
+
+    br {
+        display: none;
+    }
+
+    .header_wrapper, .wrapper {
+        top: 0;
+        margin: 0;
+        display: block;
+    }
+
+    .header_wrapper {
+        height: 120px;
+        padding: 0;
+    }
+
+    .wrapper {
+        width: 100%;
+        border-radius: 0px;
+        margin-bottom: 0px;
+    }
+
+    .login, .description {
+        width: 90%;
+        float: left;
+        margin: 0;
+        margin-top: 10px;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .description span {
+        margin: 0;
+        margin-right: 5px;
+    }
+
+    .login {
+        max-width: 340px;
+        display: block;
+        margin: 0 auto;
+        margin-top: 20px;
+        float: none;
+    }
+
+    .login input {
+        width: 90% !important;
+        font-size: smaller;
+    }
+
+    .login input[type=checkbox] {
+        width: 20px !important;
+    }
+
+    .menu {
+        margin: 0;
+        padding: 5px;
+        padding-bottom: 10px;
+        height: auto;
+    }
+
+    .menu a, .menu span {
+        width: 100%;
+        height: auto;
+        padding-top: 75%;
+    }
+
+    .box, .book, .house, .events {
+        display: none;
+    }
+
+    .user_image {
+        width: 80%;
+        max-width: 400px;
+        height: auto;
+        display: block;
+        position: initial;
+        float: none;
+        margin: auto;
+        margin-top: 20px;
+    }
+
+    .logo, .logo_gif {
+        height: 70%;
+        width: auto;
+        text-align: center;
+    }
+    
+    .by {
+        display: none;
+    }
+
+    #logout:hover {
+        background-image: url("../../app/image/Mdoor_closed.png");
+    }
+
+    .chore_header {
+        margin: 0;
+        margin-top: 25px;
+    }
+
+    .chores {
+        margin: 0;
+        width: 100%;
+        font-size: 10pt !important;
+    }
+
+    .chore_category {
+        width: 20% !important;
+    }
+
+    .chore_create {
+        clear: both;
+    }
+
+    .chore_wrapper input[type=submit] {
+        width: 50px !important;
+        height: 50px !important;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+
+    .chores td {
+        width: auto !important;
+        padding: 5px !important;
+        word-wrap: break-word;
+    }
+
+    .balance {
+        position: relative;
+        margin-top: 40px;
+        bottom: 0;
+        left: 5%;
+        right: 5%;
+        width: 90%;
+    }
+
+    .balance p {
+        font-size: 16pt;
+    }
+
+    .balance table {
+        font-size: 24pt;
+    }
+
+    .balance table img {
+        width: 30px;
+    }
+
+    .pick_image {
+        display: none;
+    }
+
+    .stats {
+        font-size: 12pt !important;
+        padding: 5px;
+        width: 90%;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .stats span {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .stats td {
+        display: initial;
+    }
+
+    #delete_account {
+        position: initial;
+        float: right;
+        margin: 20px;
+        margin-bottom: 0px;
+    }
+
+    .event_wrapper {
+        margin: 0;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .event_wrapper button {
+        font-size: 12pt;
+        padding: 15px;
+        height: 70px;
+    }
+
+    .events_my, .events_household {
+        height: auto;
+    }
+
+    .event_wrapper table {
+        overflow: hidden;
+
+        padding-bottom: 50px;
+
+        font-size: 12pt !important;
+        border-spacing: 0px 0px;
+        width: 100%;
+    }
+
+    .event_wrapper table td {
+        padding: 5px;
+    }
+
+    .event_wrapper table span {
+        width: 15px;
+        height: 15px;
+    }
+
+    .chore_create_form {
+        width: 95%;
+        padding: 0;
+    }
+
+    .create_category, .create_frequency {
+        padding: 0;
+    }
+
+    .create_frequency div {
+        font-size: 10pt;
+        word-wrap: break-word;
+
+        height: 20px;
+    }
+
+    .create_time, .create_points, .category_input {
+        display: block;
+        width: 70%;
+
+        margin: auto;
+        margin-bottom: 10px;
+    }
+
+    .create_points input[type=text] {
+        width: 50%;
+    }
+
+    .category_input {
+        width: 70%;
+    }
+
+    .create_submit {
+        position: initial;
+        display: block;
+        margin: auto;
+        width: 80%;
+        margin-top: 40px;
+    }
+
+    .chore_description {
+        border-radius: 0px !important;
+        font-size: smaller !important;
+    }
+
+    .household {
+        width: 100%;
+    }
+
+    .household #first_col {
+        width: 100px;
+    }
+
+    .household #second_col{
+        font-size: 14pt !important;
+        text-align: left;
+    }
+
+    .is_admin, .isnot_admin {
+        display: block !important;
+    }
+
+    .household #second_col img, .household #second_col form input {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    .household #second_col form {
+        margin-top: 10px;
+    }
+
+    .household tr {
+        height: 90px;
+    }
+
+    .household_user {
+        width: 80px;
+    }
+
+    #admin_col {
+        width: 20%;
+        max-width: 70px;
+        text-align: center;
+    }
+    
+    #admin_col img {
+        width:50px;
+    }
+
+    .rewards {
+        width: 100%;
+        margin: 0;
+    }
+
+    .rewards #first_col {
+        font-size: 12pt;
+        padding: 10px;
+        padding-left: 0px;
+        border-radius: 0px;
+
+        word-wrap: break-word;
+    }
+
+    .rewards #second_col {
+        font-size: 20pt;
+        padding: 10px;
+    }
+
+    .rewards #third_col form {
+        margin-right: 5px;
+        padding-left: 0px;
+    }
+
+    .rewards tr {
+        height: 30px;
+    }
+
+    .reward_left {
+        left: 5px;
+    }
+
+    .rewards form input[type=submit] {
+        width: 35px;
+        height: 35px;
+    }
+
+    .input_line {
+        width: 100%;
+        margin-top: 50px;
+        margin-bottom: 20px;
+
+        background-color: white;
+    }
+
+    .input_line #long {
+        width: -moz-calc(100% - 160px);
+        width: -webkit-calc(100% - 160px);
+        width: -o-calc(100% - 160px);
+        width: calc(100% - 160px);
+
+        margin: 0;
+        border-radius: 0;
+        padding-left: 10px;
+
+        font-size: 12pt;
+    }
+
+    .input_line #short {
+        width: 100px;
+        margin:0;
+
+        font-size: 12pt;
+    }
+
+    .input_line input[type=submit] {
+        width: 50px;
+        border-radius: 0;
+
+        color: transparent;
+        background-size: 60%;
+        background-color: white;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url("../../app/image/check_blue.png");
+    }
+
 }

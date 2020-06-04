@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width" />
         <title> <?php echo $title; ?> </title>
         <link rel="stylesheet" type="text/css" href="./view/css/style.css">
         <link rel="icon" href="./app/image/icon_min.png">

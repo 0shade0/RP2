@@ -539,7 +539,7 @@ public function getChoresByUser($ID_user) {
         $st = $db->prepare(
             'SELECT * FROM pr_chores ' .
             'WHERE ID_user=:userID AND time_next < CURRENT_TIMESTAMP() ' .
-            'AND mandatory=1 ORDER BY time_next DESC');
+            'AND mandatory=1 AND done=0 ORDER BY time_next DESC');
         $st->execute(array('userID' => $ID_user));
 
         $chores = array();
@@ -562,7 +562,7 @@ public function getChoresByCategory($category) {
     try {
         $st = $db->prepare(
             'SELECT * FROM pr_chores ' .
-            'WHERE ID_category=:categoryID ');
+            'WHERE ID_category=:categoryID AND done=0');
 
         $st->execute(array('categoryID' => $category->ID));
 
@@ -587,7 +587,7 @@ public function getChoresByHousehold($ID_household) {
         $st = $db->prepare(
             'SELECT pr_chores.* FROM pr_users JOIN pr_chores ' . 
             'WHERE ID_user = pr_users.ID AND ID_household=:householdID ' .
-            'AND time_next < CURRENT_TIMESTAMP() AND mandatory=0 ORDER BY time_next DESC');
+            'AND time_next < CURRENT_TIMESTAMP() AND mandatory=0 AND done=0 ORDER BY time_next DESC');
         $st->execute(array('householdID' => $ID_household));
 
         $chores = array();

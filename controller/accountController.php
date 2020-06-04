@@ -230,14 +230,14 @@ public function register() {
         $body = '
                 <html>
                     <body>
-                        <img src="./app/image/chorez.png" width="400" style="display:block; margin-left:20px; margin-bottom: 30px;">
+                        <img src="https://rp2.studenti.math.hr/~damcupi/RP2/app/image/chorez.png" width="400" style="display:block; margin-left:20px; margin-bottom: 30px;">
                         <div>
                             <div>
                             <p style=font-size:20pt;><strong>Bok '.$_POST['reg_name'].'!</strong></p>
                             <p>Hvala Vam što ste se prijavili na Chorez. </p>
                             <p>Preostaje Vam još samo jedan korak.
                             Kako biste uspješno dovršili registraciju, <strong>pritisnite</strong> ili <strong>prekopirajte</strong> link:
-                            <a href="https://rp2.studenti.math.hr/~damcupi/RP2/chorez.php?rt=account/activate&sequence=&userID=">
+                            <a href="https://rp2.studenti.math.hr/~damcupi/RP2/chorez.php?rt=account/activate&sequence='.$sequence.'&userID='.$userID.'">
                                 https://rp2.studenti.math.hr/~damcupi/RP2/chorez.php?rt=account/activate&sequence='.$sequence.'&userID='.$userID.' </a> </p>
                             </div>
                             <div>
