@@ -181,4 +181,8 @@ $( document ).ready(function() {
             event.preventDefault();
     });
 
+    $(".logo, .logo_gif").click(function() {
+        window.location = 'chorez.php';
+    })
+
 });

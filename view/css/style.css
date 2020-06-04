@@ -81,6 +81,10 @@ br {
     transition-delay: 0.005s;
 }
 
+.logo_gif:hover, .logo:hover {
+    cursor: pointer;
+}
+
 .by {
     position:relative;
     left: 360px;
