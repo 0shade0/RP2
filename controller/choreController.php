@@ -4,7 +4,7 @@ require_once platformSlashes($dir . '/model/chorezservice.class.php');
 class choreController {
 // Popis mojih zadataka
 public function index() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $title = 'Popis zadataka';
     $cs = new ChorezService();
@@ -33,6 +33,15 @@ public function index() {
 
     if(!$chores) $message_info_my = "Nema zadataka";
     if(!$chores_group) $message_info_group = "Nema zadataka";
+
+    $help =
+    'Ovdje se nalazi popis Vaših zadataka. <br><br>
+    Osobne zadatke rješavate samo Vi. <br><br>
+    Zadatke kućanstva može riješiti bilo tko od Vaših ukućana. <br><br>';
+    if ($user->admin) $help.= 'Nadolazeći zadaci mogu se riješiti kada prođe dovoljno vremena. <br><br> 
+    Kliknite na olovku kako biste zadali novi zadatak. <br><br>
+    Kliknite na križić kako biste izbrisali označene zadatke.<br><br>';
+    $help.= 'Kliknite na kvaćicu kako biste riješili označene zadatke.';
     
 
     require_once platformSlashes($dir . '/view/_header.php');
@@ -54,7 +63,7 @@ public function index() {
 
 // Pogledaj nečije zadatke (samo admin)
 public function show() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $title = 'Popis zadataka';
     $cs = new ChorezService();
@@ -84,7 +93,24 @@ public function show() {
 
     if($_GET['id'] === $_SESSION['user']) {
         $title = "Popis zadataka";
+        $help =
+        'Ovdje se nalazi popis Vaših zadataka. <br><br>
+        Osobne zadatke rješavate samo Vi. <br><br>
+        Zadatke kućanstva može riješiti bilo tko od Vaših ukućana. <br><br>';
+        if ($user->admin) $help.= 'Nadolazeći zadaci mogu se riješiti kada prođe dovoljno vremena. <br><br> 
+        Kliknite na olovku kako biste zadali novi zadatak. <br><br>
+        Kliknite na križić kako biste izbrisali označene zadatke.<br><br>';
+        $help.= 'Kliknite na kvaćicu kako biste riješili označene zadatke.';
         $my_page = True;
+    }
+    else {
+    $help =
+    'Ovdje se nalazi popis zadataka Vašeg ukućana. <br><br>
+    Osobne zadatke rješava samo spomenuti ukućan. <br><br>
+    Zadatke kućanstva može riješiti bilo tko od Vaših ukućana. <br><br>
+    Nadolazeće zadatke ukućan može riješiti kada prođe dovoljno vremena. <br><br>
+    Kliknite na olovku kako biste zadali novi zadatak Vašem ukućanu.<br><br>
+    Kliknite na križić kako biste izbrisali označene zadatke.';
     }
 
     // Provjeravamo je li stvoren novi zadatak
@@ -123,7 +149,7 @@ public function show() {
 
             if($mandatory) {
                 $event_user = $user_show->ID;
-                if($_SESSION['user'] !== $user_show->ID) $cs->setEventsUnseen($user->ID);
+                if($_SESSION['user'] !== $user_show->ID) $cs->setEventsUnseen($user_show->ID);
             }
             else {
                 $event_user = 0;
@@ -192,7 +218,7 @@ public function show() {
 
 // Stvori novi zadatak
 public function create() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $cs = new ChorezService();
 
@@ -229,6 +255,11 @@ public function create() {
 
     // Varijable koje su za /view/chore_create.php .
     $categories = $cs->getAllCategories($user->ID_household);
+
+    $help =
+    'Ovdje stvarate novi zadatak. <br><br>
+    Ako želite stvoriti novu kategoriju, napišite ju u polje za kategorije.';
+
 
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');

@@ -166,7 +166,7 @@ br {
     right: 30px;
     top: 0;
     overflow: hidden;
-    z-index: 1;
+    z-index: 10;
 
     width: 40px;
     height: 40px;
@@ -187,6 +187,7 @@ br {
 }
 
 .help p {
+    z-index: 10;
     float: right;
     clear: both;
     margin: 0;
@@ -195,8 +196,10 @@ br {
     background-color: white;
     color: var(--blue);
     border: 1px solid var(--blue);
-    font-size: 14pt;
+    font-size: 12pt;
     width: 360px;
+
+    text-align: left;
 }
 
 .help p:hover {
@@ -335,7 +338,6 @@ body {
     background-image: url("../../app/image/background.png");
     background-size: cover;
     background-attachment: fixed;
-    -webkit-backface-visibility: hidden;
     margin: 0;
     padding: 0;
 
@@ -1355,6 +1357,8 @@ table.pick_Image {
 
     .help p {
         width: 250px;
+        font-size: 8pt;
+        overflow-y: scroll;
     }
 
     body{
@@ -1366,6 +1370,11 @@ table.pick_Image {
 
     br {
         display: none;
+    }
+
+    .help p br {
+        display: initial;
+        line-height: 50%;
     }
 
     .header_wrapper, .wrapper {
@@ -1383,6 +1392,11 @@ table.pick_Image {
         width: 100%;
         border-radius: 0px;
         margin-bottom: 0px;
+
+        min-height: -moz-calc(100% - 120px);
+        min-height: -webkit-calc(100% - 120px);
+        min-height: -o-calc(100% - 120px);
+        min-height: calc(100% - 120px);
     }
 
     .login, .description {
@@ -1451,7 +1465,19 @@ table.pick_Image {
     }
     
     .by {
-        display: none;
+        position: absolute;
+        top: 5px;
+        left: 0;
+        font-size: 5pt;
+        margin: 0;
+        width: 100%;
+        word-wrap: initial;
+        border-bottom: 2px solid var(--teal);
+    }
+
+    .by td {
+        padding: 0;
+        padding-bottom: 3px;
     }
 
     #logout:hover {
@@ -1522,6 +1548,8 @@ table.pick_Image {
         width: 90%;
         max-width: 400px;
         margin: auto;
+
+        border-spacing: 10px;
     }
 
     .stats span {
@@ -1622,6 +1650,8 @@ table.pick_Image {
 
     .household {
         width: 100%;
+        margin: 0;
+        margin-top: 30px;
     }
 
     .household #first_col {

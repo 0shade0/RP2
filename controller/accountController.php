@@ -76,9 +76,6 @@ public function register() {
     if (!isset($_POST['reg_name']))
         $message_name = 'Morate upisati korisničko ime.';
 
-    else if (!preg_match("/^[A-Za-z0-9\d\s]+$/", $_POST['reg_name']))
-        $message_name = 'Korisničko ime može se sastojati samo od slova i znamenki.';
-
     else if ($cs->getUserByUsername($_POST['reg_name']) !== null)
         $message_name = 'Korisnik s tim korisničkim imenom već postoji.'; 
 
@@ -116,10 +113,6 @@ public function register() {
     if(isset($novo) && $novo) {
         if (!isset($_POST['house_name']) || $_POST['house_name'] === "")
             $message_hname = 'Morate upisati ime kućanstva.';
-
-        else if (!preg_match("/^[A-Za-z0-9\d\s]+$/", $_POST['house_name']))
-            $message_hname = 'Ime kućanstva može se sastojati samo od slova i znamenki.';
-
         
 
         if(!isset($_POST['house_newpassword']) || $_POST['house_newpassword'] === "") 

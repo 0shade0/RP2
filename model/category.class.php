@@ -34,9 +34,5 @@
             // Za omogućavanje ulančavanja.
             return $this;
         }
-
-        public function getDefaultCategories() {
-            return array("Čišćenje", "Vrt", "Higijena", "Zdravlje", "Kućni ljubimci", "Održavanje", "Škola");
-        }
     }
 ?>

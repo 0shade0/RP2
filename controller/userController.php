@@ -4,7 +4,7 @@ require_once platformSlashes($dir . '/model/chorezservice.class.php');
 class userController {
 // Pregled mojih podataka
 public function index() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
@@ -22,6 +22,10 @@ public function index() {
     $chores = $cs->getChoresByHousehold($user->ID_household);
     $householdchorecount = sizeof($chores);
 
+    $help = 'Ovo je Vaša profilna stranica. <br><br>
+    Ako želite promijeniti svoju profilnu sliku, kliknite na gumb pored Vaše slike. <br>(nije moguće na mobilnoj verziji) <br><br>
+    Ako želite obrisati svoj račun, kliknite na križić u donjem desnom kutu.';
+
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/user.php');
@@ -30,7 +34,7 @@ public function index() {
 
 // Pregled kućanstva
 public function household() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $cs = new ChorezService();
     $user = $cs->getUserByID($_SESSION['user']);
@@ -68,6 +72,12 @@ public function household() {
 
     if(!$users) $message_info = "Nema nagrada";
 
+    $help = 'Ovdje se nalazi popis Vaših ukućana. <br><br>
+    Vi ste označeni plavom bojom, a ukućani sa zvjezdicom pored svog imena su administratori.
+    Oni su zaduženi za zadavanje zadataka, nagrada, i ostalog.';
+    if($_SESSION['boss']) $help.= '<br><br> Vi također nosite titulu šefa, tako da možete promijeniti
+    status administratora bilo kojeg ukućana klikom na zvijezdicu pored pripadnog imena.';
+
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     require_once platformSlashes($dir . '/view/household.php');
@@ -76,7 +86,7 @@ public function household() {
 
 // Popis nagrada
 public function rewards() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $title = 'Nagrade';
     $cs = new ChorezService();
@@ -163,7 +173,7 @@ public function rewards() {
             );
 
             $cs->createEvent($event);
-            if($_SESSION['user'] !== $ID) $cs->setEventsUnseen($user->ID);
+            if($_SESSION['user'] !== $ID) $cs->setEventsUnseen($ID);
         }
     }
 
@@ -181,6 +191,28 @@ public function rewards() {
 
     if(!$rewards) $message_info = "Nema nagrada";
 
+    if($enter) $help =
+    ' Ovdje se nalaze nagrade Vašeg ukućana. <br><br>
+    Moguće je dodati novi zadatak popunjavanjem početnog obrasca. <br><br>
+    Ako je nagrada obojana zelenom bojom, to znači da je ukućan kupio tu nagradu. Vi kao administrator
+    možete zatim kliknuti na kvačicu u znak da ste primili tu informaciju. <br><br>
+    Klikom na križić uz nagradu možete ju obrisati. <br><br>
+    Na dnu stranice nalaze se bodovi posjećenog ukućana. ';
+
+    else {
+        $help =
+        ' Ovdje se nalaze Vaše nagrade. <br><br>';
+        if($user->admin) $help.='Moguće je dodati novi zadatak popunjavanjem početnog obrasca. <br><br>
+        Ako je nagrada obojana zelenom bojom, to znači da ste kupili tu nagradu. Vi kao administrator
+        možete zatim kliknuti na kvačicu u znak da ste primili tu informaciju. <br><br>
+        Moguće je dodati novi zadatak popunjavanjem početnog obrasca. <br><br>
+        Klikom na križić uz nagradu možete ju obrisati. <br><br>';
+        $help .= '
+        Ukoliko imate dovoljno bodova, uz nagradu će se pojaviti poseban znak. Klikom na njega možete
+        kupiti nagradu. <br><br>
+        Na dnu stranice nalaze se Vaši bodovi. ';
+    }
+
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');
     if($user->admin || $enter)
@@ -192,7 +224,7 @@ public function rewards() {
 
 // Popis događaja
 public function events() {
-    global $title, $db, $dir;
+    global $title, $help, $db, $dir;
 
     $title = 'Događaji';
     $cs = new ChorezService();
@@ -207,6 +239,10 @@ public function events() {
 
     if(!$events_user) $message_info_my = "Nema događaja";
     if(!$events_household) $message_info_household = "Nema događaja";
+
+    $help = 'Ovdje se nalaze Vaše obavijest. <br><br>
+    Desna kartica sadrži obavijesti kućanstva poput grupnih zadataka ili pridošlica kućanstva. <br><br>
+    Lijeva kartica sadrži osobne obavijesti poput novih osobnih zadataka ili nagrada.';
 
     require_once platformSlashes($dir . '/view/_header.php');
     require_once platformSlashes($dir . '/view/main_menu.php');

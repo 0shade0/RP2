@@ -1,13 +1,12 @@
 <div class = "info"><?php if(isset($message_info)) 
     echo $message_info . "<br><br>";?></div>
 
-<!-- Ubaci traku za dodavanje nagrada samo ako nisi u svom pofilu -->
 <div class = "input_line">
         <div class = "error"><?php if(isset($message)) echo $message . "<br><br>";?></div>
 
         <form name="add_reward_form" action="chorez.php?rt=user/rewards<?php if($enter) echo "&id=".$ID; ?>" method="post">
             <input id="long" type="text" name="reward_name" placeholder="Nova nagrada" required>
-            <input id="short" type="text" name="reward_price" placeholder="Bodovi" required>
+            <input id="short" type="text" name="reward_price" placeholder="Bodovi" required class="reward_price">
             <input type="submit" name="add_reward" value="Dodaj">
         </form>
 </div>

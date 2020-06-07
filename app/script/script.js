@@ -185,4 +185,28 @@ $( document ).ready(function() {
         window.location = 'chorez.php';
     })
 
+
+    // ograničavanje duljine svih inputa na 50
+
+    $('input').attr('maxlength', 50);
+
 });
+
+// filtriranje unosa na samo slova i brojke
+
+$(document).on('change',':text', function () {
+    if (this.value.match(/[^a-zA-Z0-9\u010D\u0107\u0161\u0111\u0173 ]/g)) {
+        this.value = this.value.replace(/[^a-zA-Z0-9\u010D\u0107\u0161\u0111\u0173 ]/g, '')
+    }
+    // micanje duplih razmaka
+    this.value = this.value.replace(/\s+/g, " ")
+});
+
+// bodovi mogu biti samo ispravne brojke (bez vodeće nule)
+
+$(document).on('change','.create_points input, #short.reward_price', function () {
+    this.value = parseInt(this.value.replace(/[^0-9]/g, ''), 10)
+    if(this.value == "NaN") this.value="0"
+});
+
+
