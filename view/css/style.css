@@ -534,14 +534,14 @@ body {
 .chores td.chore_points {
     text-align: right;
     font-family: Marker;
-    font-size: 16pt;
+    font-size: 12pt;
     width: 120px;
     padding-right: 10px;
     padding-left: 0;
 }
 
 .chores td.chore_points img {
-    width: 25px;
+    width: 20px;
     position: relative;
     top: 5px;
 }
@@ -1661,6 +1661,14 @@ table.pick_Image {
     .household #second_col{
         font-size: 14pt !important;
         text-align: left;
+    }
+
+    .household #third_col {
+        font-size: 12pt !important;
+    }
+
+    .household #third_col img {
+        width: 20px;
     }
 
     .is_admin, .isnot_admin {
