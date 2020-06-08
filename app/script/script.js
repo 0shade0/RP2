@@ -2,29 +2,29 @@
 $( document ).ready(function() {
 
 // izaberi profilnu sliku / prikaži slike
-    var count = 0;
+    var count = 0
     $("button.pick_Image").click(function() {
-        count++;
-        count % 2 ? $firstFunction() : $secondFunction();
+        count++
+        count % 2 ? $firstFunction() : $secondFunction()
 
     function $firstFunction() {
-        $("button.pick_Image").css('background-color', 'var(--orange)');
-        $("button.pick_Image").css('border-width', '10');
+        $("button.pick_Image").css('background-color', 'var(--orange)')
+        $("button.pick_Image").css('border-width', '10')
 
-        $("table.pick_Image").css('width','560px');
-        $("table.pick_Image").css('height','180px');
-        $("table.pick_Image").css('bottom','20px');
-        $("table.pick_Image").css('left','400px');
+        $("table.pick_Image").css('width','560px')
+        $("table.pick_Image").css('height','180px')
+        $("table.pick_Image").css('bottom','20px')
+        $("table.pick_Image").css('left','400px')
     }
 
     function $secondFunction() {
-        $("button.pick_Image").css('background-color', '');
-        $("button.pick_Image").css('border-width', '');
+        $("button.pick_Image").css('background-color', '')
+        $("button.pick_Image").css('border-width', '')
 
-        $("table.pick_Image").css('width','0px');
-        $("table.pick_Image").css('height','0px');
-        $("table.pick_Image").css('bottom','70px');
-        $("table.pick_Image").css('left','380px');
+        $("table.pick_Image").css('width','0px')
+        $("table.pick_Image").css('height','0px')
+        $("table.pick_Image").css('bottom','70px')
+        $("table.pick_Image").css('left','380px')
     }
 })
 
@@ -32,8 +32,8 @@ $( document ).ready(function() {
     var trenutna = $(".user_Image").attr("src")
 
     $(".pick_Image input").mouseenter(function() {
-        var slika = $(this).css('background-image');
-        slika = slika.replace('url(','').replace(')','').replace(/\"/gi, "");
+        var slika = $(this).css('background-image')
+        slika = slika.replace('url(','').replace(')','').replace(/\"/gi, "")
         $(".user_Image").attr("src", slika)
     })
 
@@ -44,16 +44,16 @@ $( document ).ready(function() {
 
 // bojanje kategorija
     var stringToColour = function(str) {
-        var hash = 0;
+        var hash = 0
         for (var i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 4) - hash);
+        hash = str.charCodeAt(i) + ((hash << 4) - hash)
         }
-        var colour = '#';
+        var colour = '#'
         for (var i = 0; i < 3; i++) {
-        var value = (hash >> (i * 8)) & 0xFF;
-        colour += ('00' + value.toString(16)).substr(-2);
+        var value = (hash >> (i * 8)) & 0xFF
+        colour += ('00' + value.toString(16)).substr(-2)
         }
-        return colour;
+        return colour
     }
 
     $("table.chores td.chore_category").each( function() {
@@ -72,7 +72,7 @@ $( document ).ready(function() {
             $(this).parent().parent().css('transform','scale(1.0)')
             $(this).parent().css('background-color','')
         }
-    });
+    })
     
 // chore_create opcije
 // Obojaj kategorije
@@ -97,16 +97,16 @@ $( document ).ready(function() {
         switch($(".time_input").val()) {
             case "1":
                 $(".create_time span").text("Dnevni")
-              break;
+              break
             case "2":
                 $(".create_time span").text("Tjedni")
-              break;
+              break
             case "3":
                 $(".create_time span").text("Mjesečni")
-            break;
+            break
             case "4":
                 $(".create_time span").text("Godišnji")
-            break;
+            break
             default:
                 $(".time_input").val(0)
                 $(".create_time span").text("Jednokratan")
@@ -178,19 +178,19 @@ $( document ).ready(function() {
 
     $("#delete_account").click(function(event) {
         if( !confirm('Želite li doista obrisati svoj račun?') ) 
-            event.preventDefault();
-    });
+            event.preventDefault()
+    })
 
     $(".logo, .logo_gif").click(function() {
-        window.location = 'chorez.php';
+        window.location = 'chorez.php'
     })
 
 
     // ograničavanje duljine svih inputa na 50
 
-    $('input').attr('maxlength', 50);
+    $('input').attr('maxlength', 50)
 
-});
+})
 
 // filtriranje unosa na samo slova i brojke
 
@@ -200,14 +200,14 @@ $(document).on('change',':text', function () {
     }
     // micanje duplih razmaka
     this.value = this.value.replace(/\s+/g, " ")
-    if (this.value.match(/[^s+$]/)) this.value = ''
-});
+    if (this.value.charAt(0) == " ") this.value = this.value.substr(1)
+})
 
 // bodovi mogu biti samo ispravne brojke (bez vodeće nule)
 
 $(document).on('change','.create_points input, #short.reward_price', function () {
     this.value = parseInt(this.value.replace(/[^0-9]/g, ''), 10)
     if(this.value == "NaN") this.value="0"
-});
+})
 
 
