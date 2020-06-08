@@ -200,6 +200,7 @@ $(document).on('change',':text', function () {
     }
     // micanje duplih razmaka
     this.value = this.value.replace(/\s+/g, " ")
+    if (this.value.match(/[^s+$]/)) this.value = ''
 });
 
 // bodovi mogu biti samo ispravne brojke (bez vodeće nule)
