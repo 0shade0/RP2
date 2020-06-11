@@ -38,7 +38,7 @@
 	</div>
 	<div class = "error"><?php if(isset($message_name)) { echo $message_name; } ?></div>
     <div>
-		<input placeholder="E-mail adresa" name="reg_email" type="text" value="<?php if(isset($_POST['reg_email'])) echo $_POST['reg_email'];?>" required>
+		<input placeholder="E-mail adresa" name="reg_email" type="email" value="<?php if(isset($_POST['reg_email'])) echo $_POST['reg_email'];?>" required>
 	</div>
 	<div class = "error"><?php if(isset($message_email)) { echo $message_email; } ?></div>
 	<div>

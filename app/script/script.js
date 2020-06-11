@@ -194,7 +194,7 @@ $( document ).ready(function() {
 
 // filtriranje unosa na samo slova i brojke
 
-$(document).on('change',':text', function () {
+$(document).on('change',':text, :password', function () {
     if (this.value.match(/[^a-zA-Z0-9\u010D\u0107\u0161\u0111\u0173 ]/g)) {
         this.value = this.value.replace(/[^a-zA-Z0-9\u010D\u0107\u0161\u0111\u0173 ]/g, '')
     }

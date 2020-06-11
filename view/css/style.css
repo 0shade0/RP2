@@ -254,7 +254,7 @@ br {
     transition-duration: 0.2s;
 }
 
-.login form input[type=text], .login form input[type=password] {
+.login form input[type=text], .login form input[type=password], .login form input[type=email] {
     border: none;
     border-bottom: solid 3px var(--orange);
     padding-left: 5px;
@@ -307,7 +307,7 @@ br {
     cursor: pointer;
 }
 
-.register form input[type=text], .register form input[type=password]{
+.register form input[type=text], .register form input[type=password], .register form input[type=email]{
     border-color: var(--blue);
 }
 
