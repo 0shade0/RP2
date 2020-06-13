@@ -10,9 +10,9 @@
                 else if ($_SESSION['boss'] && $row->ID === $_SESSION['user']) echo '<img src="./app/image/star_double.png">';
             //Boss može mijenjati admin status korsnicima
                 else if($_SESSION['boss'] && $row->admin && $row->ID !== $_SESSION['user'])
-                    echo '<form action="" method=post class="is_admin"> <input type=submit name="admin" value='.$row->ID.'"> </form>';
+                    echo '<form action="" method=post class="is_admin"> <input type=submit name="admin" value='.$row->ID.'> </form>';
                 else if($_SESSION['boss'] && !$row->admin && $row->ID !== $_SESSION['user'])
-                    echo '<form action="" method=post class="isnot_admin"> <input type=submit name="admin" value='.$row->ID.'"> </form>';?>
+                    echo '<form action="" method=post class="isnot_admin"> <input type=submit name="admin" value='.$row->ID.'> </form>';?>
         </td>
 
         <?php if($user->admin): ?>
