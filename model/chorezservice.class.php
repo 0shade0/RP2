@@ -564,7 +564,7 @@ public function getChoresByCategory($category) {
             'SELECT * FROM pr_chores ' .
             'WHERE ID_category=:categoryID AND done=0');
 
-        $st->execute(array('categoryID' => $category->ID));
+        $st->execute(array('categoryID' => $category));
 
         $chores = array();
 
